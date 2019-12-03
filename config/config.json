@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "Clyde9013!",
+    "password": null,
     "database": "ticket_dev",
     "host": "localhost",
     "dialect": "mysql"
