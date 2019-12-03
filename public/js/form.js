@@ -8,19 +8,28 @@ $(document).ready(() => {
 
     $("#user-price").on("click", () => {
 
-        const rowNumber = $("#row-input").val().trim();
-        const sectionNumber = $("#ticket-section").val().trim();
+        const rowNumber = parseInt($("#row-input").val().trim());
+        const sectionNumber = parseInt($("#ticket-section").val().trim());
 
-        const rowId = idConverter(rowNumber, sectionNumber)
+        const rowId = idConverter(rowNumber, sectionNumber);
 
-        $.ajax("/api/sell-price/" + rowId, { 
-            type: "GET"
-        })
-        .then(response => {
-            console.log("seller suggested price response", response);
-            // target info span at bottom of form 
-            $("#info").text(`(suggested price $${response.price})`);
-        })
+        if (rowNumber > 20) {
+            $("#form-info").text("Please input a valid section/row number");
+
+        } else {
+            
+            $.ajax("/api/sell-price/" + rowId, { 
+                type: "GET"
+            })
+            .then(response => {
+                // target info span at bottom of form 
+                $("#form-info").text(`Suggested price is $${response.price}`);
+            })
+            .catch(() => {
+                // need to tell user to input valid section/row number
+                $("#form-info").text("Please input a valid section/row number");
+            })
+        }
     })
 
 });
