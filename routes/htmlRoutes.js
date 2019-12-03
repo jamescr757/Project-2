@@ -12,6 +12,7 @@ module.exports = function(app) {
   app.get("/confirmation", function(req,res){
     res.sendFile(path.join(__dirname,"../public/confirmation.html"))
   })
+<<<<<<< HEAD
 
   // Load index page
    app.get("/", function(req, res) {
@@ -44,3 +45,6 @@ module.exports = function(app) {
   });
 
 };
+=======
+};
+>>>>>>> 1991d355fc306faffaec87d708f870f89383ae58
