@@ -23,6 +23,29 @@ module.exports = function(app) {
     });
   });
 
+  app.post("/api/new-listing", function(req, res) {
+
+    const { sectionNumber, rowNumber, seatNumber, userName, email, price } = req.body;
+
+    db.TicketMaster.create({
+
+      section_number: sectionNumber,
+      row_number: rowNumber,
+      seat_number: seatNumber,
+      price: price,
+      user_name: userName,
+      email: email
+
+    }).then(() => {
+      // going to be an array of objects
+      res.status(201).end();
+    })
+    .catch(() => {
+      console.log("there's been a db query error");
+      res.status(500).end();
+    });
+  });
+
   // Create a new example
   // app.post("/api/examples", function(req, res) {
   //   db.Example.create(req.body).then(function(dbExample) {

@@ -40,9 +40,6 @@ module.exports = function(sequelize, DataTypes) {
         },
         user_name: {
             type: DataTypes.STRING,
-            validate: {
-                isAlpha: true
-            }
         },
         email: {
             type: DataTypes.STRING,

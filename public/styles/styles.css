@@ -16,3 +16,7 @@
 .card{
   margin-bottom: 5%;
 }
+
+#form-info {
+  opacity: 0;
+}
