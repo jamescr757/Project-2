@@ -1,3 +1,18 @@
 .list-group-item {
   line-height: 2.5;
 }
+.container{
+  margin-top: 10%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.jumbotron{
+  margin-top: 10%;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.card{
+  margin-bottom: 5%;
+}
