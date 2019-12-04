@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
+    "username": "fhf21bme29pn8u8v",
     "password": null,
-    "database": "ticket_dev",
-    "host": "localhost",
+    "database": "qz1el41hrz3net3q",
+    "host": "hcm4e9frmbwfez47.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {
