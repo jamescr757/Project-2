@@ -13,6 +13,10 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname,"../public/confirmation.html"))
   })
 
+  app.get("/user-email",function(req,res){
+    res.sendFile(path.join(__dirname, "../public/listing-search.html"))
+  })
+
   // Load index page
    app.get("/", function(req, res) {
   //   db.Example.findAll({}).then(function(dbExamples) {
@@ -20,12 +24,6 @@ module.exports = function(app) {
          msg: "Welcome!!! to our"
   //       examples: dbExamples
        });
-  
-   });
-   app.get("/seller-form", function(req, res) {
-    
-     res.sendFile(path.join(__dirname,"../views/seller-form.html"));
-    
    });
     
 
@@ -37,7 +35,6 @@ module.exports = function(app) {
   //     });
   //   });
   // });
-
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
     res.render("404");
