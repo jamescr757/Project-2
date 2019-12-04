@@ -1,9 +1,15 @@
 $(document).ready(() => {
 
      // convert section and row number into id number
-    function idConverter(rowNum, sectionNum) {
+    function rowIdGenerator(rowNum, sectionNum) {
         const idNum = (sectionNum - 1) * 20 + rowNum;
         return idNum;
+    }
+
+    // convert seat into unique ticket id
+    function ticketIdGenerator(rowNum, sectionNum, seatNum) {
+        const ticketId = (sectionNum - 1) * 600 + (rowNum - 1) * 30 + seatNum;
+        return ticketId;
     }
 
     $("#user-price").on("focus", () => {
@@ -12,7 +18,7 @@ $(document).ready(() => {
         const seatNumber = parseInt($("#seat-input").val().trim());
         const sectionNumber = parseInt($("#ticket-section").val().trim());
 
-        const rowId = idConverter(rowNumber, sectionNumber);
+        const rowId = rowIdGenerator(rowNumber, sectionNumber);
         
         if (rowNumber > 20) {
             $("#form-info").text("Please input a valid row number");
@@ -48,6 +54,7 @@ $(document).ready(() => {
             sectionNumber: parseInt($("#ticket-section").val().trim()),
             rowNumber: parseInt($("#row-input").val().trim()),
             seatNumber: parseInt($("#seat-input").val().trim()),
+            ticketId: ticketIdGenerator(this.sectionNumber, this.rowNumber, this.seatNumber),
             userName: $("#name-input").val().trim(),
             email: $("#email-input").val().trim(),
             price: parseFloat($("#user-price").val().trim())
@@ -61,7 +68,7 @@ $(document).ready(() => {
             location.href = "/confirmation"
         })
         .catch(() => {
-            $("#form-info").text("Please input valid information");
+            $("#form-info").text("The information provided is invalid or that ticket is already for sale.");
             $("#form-info").css("opacity", 1);
         })
     });

@@ -73,13 +73,14 @@ module.exports = function(app) {
 
   app.post("/api/new-listing", function(req, res) {
 
-    const { sectionNumber, rowNumber, seatNumber, userName, email, price } = req.body;
+    const { sectionNumber, rowNumber, seatNumber, ticketId, userName, email, price } = req.body;
 
     db.TicketMaster.create({
 
       section_number: sectionNumber,
       row_number: rowNumber,
       seat_number: seatNumber,
+      ticket_id: ticketId,
       price: price,
       user_name: userName,
       email: email
