@@ -30,11 +30,7 @@ $(document).ready(() => {
             .then(response => {
                 // target info span at bottom of form
                 $("#form-info").text(`Suggested price is $${response.price}`);
-<<<<<<< HEAD
-                $("#form-info").css("opacity", 1);
-=======
                 
->>>>>>> bb3b8935f69cbfa9d25e44a4ecb3c518328debd4
             })
             .catch(() => {
                 // need to tell user to input valid section/row number
