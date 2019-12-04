@@ -17,6 +17,9 @@
   margin-bottom: 5%;
 }
 
+#form-info {
+  opacity: 0;
+}
 .btn-sellticket {
   margin: 70px;
 }

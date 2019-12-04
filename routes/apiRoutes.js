@@ -1,12 +1,43 @@
 var db = require("../models");
 
-var userinfo = {
-      name: "arthi",
-      seatnumber: 5,
-      sectionnumber: 4,
-      rownumber: 3,
-      price: 120
+const nodemailer = require("nodemailer");
+require("dotenv").config();
+
+// function to send a confirmation email 
+function emailer(userEmail, ticketObj) {
+  console.log("email function active");
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'jamesriddle@utexas.edu',
+      pass: process.env.GMAIL_PASS
     }
+  });
+  
+  const mailOptions = {
+    from: 'jamesriddle@utexas.edu',
+    to: userEmail,
+    subject: 'Listing Confirmation',
+    text: `Your ticket has been posted!
+
+      Section: ${ticketObj.sectionNumber}
+      Row: ${ticketObj.rowNumber}
+      Seat: ${ticketObj.seatNumber}
+      Listing Price: $${ticketObj.price}
+    `
+  };
+  
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+
+}
+
 module.exports = function(app) {
   // Get all examples
   app.get("/api/sell-price/:id", function(req, res) {
@@ -20,16 +51,47 @@ module.exports = function(app) {
     });
   });
 
-  app.get("/api/listing", function(req, res) {
-    console.log("HIII : ",req.body);
+  app.get("/user-email/:email", function(req, res) {
     db.TicketMaster.findAll({
       where: {
-        email: req.body.email
+        email: req.params.email
       }
-    }).then(function(userListing) {
+    })
+    .then(function(userListing) {
       // going to be an array of objects
-      console.log(userListing);
-      res.json(userListing);
+      // console.log("query result", userListing);
+      res.render("user-listing", { 
+        listing: true,
+        listingArray: userListing 
+      });
+    })
+    .catch(() => {
+      console.log("there's been a db query error");
+      res.status(500).end();
+    });
+  });
+
+  app.post("/api/new-listing", function(req, res) {
+
+    const { sectionNumber, rowNumber, seatNumber, userName, email, price } = req.body;
+
+    db.TicketMaster.create({
+
+      section_number: sectionNumber,
+      row_number: rowNumber,
+      seat_number: seatNumber,
+      price: price,
+      user_name: userName,
+      email: email
+
+    }).then(() => {
+      emailer(email, req.body);
+      // going to be an array of objects
+      res.status(201).end();
+    })
+    .catch(() => {
+      console.log("there's been a db query error");
+      res.status(500).end();
     });
   });
 

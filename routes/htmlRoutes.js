@@ -14,6 +14,11 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname,"../public/confirmation.html"))
   })
 
+  app.get("/user-email",function(req,res){
+    // res.sendFile(path.join(__dirname, "../public/email-search.html"))
+    res.render("user-listing", { emailInput: true });
+  })
+
   // Load index page
    app.get("/", function(req, res) {
   //   db.Example.findAll({}).then(function(dbExamples) {
@@ -21,22 +26,7 @@ module.exports = function(app) {
          msg: "Welcome!!! to our"
   //       examples: dbExamples
        });
-  
    });
-
-  //app.get("/api/listing", function(req, res) {
-    
-  //    console.log(userinfo);
-  //   res.render("../views/userform.handlebars", {userinfo});
-    
-  //});
-  
-
-  //app.get("/seller-form", function(req, res) {
-    
-  //    res.sendFile(path.join(__dirname,"../public/form.html"));
-    
-  //  });
     
 
   //Load example page and pass in an example by id
@@ -47,7 +37,6 @@ module.exports = function(app) {
   //     });
   //   });
   // });
-
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
     res.render("404");
