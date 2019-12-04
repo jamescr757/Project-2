@@ -30,11 +30,7 @@ $(document).ready(() => {
             .then(response => {
                 // target info span at bottom of form
                 $("#form-info").text(`Suggested price is $${response.price}`);
-<<<<<<< HEAD
                 $("#form-info").css("opacity", 1);
-=======
-                
->>>>>>> bb3b8935f69cbfa9d25e44a4ecb3c518328debd4
             })
             .catch(() => {
                 // need to tell user to input valid section/row number
@@ -76,55 +72,37 @@ $(document).ready(() => {
         $("#form-info").css("opacity", 0);
     });
 
-});
-
 
 
 // future js for confirmation page
 // need to grab user email and place in userData object
 
-// can grab user info with an on submit listener 
-// $(#email-input-form).on("submit", event => {
-    // event.preventDefault();
+    $("#email-input-form").on("submit", (event) => {
+        event.preventDefault();
+        
+        console.log("email box active");
+        const userData = {
+            email: $("#user-email").val().trim()
+        }
+        
+        location.href = "/user-email/" + userData.email;
+        // $.ajax("/user-email/" + userData.email, {
+        //     // type: "POST",
+        //     type: "GET"
+        //     // data: userData
+        // })
+        // .then(function() {
+        //     // console.log("email query successful");
+        //     location.href = "/user-email/" + userData.email
+        // })
+        // .catch(() => {
+        //     // $("#form-info").text("Please input a valid email");
+        //     // $("#form-info").css("opacity", 1);
+        //     console.log("there's been an error");
+        //  });
 
-    // const userData = {
-    //     email: $("user-email").val().trim();
-    // }
-    
-    // $.ajax("/api/listing", {
-    //     type: "POST",
-    //     data: userData
-    // })
-    // .then(response => {
-    //     // arthi's code
-    
-    //     }
-    // })
-    //     .catch(() => {
-        // need to change target tag
-        //     $("#form-info").text("Please input a valid email");
-        //     $("#form-info").css("opacity", 1);
-    // })
+    });
 
 
-// });
-$("#btn-sellerinfo").on("click", () => {
-
-//    const userEmail = $("#user-email").val().trim();
-const userEmail = "arthitest@gmail.com";
-//const userData = {
-//     email: $("#").val().trim();
- // }
-console.log("i am in sellerinfo");
-$.ajax("/api/listing", {
-    type: "POST",
-    data: userEmail
-})
-.then(function(listing) {
-    res.render("user-listing", { listing });
+      
 });
-
-});
-
-
-       

@@ -15,7 +15,8 @@ module.exports = function(app) {
   })
 
   app.get("/user-email",function(req,res){
-    res.sendFile(path.join(__dirname, "../public/email-search.html"))
+    // res.sendFile(path.join(__dirname, "../public/email-search.html"))
+    res.render("user-listing", { emailInput: true });
   })
 
   // Load index page
