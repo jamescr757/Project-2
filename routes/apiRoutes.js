@@ -1,5 +1,43 @@
 var db = require("../models");
 
+const nodemailer = require("nodemailer");
+require("dotenv").config();
+
+// function to send a confirmation email 
+function emailer(userEmail, ticketObj) {
+  console.log("email function active");
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'jamesriddle@utexas.edu',
+      pass: process.env.GMAIL_PASS
+    }
+  });
+  
+  const mailOptions = {
+    from: 'jamesriddle@utexas.edu',
+    to: userEmail,
+    subject: 'Listing Confirmation',
+    text: `Your ticket has been posted!
+
+      Section: ${ticketObj.sectionNumber}
+      Row: ${ticketObj.rowNumber}
+      Seat: ${ticketObj.seatNumber}
+      Listing Price: $${ticketObj.price}
+    `
+  };
+  
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+
+}
+
 module.exports = function(app) {
   // Get all examples
   app.get("/api/sell-price/:id", function(req, res) {
@@ -37,6 +75,7 @@ module.exports = function(app) {
       email: email
 
     }).then(() => {
+      emailer(email, req.body);
       // going to be an array of objects
       res.status(201).end();
     })
