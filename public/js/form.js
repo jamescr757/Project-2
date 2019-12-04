@@ -120,8 +120,7 @@ $.ajax("/api/listing", {
     type: "POST",
     data: userEmail
 })
-.then(function(listing)
-{
+.then(function(listing) {
     res.render("userform", {listing});
 });
 
