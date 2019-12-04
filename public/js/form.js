@@ -13,7 +13,7 @@ $(document).ready(() => {
         const sectionNumber = parseInt($("#ticket-section").val().trim());
 
         const rowId = idConverter(rowNumber, sectionNumber);
-
+        
         if (rowNumber > 20) {
             $("#form-info").text("Please input a valid row number");
             $("#form-info").css("opacity", 1);
@@ -30,7 +30,11 @@ $(document).ready(() => {
             .then(response => {
                 // target info span at bottom of form
                 $("#form-info").text(`Suggested price is $${response.price}`);
+<<<<<<< HEAD
                 $("#form-info").css("opacity", 1);
+=======
+                
+>>>>>>> bb3b8935f69cbfa9d25e44a4ecb3c518328debd4
             })
             .catch(() => {
                 // need to tell user to input valid section/row number
@@ -104,3 +108,24 @@ $(document).ready(() => {
 
 
 // });
+$("#btn-sellerinfo").on("click", () => {
+
+//    const userEmail = $("#user-email").val().trim();
+const userEmail = "arthitest@gmail.com";
+//const userData = {
+//     email: $("#").val().trim();
+ // }
+console.log("i am in sellerinfo");
+$.ajax("/api/listing", {
+    type: "POST",
+    data: userEmail
+})
+.then(function(listing)
+{
+    res.render("userform", {listing});
+});
+
+});
+
+
+       

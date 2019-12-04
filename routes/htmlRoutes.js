@@ -1,5 +1,6 @@
 var db = require("../models");
 var path = require("path");
+var exphbs = require("express-handlebars");
 
 module.exports = function(app) {
 
@@ -22,11 +23,20 @@ module.exports = function(app) {
        });
   
    });
-   app.get("/seller-form", function(req, res) {
+
+  //app.get("/api/listing", function(req, res) {
     
-     res.sendFile(path.join(__dirname,"../views/seller-form.html"));
+  //    console.log(userinfo);
+  //   res.render("../views/userform.handlebars", {userinfo});
     
-   });
+  //});
+  
+
+  //app.get("/seller-form", function(req, res) {
+    
+  //    res.sendFile(path.join(__dirname,"../public/form.html"));
+    
+  //  });
     
 
   //Load example page and pass in an example by id
