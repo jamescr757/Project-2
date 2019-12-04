@@ -20,7 +20,8 @@ module.exports = function(app) {
     });
   });
 
-  app.post("/api/listing", function(req, res) {
+  app.get("/api/listing", function(req, res) {
+    console.log("HIII : ",req.body);
     db.TicketMaster.findAll({
       where: {
         email: req.body.email

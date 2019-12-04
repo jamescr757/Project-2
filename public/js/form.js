@@ -40,20 +40,23 @@ $(document).ready(() => {
 // future js for confirmation page 
 // need to grab user email and place in userData object
 
-$("#btn-sellerinfo").on("click", () => {
+$("#btn-sellerinfo").on("click", function() {
 
-//    const userEmail = $("#user-email").val().trim();
-const userEmail = "arthitest@gmail.com";
+// //    const userEmail = $("#user-email").val().trim();
+ console.log("ARTHI!!!!!!");
+
+
+//var userEmail = "arthitest@gmail.com";
 //const userData = {
 //     email: $("#").val().trim();
  // }
-console.log("i am in sellerinfo");
-$.ajax("/api/listing", {
-    type: "POST",
-    data: userEmail
+$.ajax("/api/listing", { 
+    type: "GET",
+    data: "arthitest@gmail.com"
 })
 .then(function(listing)
 {
+    console.log("inside ajax");
     res.render("userform", {listing});
 });
 
