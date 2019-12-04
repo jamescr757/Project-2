@@ -12,7 +12,7 @@ $(document).ready(() => {
         const sectionNumber = parseInt($("#ticket-section").val().trim());
 
         const rowId = idConverter(rowNumber, sectionNumber);
-
+        
         if (rowNumber > 20) {
             $("#form-info").text("Please input a valid section/row number");
 
@@ -24,6 +24,7 @@ $(document).ready(() => {
             .then(response => {
                 // target info span at bottom of form 
                 $("#form-info").text(`Suggested price is $${response.price}`);
+                
             })
             .catch(() => {
                 // need to tell user to input valid section/row number
@@ -41,17 +42,20 @@ $(document).ready(() => {
 
 // const userData = {
 //     email: $("#").val().trim();
-// }
+//  }
 
 // $.ajax("/api/listing", {
 //     type: "POST",
 //     data: userData
 // })
 // .then(response => {
+
 //     // array of objects from TicketMaster database
-//     for (let i = 0; i < response.length; i++) {
-//         // relevant column names
-//         // section_number, row_number, seat_number, user_name, price 
+//     // for (let i = 0; i < response.length; i++) {
+//     //     // relevant column names
+//     //     // section_number, row_number, seat_number, user_name, price 
 
 //     }
 // })
+
+       

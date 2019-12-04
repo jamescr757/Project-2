@@ -1,5 +1,12 @@
 var db = require("../models");
 
+var userinfo = {
+      name: "arthi",
+      seatnumber: 5,
+      sectionnumber: 4,
+      rownumber: 3,
+      price: 120
+    }
 module.exports = function(app) {
   // Get all examples
   app.get("/api/sell-price/:id", function(req, res) {
@@ -8,6 +15,7 @@ module.exports = function(app) {
         id: req.params.id
       }
     }).then(function(ticketFaceValue) {
+
       res.json(ticketFaceValue);
     });
   });
@@ -23,6 +31,7 @@ module.exports = function(app) {
     });
   });
 
+  
   // Create a new example
   // app.post("/api/examples", function(req, res) {
   //   db.Example.create(req.body).then(function(dbExample) {
