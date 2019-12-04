@@ -121,7 +121,7 @@ $.ajax("/api/listing", {
     data: userEmail
 })
 .then(function(listing) {
-    res.render("userform", {listing});
+    res.render("user-listing", { listing });
 });
 
 });
