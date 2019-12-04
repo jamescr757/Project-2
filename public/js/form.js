@@ -40,22 +40,24 @@ $(document).ready(() => {
 // future js for confirmation page 
 // need to grab user email and place in userData object
 
-// const userData = {
+$("#btn-sellerinfo").on("click", () => {
+
+//    const userEmail = $("#user-email").val().trim();
+const userEmail = "arthitest@gmail.com";
+//const userData = {
 //     email: $("#").val().trim();
-//  }
+ // }
+console.log("i am in sellerinfo");
+$.ajax("/api/listing", {
+    type: "POST",
+    data: userEmail
+})
+.then(function(listing)
+{
+    res.render("userform", {listing});
+});
 
-// $.ajax("/api/listing", {
-//     type: "POST",
-//     data: userData
-// })
-// .then(response => {
+});
 
-//     // array of objects from TicketMaster database
-//     // for (let i = 0; i < response.length; i++) {
-//     //     // relevant column names
-//     //     // section_number, row_number, seat_number, user_name, price 
-
-//     }
-// })
 
        

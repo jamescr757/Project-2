@@ -4,11 +4,14 @@
       <div class="card mt-4">
         <div class="card-body">
             <h1>Users name Ticket Listing</h1>
-            <p><strong>User Name</strong>: {{userinfo.username}}</p>
-            <p><strong>Seat Number</strong>: {{userinfo.seatnumber}}</p>
-            <p><strong>Section Number</strong>: {{userinfo.sectionnumber}}</p>
-            <p><strong>Row Number</strong>: {{userinfo.rownumber}}</p>
-            <p><strong>Price</strong>: ${{userinfo.price}}</p>
+            <ul>{{#each userListings}}
+            <li><p><strong>User Name</strong>: {{this.username}}</p></li>
+            <li><p><strong>Seat Number</strong>: {{this.seatnumber}}</p></li>
+            <li><p><strong>Section Number</strong>: {{this.sectionnumber}}</p></li>
+            <li><p><strong>Row Number</strong>: {{this.rownumber}}</p></li>
+            <li><p><strong>Price</strong>: ${{this.price}}</p></li>
+            {{/each}}
+            </ul>
             <a href="/">← Back To Home</a>
         </div>
       </div>

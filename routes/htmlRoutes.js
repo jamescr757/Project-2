@@ -24,21 +24,15 @@ module.exports = function(app) {
   
    });
 
-   app.get("/seller-info", function(req, res) {
-    var userinfo = {
-      username: "arthi",
-      seatnumber: 1,
-      sectionnumber: 1,
-      rownumber: 1,
-      price: 300
-    }
-    console.log(userinfo);
-    res.render("../views/userform.handlebars", {userinfo});
+  //app.get("/api/listing", function(req, res) {
     
-  });
+  //    console.log(userinfo);
+  //   res.render("../views/userform.handlebars", {userinfo});
+    
+  //});
   
 
-  //  app.get("/seller-form", function(req, res) {
+  //app.get("/seller-form", function(req, res) {
     
   //    res.sendFile(path.join(__dirname,"../public/form.html"));
     

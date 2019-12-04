@@ -25,9 +25,10 @@ module.exports = function(app) {
       where: {
         email: req.body.email
       }
-    }).then(function(userTickets) {
+    }).then(function(userListing) {
       // going to be an array of objects
-      res.json(userTickets);
+      console.log(userListing);
+      res.json(userListing);
     });
   });
 
