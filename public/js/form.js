@@ -61,7 +61,6 @@ $(document).ready(() => {
             location.href = "/confirmation"
         })
         .catch(() => {
-            console.log("there's been an error");
             $("#form-info").text("Please input valid information");
             $("#form-info").css("opacity", 1);
         })
@@ -80,19 +79,28 @@ $(document).ready(() => {
 // future js for confirmation page
 // need to grab user email and place in userData object
 
-// const userData = {
-//     email: $("#").val().trim();
-// }
+// can grab user info with an on submit listener 
+// $(#email-input-form).on("submit", event => {
+    // event.preventDefault();
 
-// $.ajax("/api/listing", {
-//     type: "POST",
-//     data: userData
-// })
-// .then(response => {
-//     // array of objects from TicketMaster database
-//     for (let i = 0; i < response.length; i++) {
-//         // relevant column names
-//         // section_number, row_number, seat_number, user_name, price
+    // const userData = {
+    //     email: $("user-email").val().trim();
+    // }
+    
+    // $.ajax("/api/listing", {
+    //     type: "POST",
+    //     data: userData
+    // })
+    // .then(response => {
+    //     // arthi's code
+    
+    //     }
+    // })
+    //     .catch(() => {
+        // need to change target tag
+        //     $("#form-info").text("Please input a valid email");
+        //     $("#form-info").css("opacity", 1);
+    // })
 
-//     }
-// })
+
+// });
