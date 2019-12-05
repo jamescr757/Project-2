@@ -25,6 +25,7 @@
 }
 
 body {
-  background: gray;
+  background-image: url('concert.jpeg');
+  background-size: 80%;
 }
 

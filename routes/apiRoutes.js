@@ -51,15 +51,19 @@ module.exports = function(app) {
     });
   });
 
-  app.post("/api/listing", function(req, res) {
+  app.get("/user-email/:email", function(req, res) {
     db.TicketMaster.findAll({
       where: {
-        email: req.body.email
+        email: req.params.email
       }
     })
     .then(function(userListing) {
       // going to be an array of objects
-      res.json(userListing);
+      // console.log("query result", userListing);
+      res.render("user-listing", { 
+        listing: true,
+        listingArray: userListing 
+      });
     })
     .catch(() => {
       console.log("there's been a db query error");

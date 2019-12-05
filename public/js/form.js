@@ -30,7 +30,7 @@ $(document).ready(() => {
             .then(response => {
                 // target info span at bottom of form
                 $("#form-info").text(`Suggested price is $${response.price}`);
-                
+                $("#form-info").css("opacity", 1);
             })
             .catch(() => {
                 // need to tell user to input valid section/row number
@@ -72,55 +72,34 @@ $(document).ready(() => {
         $("#form-info").css("opacity", 0);
     });
 
-});
-
 
 
 // future js for confirmation page
 // need to grab user email and place in userData object
 
-// can grab user info with an on submit listener 
-// $(#email-input-form).on("submit", event => {
-    // event.preventDefault();
-
-    // const userData = {
-    //     email: $("user-email").val().trim();
-    // }
-    
-    // $.ajax("/api/listing", {
-    //     type: "POST",
-    //     data: userData
-    // })
-    // .then(response => {
-    //     // arthi's code
-    
-    //     }
-    // })
-    //     .catch(() => {
-        // need to change target tag
-        //     $("#form-info").text("Please input a valid email");
-        //     $("#form-info").css("opacity", 1);
-    // })
+    $("#seller-email-form").on("submit", (event) => {
+        event.preventDefault();
+        
+        console.log("email box active");
+        const userData = {
+            email: $("#user-email").val().trim()
+        }
+        
+        location.href = "/user-email/" + userData.email;
+    });
 
 
-// });
-$("#btn-sellerinfo").on("click", () => {
+    $("#buyer-email-form").on("submit", (event) => {
+        event.preventDefault();
+        
+        console.log("email box active");
+        const userData = {
+            email: $("#user-email").val().trim()
+        }
+        
+        location.href = "/buyer-confirmation"
 
-//    const userEmail = $("#user-email").val().trim();
-const userEmail = "arthitest@gmail.com";
-//const userData = {
-//     email: $("#").val().trim();
- // }
-console.log("i am in sellerinfo");
-$.ajax("/api/listing", {
-    type: "POST",
-    data: userEmail
-})
-.then(function(listing) {
-    res.render("user-listing", { listing });
-});
-
-});
+    });
 
 
-       
+      
