@@ -1,19 +1,51 @@
   <div class="container">
     {{#if listing}}
       <div class="row">
-        <div class="col-8 offset-2">
+        <div class="col-6">
           <div class="card mt-4">
             <div class="card-body">
                 <h1>Your Tickets</h1>
                 {{#each listingArray}}
-                <br>
-                  <ul>
-                    <li><p><strong>Seat Number</strong>: {{this.seat_number}}</p></li>
-                    <li><p><strong>Section Number</strong>: {{this.section_number}}</p></li>
-                    <li><p><strong>Row Number</strong>: {{this.row_number}}</p></li>
-                    <li><p><strong>Price</strong>: ${{this.price}}</p></li>
+                {{#if this.purchased}}
+                {{else}}
+                <ul class="listing">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <li><p><strong>Seat Number</strong>: </p>
+                            </div>
+                            <div class="col-7">
+                                    <p>{{this.seat_number}}</p></li>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5">
+                                <li><p><strong>Section Number</strong>:</p>
+                            </div>
+                            <div class="col-7">
+                                    <p>{{this.section_number}}</p></li>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5">
+                                <li><p><strong>Row Number</strong>:</p> 
+                            </div>
+                            <div class="col-7">
+                                <p>{{this.row_number}}</p></li>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5">
+                                <li><p><strong>Listing Price</strong>:</p>
+                            </div>
+                            <div class="col-7">
+                                 <p>${{this.price}}</p></li>
+                            </div>
+                        </div>
+                    </div>
                   </ul>
-                  <br> 
+                  <br>
+                  {{/if}}
                 {{/each}}
 
                 <a href="/">← Back To Home</a>
@@ -36,24 +68,13 @@
 
   {{#if buyerEmail}}
   <div class="jumbotron">
-      <form id="buyer-email-form">
-          <div class="form-email">
-            <label for="name-input">Enter your email to recieve your reciept:</label>
-            <input class="form-control" id="user-email" placeholder="jon@gmail.com" type="text">
-          </div>
-      </form>  
-  </div>
-  {{/if}}
-
-  {{#if buyerInput}}
-  <div class="jumbotron">
       <form id="buyer-email-form"
             data-section="{{section_number}}"
             data-row="{{row_number}}"
             data-seat="{{seat_number}}"
             data-price="{{price}}">
           <div class="form-email">
-            <label for="name-input">Enter your email to find your listings:</label>
+            <label for="name-input">Enter your email to recieve your reciept:</label>
             <input class="form-control" id="user-email" placeholder="jon@gmail.com" type="text">
           </div>
       </form>  

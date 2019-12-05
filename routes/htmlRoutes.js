@@ -41,7 +41,7 @@ app.get("/", function(req,res){
 
       // going to be an array of objects
       res.render("user-listing", { 
-        buyerInput: true,
+        buyerEmail: true,
         section_number,
         row_number,
         seat_number,
@@ -55,20 +55,8 @@ app.get("/", function(req,res){
     });
   })
 
-  // Load index page
-  //  app.get("/", function(req, res) {
-  // //   db.Example.findAll({}).then(function(dbExamples) {
-  //      res.render("index", {
-  //        msg: "POST PASS"
-  // //       examples: dbExamples
-  //      });
-  //  });
-
    app.get("/venue", function(req, res) {
-  //   db.Example.findAll({}).then(function(dbExamples) {
-       res.render("venue", {
-  //       examples: dbExamples
-       });
+       res.render("venue", {});
    });
     
   // Render 404 page for any unmatched routes

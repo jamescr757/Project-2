@@ -3,8 +3,23 @@ var db = require("../models");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
+// helper function for email body text
+function emailText(mailOptions, ticketObj, headlineString, typeString) {
+  
+  mailOptions.subject = `${typeString} Confirmation`;
+
+  mailOptions.text = `
+  ${headlineString}
+  
+    Section: ${ticketObj.sectionNumber}
+    Row: ${ticketObj.rowNumber}
+    Seat: ${ticketObj.seatNumber}
+    ${typeString} Price: $${ticketObj.price}
+  `
+}
+
 // function to send a confirmation email 
-function emailer(userEmail, ticketObj, sellerBool, soldBool) {
+function emailer(userEmail, ticketObj, userType) {
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -14,50 +29,24 @@ function emailer(userEmail, ticketObj, sellerBool, soldBool) {
     }
   });
   
-  let mailOptions;
-  if (sellerBool) {
-    
-    mailOptions = {
+  const mailOptions = {
       from: 'jamesriddle@utexas.edu',
-      to: userEmail,
-      subject: 'Listing Confirmation',
-      text: `Your ticket has been posted!
-  
-        Section: ${ticketObj.sectionNumber}
-        Row: ${ticketObj.rowNumber}
-        Seat: ${ticketObj.seatNumber}
-        Listing Price: $${ticketObj.price}
-      `
-    };
-  } else if (soldBool) {
-    
-    mailOptions = {
-      from: 'jamesriddle@utexas.edu',
-      to: userEmail,
-      subject: 'Ticket Sale Confirmation',
-      text: `Your ticket has sold!
-  
-        Section: ${ticketObj.sectionNumber}
-        Row: ${ticketObj.rowNumber}
-        Seat: ${ticketObj.seatNumber}
-        Sale Price: $${ticketObj.price}
-      `
-    };
+      to: userEmail
+  }
 
-  } else {
+  switch (userType) {
 
-    mailOptions = {
-      from: 'jamesriddle@utexas.edu',
-      to: userEmail,
-      subject: 'Purchase Receipt',
-      text: `Thank you for your purchase!
-  
-        Section: ${ticketObj.sectionNumber}
-        Row: ${ticketObj.rowNumber}
-        Seat: ${ticketObj.seatNumber}
-        Purchase Price: $${ticketObj.price}
-      `
-    };
+    case "seller":
+      emailText(mailOptions, ticketObj, "Your ticket has been listed!", "Listing");
+      break;
+      
+    case "sold": 
+      emailText(mailOptions, ticketObj, "Your ticket has sold!", "Sale");
+      break;
+      
+    default: 
+      emailText(mailOptions, ticketObj, "Thank you for your purchase!", "Purchase");
+      break;
   }
   
   transporter.sendMail(mailOptions, function(error, info){
@@ -91,10 +80,12 @@ module.exports = function(app) {
     })
     .then(function(userListing) {
       // going to be an array of objects
-      res.render("user-listing", { 
+      const contextObj = {
         listing: true,
-        listingArray: userListing 
-      });
+        listingArray: userListing
+      };
+
+      res.render("user-listing", contextObj);
     })
     .catch(() => {
       console.log("there's been a db query error");
@@ -117,8 +108,7 @@ module.exports = function(app) {
       email: email
 
     }).then(() => {
-      emailer(email, req.body, true);
-      // going to be an array of objects
+      emailer(email, req.body, "seller");
       res.status(201).end();
     })
     .catch(() => {
@@ -142,13 +132,12 @@ module.exports = function(app) {
   });
 
   app.post("/api/new-sale", function(req, res) {
-    emailer(req.body.email, req.body, false, true);
+    emailer(req.body.email, req.body, "sold");
     res.status(201).end();
   });
 
   app.post("/api/new-purchase", function(req, res) {
-    console.log("new purchase post hit");
-    emailer(req.body.email, req.body, false, false, true);
+    emailer(req.body.email, req.body, "buyer");
     res.status(201).end();
   });
 
