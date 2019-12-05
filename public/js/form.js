@@ -84,7 +84,7 @@ $(document).ready(() => {
 
         event.preventDefault();
 
-        const userEmail = $("#user-email").val().trim();
+    });
 
     $("#buyer-email-form").on("submit", (event) => {
         event.preventDefault();
