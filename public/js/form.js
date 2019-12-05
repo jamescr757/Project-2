@@ -72,56 +72,32 @@ $(document).ready(() => {
         $("#form-info").css("opacity", 0);
     });
 
+    $("#my-listing").on("click", function(event) {
 
-
-// future js for confirmation page
-// need to grab user email and place in userData object
-
-$("#btn-sellerinfo").on("click", function() {
-
-// //    const userEmail = $("#user-email").val().trim();
- console.log("ARTHI!!!!!!");
-
-
-//var userEmail = "arthitest@gmail.com";
-//const userData = {
-//     email: $("#").val().trim();
- // }
-$.ajax("/api/listing", { 
-    type: "GET",
-    data: "arthitest@gmail.com"
-})
-.then(function(listing)
-{
-    console.log("inside ajax");
-    res.render("userform", {listing});
-});
-    $("#email-input-form").on("submit", (event) => {
         event.preventDefault();
-        
-        console.log("email box active");
-        const userData = {
-            email: $("#user-email").val().trim()
-        }
-        
-        location.href = "/user-email/" + userData.email;
-        // $.ajax("/user-email/" + userData.email, {
-        //     // type: "POST",
-        //     type: "GET"
-        //     // data: userData
-        // })
-        // .then(function() {
-        //     // console.log("email query successful");
-        //     location.href = "/user-email/" + userData.email
-        // })
-        // .catch(() => {
-        //     // $("#form-info").text("Please input a valid email");
-        //     // $("#form-info").css("opacity", 1);
-        //     console.log("there's been an error");
-        //  });
 
+        const userEmail = $("#user-email").val().trim();
+
+        $.ajax("/api/listing", { 
+            type: "GET",
+            data: userEmail
+        })
+        .then(function(listing)
+        {
+            console.log("Listing form Rendered");
+        //    res.render("user-listing", {listing});
+        });
+        $("#email-input-form").on("submit", (event) => {
+            event.preventDefault();
+            
+            console.log("email box active");
+            const userData = {
+                email: $("#user-email").val().trim()
+            }
+            
+            location.href = "/user-email/" + userData.email;
+            
+        });
+        
     });
-
-
-      
 });

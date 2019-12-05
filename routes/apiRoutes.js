@@ -59,7 +59,7 @@ module.exports = function(app) {
     })
     .then(function(userListing) {
       // going to be an array of objects
-      // console.log("query result", userListing);
+      console.log("query result", userListing);
       res.render("user-listing", { 
         listing: true,
         listingArray: userListing 

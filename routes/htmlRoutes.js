@@ -4,6 +4,11 @@ var exphbs = require("express-handlebars");
 
 module.exports = function(app) {
 
+// Load Home Page
+app.get("/", function(req,res){
+  res.sendFile(path.join(__dirname,"../public/home.html"));
+});
+
 // Load seller form
   app.get("/seller-form", function(req,res){
     res.sendFile(path.join(__dirname,"../public/form.html"));
@@ -20,13 +25,13 @@ module.exports = function(app) {
   })
 
   // Load index page
-   app.get("/", function(req, res) {
-  //   db.Example.findAll({}).then(function(dbExamples) {
-       res.render("index", {
-         msg: "Welcome!!! to our"
-  //       examples: dbExamples
-       });
-   });
+  //  app.get("/", function(req, res) {
+  // //   db.Example.findAll({}).then(function(dbExamples) {
+  //      res.render("index", {
+  //        msg: "Welcome!!! to our"
+  // //       examples: dbExamples
+  //      });
+  //  });
     
 
   //Load example page and pass in an example by id
