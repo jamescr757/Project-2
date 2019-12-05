@@ -25,13 +25,20 @@ app.get("/", function(req,res){
   })
 
   // Load index page
-  //  app.get("/", function(req, res) {
-  // //   db.Example.findAll({}).then(function(dbExamples) {
-  //      res.render("index", {
-  //        msg: "Welcome!!! to our"
-  // //       examples: dbExamples
-  //      });
-  //  });
+   app.get("/", function(req, res) {
+  //   db.Example.findAll({}).then(function(dbExamples) {
+       res.render("index", {
+         msg: "Welcome!!! to our"
+  //       examples: dbExamples
+       });
+   });
+
+   app.get("/venue", function(req, res) {
+  //   db.Example.findAll({}).then(function(dbExamples) {
+       res.render("venue", {
+  //       examples: dbExamples
+       });
+   });
     
 
   //Load example page and pass in an example by id

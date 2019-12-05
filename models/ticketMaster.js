@@ -29,6 +29,11 @@ module.exports = function(sequelize, DataTypes) {
                 max: 30
             }
         },
+        ticket_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            unique: true
+        },
         purchased: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
@@ -40,9 +45,11 @@ module.exports = function(sequelize, DataTypes) {
         },
         user_name: {
             type: DataTypes.STRING,
+            defaultValue: "Master"
         },
         email: {
             type: DataTypes.STRING,
+            defaultValue: "app@gmail.com",
             allowNull: true,
             validate: {
                 isEmail: true
