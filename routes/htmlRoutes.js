@@ -4,6 +4,11 @@ var exphbs = require("express-handlebars");
 
 module.exports = function(app) {
 
+// Load Home Page
+app.get("/", function(req,res){
+  res.sendFile(path.join(__dirname,"../public/home.html"));
+});
+
 // Load seller form
   app.get("/seller-form", function(req,res){
     res.sendFile(path.join(__dirname,"../public/form.html"));

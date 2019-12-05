@@ -1,27 +1,27 @@
-<div class="container">
-  {{#if listing}}
-    <div class="row">
-      <div class="col-8 offset-2">
-        <div class="card mt-4">
-          <div class="card-body">
-              <h1>Your Tickets</h1>
-              {{#each listingArray}}
-              <br>
-                <ul>
-                  <li><p><strong>Seat Number</strong>: {{this.seat_number}}</p></li>
-                  <li><p><strong>Section Number</strong>: {{this.section_number}}</p></li>
-                  <li><p><strong>Row Number</strong>: {{this.row_number}}</p></li>
-                  <li><p><strong>Price</strong>: ${{this.price}}</p></li>
-                </ul>
-                <br> 
-              {{/each}}
+  <div class="container">
+    {{#if listing}}
+      <div class="row">
+        <div class="col-8 offset-2">
+          <div class="card mt-4">
+            <div class="card-body">
+                <h1>Your Tickets</h1>
+                {{#each listingArray}}
+                <br>
+                  <ul>
+                    <li><p><strong>Seat Number</strong>: {{this.seat_number}}</p></li>
+                    <li><p><strong>Section Number</strong>: {{this.section_number}}</p></li>
+                    <li><p><strong>Row Number</strong>: {{this.row_number}}</p></li>
+                    <li><p><strong>Price</strong>: ${{this.price}}</p></li>
+                  </ul>
+                  <br> 
+                {{/each}}
 
-              <a href="/">← Back To Home</a>
+                <a href="/">← Back To Home</a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  {{/if}}
+    {{/if}}
 
   {{#if emailInput}}
   <div class="jumbotron">

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">   
+    <link rel="stylesheet" type="text/css" href="./styles/styles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>User Listings</title>
+    <style>
+        ul.a {list-style-type: none;}        
+    </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="#">Post Pass</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button> 
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav float-right">
+              <li class="nav-item active">
+                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">Sell It</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">My Listings</a>
+              </li> 
+          </ul>
+      </div>
+  </nav>      
+  <div class="container">    
+    {{#if listing}}
+      <div class="row">
+        <div class="col-6">
+          <div class="card mt-4">
+            <div class="card-body">
+                <h1>Your Tickets</h1>
+                {{#each listingArray}}
+                <br>
+                <ul class="a">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4">
+                                <li><p><strong>Seat Number</strong>: </p>
+                            </div>
+                            <div class="col-8">
+                                    <p>{{this.seat_number}}</p></li>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <li><p><strong>Section Number</strong>:</p>
+                            </div>
+                            <div class="col-8">
+                                    <p>{{this.section_number}}</p></li>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <li><p><strong>Row Number</strong>:</p> 
+                            </div>
+                            <div class="col-8">
+                                <p>{{this.row_number}}</p></li>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <li><p><strong>Price</strong>:</p>
+                            </div>
+                            <div class="col-8">
+                                    <p>${{this.price}}</p></li>
+                            </div>
+                        </div>
+                    </div>
+                  </ul>
+                  <br> 
+                {{/each}}
+
+                <a href="/">← Back To Home</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+            {{/if}}
+            {{#if emailInput}}
+            <div class="jumbotron">
+                <form id="email-input-form">
+                    <div class="form-email">
+                    <label for="name-input">Enter your email to find your listings:</label>
+                    <input class="form-control" id="user-email" placeholder="jon@gmail.com" type="text">
+                    </div>
+                </form>  
+            </div>
+            {{/if}}
+        </div>
+      </div>
+    
+</div>
+
+  </div>
+  <div class="bottom-wrapper">
+      <div class="logo-cell">
+          <div class="logo text-center" >
+              <a href="/" aria-label="Homepage">
+                  <i class="material-icons">settings_voice</i>                    
+              </a>
+          </div>
+      </div>
+      <div class="bottom-wrapper__links text-center">
+          <a href="#">Privacy policy</a>
+          <a href="#">Terms of use</a>
+          <a href="#">Site map</a>
+      </div>
+      <div class="copyright text-center">© 2019 Ticketing. All rights reserved. 
+      </div>
+</div>
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/js/form.js"></script>
+</html>
+

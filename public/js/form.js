@@ -80,10 +80,11 @@ $(document).ready(() => {
         $("#form-info").css("opacity", 0);
     });
 
+    $("#my-listing").on("click", function(event) {
 
+        event.preventDefault();
 
-// future js for confirmation page
-// need to grab user email and place in userData object
+        const userEmail = $("#user-email").val().trim();
 
     $("#buyer-email-form").on("submit", (event) => {
         event.preventDefault();
@@ -125,7 +126,4 @@ $(document).ready(() => {
         location.href = "/user-email/email/" + userData.email;
 
     });
-
-
-      
 });
