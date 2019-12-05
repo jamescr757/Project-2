@@ -1,9 +1,15 @@
 $(document).ready(() => {
 
      // convert section and row number into id number
-    function idConverter(rowNum, sectionNum) {
+    function rowIdGenerator(rowNum, sectionNum) {
         const idNum = (sectionNum - 1) * 20 + rowNum;
         return idNum;
+    }
+
+    // convert seat into unique ticket id
+    function ticketIdGenerator(sectionNum, rowNum, seatNum) {
+        const ticketId = (sectionNum - 1) * 600 + (rowNum - 1) * 30 + seatNum;
+        return ticketId;
     }
 
     $("#user-price").on("focus", () => {
@@ -12,7 +18,7 @@ $(document).ready(() => {
         const seatNumber = parseInt($("#seat-input").val().trim());
         const sectionNumber = parseInt($("#ticket-section").val().trim());
 
-        const rowId = idConverter(rowNumber, sectionNumber);
+        const rowId = rowIdGenerator(rowNumber, sectionNumber);
         
         if (rowNumber > 20) {
             $("#form-info").text("Please input a valid row number");
@@ -44,24 +50,26 @@ $(document).ready(() => {
 
         event.preventDefault();
 
-        const userData = {
-            sectionNumber: parseInt($("#ticket-section").val().trim()),
-            rowNumber: parseInt($("#row-input").val().trim()),
-            seatNumber: parseInt($("#seat-input").val().trim()),
-            userName: $("#name-input").val().trim(),
-            email: $("#email-input").val().trim(),
-            price: parseFloat($("#user-price").val().trim())
-        }
+        const sectionNumber = parseInt($("#ticket-section").val().trim());
+        const rowNumber = parseInt($("#row-input").val().trim());
+        const seatNumber = parseInt($("#seat-input").val().trim());
+        const ticketId = ticketIdGenerator(sectionNumber, rowNumber, seatNumber);
+
+        const userName = $("#name-input").val().trim();
+        const email = $("#email-input").val().trim();
+        const price = parseFloat($("#user-price").val().trim());
+
+        const userData = { sectionNumber, rowNumber, seatNumber, ticketId, userName, email, price }
 
         $.ajax("/api/new-listing", {
             type: "POST",
             data: userData
         })
         .then(() => {
-            location.href = "/confirmation"
+            location.href = "/seller-confirmation"
         })
         .catch(() => {
-            $("#form-info").text("Please input valid information");
+            $("#form-info").text("The information provided is invalid or that ticket is already for sale.");
             $("#form-info").css("opacity", 1);
         })
     });
@@ -80,7 +88,6 @@ $(document).ready(() => {
     $("#seller-email-form").on("submit", (event) => {
         event.preventDefault();
         
-        console.log("email box active");
         const userData = {
             email: $("#user-email").val().trim()
         }
@@ -102,4 +109,4 @@ $(document).ready(() => {
     });
 
 
-      
+});
