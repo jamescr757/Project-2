@@ -1,6 +1,5 @@
 var db = require("../models");
 var path = require("path");
-var exphbs = require("express-handlebars");
 
 module.exports = function(app) {
 
@@ -14,14 +13,19 @@ app.get("/", function(req,res){
     res.sendFile(path.join(__dirname,"../public/form.html"));
   });
 
-// load confirmation page
-  app.get("/confirmation", function(req,res){
-    res.sendFile(path.join(__dirname,"../public/confirmation.html"))
+// load seller - confirmation page
+  app.get("/seller-confirmation", function(req,res){
+    res.sendFile(path.join(__dirname,"../public/seller-confirmation.html"))
+  })
+
+// load buyer - confirmation page
+  app.get("/buyer-confirmation", function(req,res){
+    res.sendFile(path.join(__dirname,"../public/buyer-confirmation.html"))
   })
 
   app.get("/user-email",function(req,res){
     // res.sendFile(path.join(__dirname, "../public/email-search.html"))
-    res.render("user-listing", { emailInput: true });
+    res.render("user-listing", { sellerEmail: true });
   })
 
   app.get("/user-email/ticket/:id",function(req,res){
@@ -52,13 +56,13 @@ app.get("/", function(req,res){
   })
 
   // Load index page
-   app.get("/", function(req, res) {
-  //   db.Example.findAll({}).then(function(dbExamples) {
-       res.render("index", {
-         msg: "Welcome!!! to our"
-  //       examples: dbExamples
-       });
-   });
+  //  app.get("/", function(req, res) {
+  // //   db.Example.findAll({}).then(function(dbExamples) {
+  //      res.render("index", {
+  //        msg: "POST PASS"
+  // //       examples: dbExamples
+  //      });
+  //  });
 
    app.get("/venue", function(req, res) {
   //   db.Example.findAll({}).then(function(dbExamples) {

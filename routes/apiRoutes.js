@@ -83,7 +83,7 @@ module.exports = function(app) {
     });
   });
 
-  app.get("/user-email/email/:email", function(req, res) {
+  app.get("/user-email/:email", function(req, res) {
     db.TicketMaster.findAll({
       where: {
         email: req.params.email

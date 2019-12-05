@@ -1,6 +1,19 @@
 .list-group-item {
   line-height: 2.5;
 }
+h1,h2 {
+  font-family: 'Bebas Neue', cursive;
+}
+
+.post-pass {
+  color:snow;
+
+  font-size: 250px;
+  /* letter-spacing: 0.1cm; */
+  float: left;
+  text-shadow: 2px 3px black
+}
+
 .container{
   margin-top: 10%;
   margin-left: 10%;
@@ -29,8 +42,11 @@ ul.a {
 }
 
 body {
-  background: gray;
-  background-image: url("https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwj3vcydgp_mAhVRaq0KHfhJCxUQjRx6BAgBEAQ&url=https%3A%2F%2Fwzbhrocks.com%2Fconcert-background-02-thebeach%2F&psig=AOvVaw3btxL4jCJC6fceImFnBqDQ&ust=1575652779007504");
+  background-image: url('concert.jpeg');
+  background-size: 80%;
+  position: sticky;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .main-container {
@@ -134,4 +150,8 @@ p.modal-purchase {
 
 .south h3 {
   transform: rotate(270deg);
+}
+
+.test {
+  display: block;
 }

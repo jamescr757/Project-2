@@ -23,11 +23,22 @@
       </div>
     {{/if}}
 
-  {{#if emailInput}}
+  {{#if sellerEmail}}
   <div class="jumbotron">
-      <form id="email-input-form">
+      <form id="seller-email-form">
           <div class="form-email">
-            <label for="name-input">Enter your email to find your listings:</label>
+            <label for="name-input">Enter your email to view your listing:</label>
+            <input class="form-control" id="user-email" placeholder="jon@gmail.com" type="text">
+          </div>
+      </form>  
+  </div>
+  {{/if}}
+
+  {{#if buyerEmail}}
+  <div class="jumbotron">
+      <form id="buyer-email-form">
+          <div class="form-email">
+            <label for="name-input">Enter your email to recieve your reciept:</label>
             <input class="form-control" id="user-email" placeholder="jon@gmail.com" type="text">
           </div>
       </form>  

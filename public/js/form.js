@@ -66,7 +66,7 @@ $(document).ready(() => {
             data: userData
         })
         .then(() => {
-            location.href = "/confirmation"
+            location.href = "/seller-confirmation"
         })
         .catch(() => {
             $("#form-info").text("The information provided is invalid or that ticket is already for sale.");
@@ -99,10 +99,6 @@ $(document).ready(() => {
             price: price
         }
 
-        location.href = "/confirmation";
-
-        console.log("user data", userData);
-
         $.ajax("/api/new-purchase", {
             type: "POST",
             data: userData
@@ -113,17 +109,19 @@ $(document).ready(() => {
         .catch(() => {
             console.log("there's been an error trying to process a new purchase");
         });
+
+        location.href = "/buyer-confirmation";
         
     });
 
-    $("#email-input-form").on("submit", (event) => {
+    $("#seller-email-form").on("submit", (event) => {
         event.preventDefault();
 
         const userData = {
             email: $("#user-email").val().trim()
         }
         
-        location.href = "/user-email/email/" + userData.email;
-
+        location.href = "/user-email/" + userData.email;
     });
+
 });
