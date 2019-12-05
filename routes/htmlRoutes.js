@@ -27,6 +27,13 @@ module.exports = function(app) {
   //       examples: dbExamples
        });
    });
+
+   app.get("/venue", function(req, res) {
+  //   db.Example.findAll({}).then(function(dbExamples) {
+       res.render("venue", {
+  //       examples: dbExamples
+       });
+   });
     
 
   //Load example page and pass in an example by id

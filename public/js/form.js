@@ -7,7 +7,7 @@ $(document).ready(() => {
     }
 
     // convert seat into unique ticket id
-    function ticketIdGenerator(rowNum, sectionNum, seatNum) {
+    function ticketIdGenerator(sectionNum, rowNum, seatNum) {
         const ticketId = (sectionNum - 1) * 600 + (rowNum - 1) * 30 + seatNum;
         return ticketId;
     }
@@ -50,15 +50,16 @@ $(document).ready(() => {
 
         event.preventDefault();
 
-        const userData = {
-            sectionNumber: parseInt($("#ticket-section").val().trim()),
-            rowNumber: parseInt($("#row-input").val().trim()),
-            seatNumber: parseInt($("#seat-input").val().trim()),
-            ticketId: ticketIdGenerator(this.sectionNumber, this.rowNumber, this.seatNumber),
-            userName: $("#name-input").val().trim(),
-            email: $("#email-input").val().trim(),
-            price: parseFloat($("#user-price").val().trim())
-        }
+        const sectionNumber = parseInt($("#ticket-section").val().trim());
+        const rowNumber = parseInt($("#row-input").val().trim());
+        const seatNumber = parseInt($("#seat-input").val().trim());
+        const ticketId = ticketIdGenerator(sectionNumber, rowNumber, seatNumber);
+
+        const userName = $("#name-input").val().trim();
+        const email = $("#email-input").val().trim();
+        const price = parseFloat($("#user-price").val().trim());
+
+        const userData = { sectionNumber, rowNumber, seatNumber, ticketId, userName, email, price }
 
         $.ajax("/api/new-listing", {
             type: "POST",
@@ -87,26 +88,11 @@ $(document).ready(() => {
     $("#email-input-form").on("submit", (event) => {
         event.preventDefault();
         
-        console.log("email box active");
         const userData = {
             email: $("#user-email").val().trim()
         }
         
         location.href = "/user-email/" + userData.email;
-        // $.ajax("/user-email/" + userData.email, {
-        //     // type: "POST",
-        //     type: "GET"
-        //     // data: userData
-        // })
-        // .then(function() {
-        //     // console.log("email query successful");
-        //     location.href = "/user-email/" + userData.email
-        // })
-        // .catch(() => {
-        //     // $("#form-info").text("Please input a valid email");
-        //     // $("#form-info").css("opacity", 1);
-        //     console.log("there's been an error");
-        //  });
 
     });
 

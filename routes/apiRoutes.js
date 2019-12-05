@@ -5,7 +5,6 @@ require("dotenv").config();
 
 // function to send a confirmation email 
 function emailer(userEmail, ticketObj) {
-  console.log("email function active");
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -59,7 +58,6 @@ module.exports = function(app) {
     })
     .then(function(userListing) {
       // going to be an array of objects
-      // console.log("query result", userListing);
       res.render("user-listing", { 
         listing: true,
         listingArray: userListing 
@@ -96,18 +94,25 @@ module.exports = function(app) {
     });
   });
 
-  
-  // Create a new example
-  // app.post("/api/examples", function(req, res) {
-  //   db.Example.create(req.body).then(function(dbExample) {
-  //     res.json(dbExample);
-  //   });
-  // });
+  app.get("/api/venue", function(req, res) {
+    db.TicketMaster.findAll({})
+    .then(function(allTickets) {
+      res.json(allTickets);
+    })
+    .catch(() => {
+      console.log("there's been a db query error");
+    });
+  });
 
-  // // Delete an example by id
-  // app.delete("/api/examples/:id", function(req, res) {
-  //   db.Example.destroy({ where: { id: req.params.id } }).then(function(dbExample) {
-  //     res.json(dbExample);
-  //   });
-  // });
+  app.delete("/api/delete/listing/:ticketId", function(req, res) {
+    db.TicketMaster.destroy({
+      where: {
+        ticket_id: req.params.ticketId
+      }
+    }).then(function() {
+
+      res.send(204).end();
+    });
+  });
+
 };

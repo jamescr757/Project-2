@@ -28,3 +28,91 @@ body {
   background: gray;
 }
 
+.main-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
+}
+
+.top-row, .middle-row, .bottom-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 1;
+}
+
+.section {
+  height: 200px;
+  flex-basis: 200px;
+  background-color: whitesmoke;
+  display: flex;
+  flex-flow: wrap column;
+}
+
+.stage {
+  height: 250px;
+  flex-basis: 250px;
+  background-color: black;
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.seat {
+  margin: 1px;
+  border: black 0.25px solid;
+  height: 2.8%;
+}
+
+.section-row {
+  margin: 1px 0.75px;
+  /* border: blue 1px solid; */
+  display: none;
+  height: 100%;
+}
+
+.section h3, .stage h3 {
+  margin: auto;
+  text-align: center;
+}
+
+.stage p.top {
+  margin-top: 1.5rem;
+}
+
+.stage p {
+  margin: 0;
+  margin-bottom: 0.75rem;
+  margin-left: 1.5rem;
+  font-size: 1.25rem;
+}
+
+p.purchase {
+  color: rgb(7, 255, 7);
+}
+
+.stage button {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.north {
+  transform: rotate(270deg);
+}
+
+.west, .west h3 {
+  transform: rotate(180deg);
+}
+
+.south {
+  transform: rotate(90deg);
+}
+
+.north h3 {
+  transform: rotate(90deg);
+}
+
+.south h3 {
+  transform: rotate(270deg);
+}

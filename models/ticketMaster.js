@@ -45,9 +45,11 @@ module.exports = function(sequelize, DataTypes) {
         },
         user_name: {
             type: DataTypes.STRING,
+            defaultValue: "Master"
         },
         email: {
             type: DataTypes.STRING,
+            defaultValue: "app@gmail.com",
             allowNull: true,
             validate: {
                 isEmail: true
