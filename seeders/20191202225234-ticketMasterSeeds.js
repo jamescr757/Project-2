@@ -58,6 +58,22 @@ module.exports = {
       },
       {
         section_number: 1,
+        row_number: 3,
+        seat_number: 18,
+        ticket_id: 78,
+        price: 450.00,
+        email: "test@gmail.com"
+      },
+      {
+        section_number: 1,
+        row_number: 3,
+        seat_number: 19,
+        ticket_id: 79,
+        price: 450.00,
+        email: "test@gmail.com"
+      },
+      {
+        section_number: 1,
         row_number: 6,
         seat_number: 29,
         ticket_id: 179,
@@ -118,6 +134,14 @@ module.exports = {
         seat_number: 25,
         ticket_id: 295,
         price: 230.00
+      },
+      {
+        section_number: 1,
+        row_number: 10,
+        seat_number: 26,
+        ticket_id: 296,
+        price: 230.00,
+        email: "test1@gmail.com"
       },
       {
         section_number: 1,

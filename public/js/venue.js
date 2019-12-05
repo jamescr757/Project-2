@@ -11,38 +11,22 @@ $(document).ready(() => {
             let id = (rowNum - 1) * 30 + seatNum;
 
             $(`.section.north .row-${rowNum}`).append(`
-                <div class="seat" data-id="${id}"
-                    data-section=""
-                    data-row=""
-                    data-seat=""
-                    data-price="">
+                <div class="seat" data-id="${id}">
                 </div>
             `);
 
             $(`.section.east .row-${rowNum}`).append(`
-                <div class="seat" data-id="${id + 600}"
-                    data-section=""
-                    data-row=""
-                    data-seat=""
-                    data-price="">
+                <div class="seat" data-id="${id + 600}">
                 </div>
             `);
 
             $(`.section.south .row-${rowNum}`).append(`
-                <div class="seat" data-id="${id + 1200}"
-                    data-section=""
-                    data-row=""
-                    data-seat=""
-                    data-price="">
+                <div class="seat" data-id="${id + 1200}">
                 </div>
             `);
 
             $(`.section.west .row-${rowNum}`).append(`
-                <div class="seat" data-id="${id + 1800}"
-                    data-section=""
-                    data-row=""
-                    data-seat=""
-                    data-price="">
+                <div class="seat" data-id="${id + 1800}">
                 </div>
             `);
             
@@ -63,6 +47,10 @@ $(document).ready(() => {
             ticketSquareElement.attr("data-row", `${ticket.row_number}`);
             ticketSquareElement.attr("data-seat", `${ticket.seat_number}`);
             ticketSquareElement.attr("data-price", `${ticket.price}`);
+            ticketSquareElement.attr("data-email", `${ticket.email}`);
+
+            ticketSquareElement.attr("data-toggle", "modal");
+            ticketSquareElement.attr("data-target", "#purchaseModal");
             
             ticketSquareElement.on("click", seatClick);
         }
@@ -107,20 +95,62 @@ $(document).ready(() => {
 
 
     function seatClick(event) {
-        const ticketId = event.target.dataset.id;
 
-        location.href = "/user-email"
+        $(".modal-body").empty();
 
-        $.ajax("/api/delete/listing/" + ticketId, {
-            type: "DELETE"
-        })
-        .then(() => {
-            console.log("delete successful");
-        })
-        .catch(() => {
-            console.log("there's been an error trying to delete from database");
-        });
+        $(".modal-body").append(`
+            <p class="modal-purchase">Are you sure you want to purchase this ticket?</p>
+            <p class="top">Section Number: ${event.target.dataset.section}</p>
+            <p>Row Number: ${event.target.dataset.row}</p>
+            <p>Seat Number: ${event.target.dataset.seat}</p>
+            <p>Price: $${event.target.dataset.price}</p>
+        `);
+
+        const purchaseBtnElement = $("#purchase-btn");
+
+        purchaseBtnElement.attr("data-id", `${event.target.dataset.id}`);
+        purchaseBtnElement.attr("data-section", `${event.target.dataset.section}`);
+        purchaseBtnElement.attr("data-row", `${event.target.dataset.row}`);
+        purchaseBtnElement.attr("data-seat", `${event.target.dataset.seat}`);
+        purchaseBtnElement.attr("data-price", `${event.target.dataset.price}`);
+        purchaseBtnElement.attr("data-email", `${event.target.dataset.email}`);
+
     }
 
+    $("#purchase-btn").on("click", (event) => {
+
+        const ticketId = event.target.dataset.id;
+
+        location.href = "/user-email/ticket/" + ticketId;
+
+        const ticketData = {
+            sectionNumber: event.target.dataset.section,
+            rowNumber: event.target.dataset.row,
+            seatNumber: event.target.dataset.seat,
+            price: event.target.dataset.price,
+            email: event.target.dataset.email
+        }
+
+        $.ajax("/api/ticket-purchased/" + ticketId, {
+            type: "PUT"
+        })
+        .then(() => {
+            console.log("update successful");
+        })
+        .catch(() => {
+            console.log("there's been an error trying to update the database");
+        });
+
+        $.ajax("/api/new-sale", {
+            type: "POST",
+            data: ticketData
+        })
+        .then(() => {
+            console.log("seller email successful");
+        })
+        .catch(() => {
+            console.log("there's been an error trying to process a new sale");
+        });
+    })
 
 });

@@ -85,14 +85,44 @@ $(document).ready(() => {
 // future js for confirmation page
 // need to grab user email and place in userData object
 
+    $("#buyer-email-form").on("submit", (event) => {
+        event.preventDefault();
+
+        const { section, row, seat, price } = event.target.dataset
+
+        const userData = {
+            email: $("#user-email").val().trim(),
+            sectionNumber: section,
+            rowNumber: row,
+            seatNumber: seat,
+            price: price
+        }
+
+        location.href = "/confirmation";
+
+        console.log("user data", userData);
+
+        $.ajax("/api/new-purchase", {
+            type: "POST",
+            data: userData
+        })
+        .then(() => {
+            console.log("buyer email successful");
+        })
+        .catch(() => {
+            console.log("there's been an error trying to process a new purchase");
+        });
+        
+    });
+
     $("#email-input-form").on("submit", (event) => {
         event.preventDefault();
-        
+
         const userData = {
             email: $("#user-email").val().trim()
         }
         
-        location.href = "/user-email/" + userData.email;
+        location.href = "/user-email/email/" + userData.email;
 
     });
 

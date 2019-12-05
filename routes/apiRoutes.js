@@ -4,7 +4,7 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 // function to send a confirmation email 
-function emailer(userEmail, ticketObj) {
+function emailer(userEmail, ticketObj, sellerBool, soldBool) {
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -14,18 +14,51 @@ function emailer(userEmail, ticketObj) {
     }
   });
   
-  const mailOptions = {
-    from: 'jamesriddle@utexas.edu',
-    to: userEmail,
-    subject: 'Listing Confirmation',
-    text: `Your ticket has been posted!
+  let mailOptions;
+  if (sellerBool) {
+    
+    mailOptions = {
+      from: 'jamesriddle@utexas.edu',
+      to: userEmail,
+      subject: 'Listing Confirmation',
+      text: `Your ticket has been posted!
+  
+        Section: ${ticketObj.sectionNumber}
+        Row: ${ticketObj.rowNumber}
+        Seat: ${ticketObj.seatNumber}
+        Listing Price: $${ticketObj.price}
+      `
+    };
+  } else if (soldBool) {
+    
+    mailOptions = {
+      from: 'jamesriddle@utexas.edu',
+      to: userEmail,
+      subject: 'Ticket Sale Confirmation',
+      text: `Your ticket has sold!
+  
+        Section: ${ticketObj.sectionNumber}
+        Row: ${ticketObj.rowNumber}
+        Seat: ${ticketObj.seatNumber}
+        Sale Price: $${ticketObj.price}
+      `
+    };
 
-      Section: ${ticketObj.sectionNumber}
-      Row: ${ticketObj.rowNumber}
-      Seat: ${ticketObj.seatNumber}
-      Listing Price: $${ticketObj.price}
-    `
-  };
+  } else {
+
+    mailOptions = {
+      from: 'jamesriddle@utexas.edu',
+      to: userEmail,
+      subject: 'Purchase Receipt',
+      text: `Thank you for your purchase!
+  
+        Section: ${ticketObj.sectionNumber}
+        Row: ${ticketObj.rowNumber}
+        Seat: ${ticketObj.seatNumber}
+        Purchase Price: $${ticketObj.price}
+      `
+    };
+  }
   
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {
@@ -50,7 +83,7 @@ module.exports = function(app) {
     });
   });
 
-  app.get("/user-email/:email", function(req, res) {
+  app.get("/user-email/email/:email", function(req, res) {
     db.TicketMaster.findAll({
       where: {
         email: req.params.email
@@ -84,7 +117,7 @@ module.exports = function(app) {
       email: email
 
     }).then(() => {
-      emailer(email, req.body);
+      emailer(email, req.body, true);
       // going to be an array of objects
       res.status(201).end();
     })
@@ -95,7 +128,11 @@ module.exports = function(app) {
   });
 
   app.get("/api/venue", function(req, res) {
-    db.TicketMaster.findAll({})
+    db.TicketMaster.findAll({
+      where: {
+        purchased: false
+      }
+    })
     .then(function(allTickets) {
       res.json(allTickets);
     })
@@ -104,14 +141,27 @@ module.exports = function(app) {
     });
   });
 
-  app.delete("/api/delete/listing/:ticketId", function(req, res) {
-    db.TicketMaster.destroy({
+  app.post("/api/new-sale", function(req, res) {
+    emailer(req.body.email, req.body, false, true);
+    res.status(201).end();
+  });
+
+  app.post("/api/new-purchase", function(req, res) {
+    console.log("new purchase post hit");
+    emailer(req.body.email, req.body, false, false, true);
+    res.status(201).end();
+  });
+
+  app.put("/api/ticket-purchased/:ticketId", function(req, res) {
+    db.TicketMaster.update({
+      purchased: true
+    }, {
       where: {
         ticket_id: req.params.ticketId
       }
     }).then(function() {
 
-      res.send(204).end();
+      res.status(204).end();
     });
   });
 

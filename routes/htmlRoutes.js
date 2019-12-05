@@ -19,6 +19,33 @@ module.exports = function(app) {
     res.render("user-listing", { emailInput: true });
   })
 
+  app.get("/user-email/ticket/:id",function(req,res){
+
+    db.TicketMaster.findOne({
+      where: {
+        ticket_id: req.params.id
+      }
+    })
+    .then(function(ticketInfo) {
+
+      const { section_number, row_number, seat_number, price } = ticketInfo.dataValues
+
+      // going to be an array of objects
+      res.render("user-listing", { 
+        buyerInput: true,
+        section_number,
+        row_number,
+        seat_number,
+        price,
+      });
+      
+    })
+    .catch(() => {
+      console.log("there's been a db query error");
+      res.status(500).end();
+    });
+  })
+
   // Load index page
    app.get("/", function(req, res) {
   //   db.Example.findAll({}).then(function(dbExamples) {
@@ -35,15 +62,6 @@ module.exports = function(app) {
        });
    });
     
-
-  //Load example page and pass in an example by id
-  // app.get("/example/:id", function(req, res) {
-  //   db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
-  //     res.render("example", {
-  //       example: dbExample
-  //     });
-  //   });
-  // });
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
     res.render("404");
