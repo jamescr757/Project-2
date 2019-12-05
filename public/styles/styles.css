@@ -31,7 +31,7 @@ body {
 .main-container {
   display: flex;
   flex-direction: column;
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 
 .top-row, .middle-row, .bottom-row {
@@ -47,6 +47,7 @@ body {
   background-color: whitesmoke;
   display: flex;
   flex-flow: wrap column;
+  position: relative;
 }
 
 .stage {
@@ -65,9 +66,17 @@ body {
   height: 2.8%;
 }
 
+.seat.available {
+  background-color: rgb(28, 235, 28);
+  cursor: pointer;
+}
+
+.seat.available:hover {
+  transform: scale(1.5);
+}
+
 .section-row {
   margin: 1px 0.75px;
-  /* border: blue 1px solid; */
   display: none;
   height: 100%;
 }

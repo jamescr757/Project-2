@@ -57,10 +57,7 @@ $(document).ready(() => {
         for (const ticket of allTickets) {
             const ticketSquareElement = $(`[data-id="${ticket.ticket_id}"]`);
 
-            ticketSquareElement.css({
-                backgroundColor: "rgba(100, 250, 100, 0.9)",
-                cursor: "pointer"
-            });
+            ticketSquareElement.addClass("available");
 
             ticketSquareElement.attr("data-section", `${ticket.section_number}`);
             ticketSquareElement.attr("data-row", `${ticket.row_number}`);
@@ -78,14 +75,15 @@ $(document).ready(() => {
         $(event.currentTarget).find("h3").hide();
         $(event.currentTarget).find(".section-row").show();
 
-        $(".stage h3").show();
-        $(".stage p").remove();
-        $(".stage button").remove();
     });
 
     $(".section").on("mouseleave", (event) => {
         $(".section h3").show();
         $(".section-row").hide();
+
+        $(".stage h3").show();
+        $(".stage p").remove();
+        $(".stage button").remove();
     });
 
     $(".seat").on("mouseover", event => {
@@ -111,7 +109,7 @@ $(document).ready(() => {
     function seatClick(event) {
         const ticketId = event.target.dataset.id;
 
-        location.href = "/confirmation"
+        location.href = "/user-email"
 
         $.ajax("/api/delete/listing/" + ticketId, {
             type: "DELETE"
