@@ -154,3 +154,8 @@ $(document).ready(() => {
     })
 
 });
+
+
+// TODO: deactive button on listing page
+// TODO: style section display
+// TODO: deal rating for buyers
