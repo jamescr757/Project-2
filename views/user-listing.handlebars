@@ -1,0 +1,92 @@
+  <div class="container">
+    {{#if listing}}
+      <div class="row">
+        <div class="col-6">
+          <div class="card mt-4">
+            <div class="card-body">
+                <h1>Your Tickets</h1>
+                {{#if noTix}}
+                  <p>That email does not have any active listings</p>
+                {{/if}}
+
+                {{#each listingArray}}
+                {{#if this.purchased}}
+                {{else}}
+                <ul class="listing">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <li><p><strong>Seat Number</strong>: </p>
+                            </div>
+                            <div class="col-7">
+                                    <p>{{this.seat_number}}</p></li>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5">
+                                <li><p><strong>Section Number</strong>:</p>
+                            </div>
+                            <div class="col-7">
+                                    <p>{{this.section_number}}</p></li>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5">
+                                <li><p><strong>Row Number</strong>:</p> 
+                            </div>
+                            <div class="col-7">
+                                <p>{{this.row_number}}</p></li>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5">
+                                <li><p><strong>Listing Price</strong>:</p>
+                            </div>
+                            <div class="col-7">
+                                 <p>${{this.price}}</p></li>
+                            </div>
+                        </div>
+                    </div>
+                  </ul>
+                  <br>
+                  {{/if}}
+                {{/each}}
+
+                <a class="home-anchor" href="/">← Back To Home</a>
+                {{#if noTix}}
+                  <a class="try-again-anchor" href="/user-email">Try Again</a>
+                {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+    {{/if}}
+
+  {{#if sellerEmail}}
+  <div class="jumbotron">
+      <form id="seller-email-form">
+          <div class="form-email">
+            <label for="name-input">Enter your email to view your listing:</label>
+            <input class="form-control" id="user-email" placeholder="jon@gmail.com" type="text">
+          </div>
+      </form>  
+  </div>
+  {{/if}}
+
+  {{#if buyerEmail}}
+  <div class="jumbotron">
+      <form id="buyer-email-form"
+            data-section="{{section_number}}"
+            data-row="{{row_number}}"
+            data-seat="{{seat_number}}"
+            data-price="{{price}}">
+          <div class="form-email">
+            <label for="name-input">Enter your email to recieve your reciept:</label>
+            <input class="form-control" id="user-email" placeholder="jon@gmail.com" type="text">
+          </div>
+      </form>  
+  </div>
+  {{/if}}
+
+</div>
+
