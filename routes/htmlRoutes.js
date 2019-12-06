@@ -29,7 +29,7 @@ module.exports = function(app) {
    app.get("/", function(req, res) {
   //   db.Example.findAll({}).then(function(dbExamples) {
        res.render("index", {
-         msg: "POST PASS"
+         msg: "WELCOME TOPOST PASS"
   //       examples: dbExamples
        });
    });

@@ -1,8 +1,11 @@
 .list-group-item {
   line-height: 2.5;
+
 }
+
 h1,h2 {
   font-family: 'Bebas Neue', cursive;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .post-pass {
@@ -32,17 +35,41 @@ h1,h2 {
 
 #form-info {
   opacity: 0;
+
 }
-.btn-sellticket {
-  margin: 70px;
+
+.display-2 {
+  font-family: 'Bebas Neue', cursive; 
+  color:black;
+  line-height: 90%;
+}
+
+.btn-lg{
+  border:black solid .1rem;
+    color:white;
+    border-radius: 10px;
+    background-color:black;
+    color:white;
+    padding: 13px;
+    margin: 10px;
+}
+
+.btn-lg:hover{
+    background-color: white;
+    border:black solid .2rem;
+    color:black;
+}
+
+.display-3{
+  font-family: 'Bebas Neue', cursive; 
 }
 
 body {
   background-image: url('concert.jpeg');
-  background-size: 80%;
   position: sticky;
   background-repeat: no-repeat;
   background-size: cover;
+  height: 100vh;
 }
 
 .main-container {
