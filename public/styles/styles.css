@@ -1,3 +1,12 @@
+.navbar {
+
+  background-color: transparent;
+  border-bottom: solid;
+  border-color: white;
+  color: white;
+
+}
+
 .list-group-item {
   line-height: 2.5;
 }
