@@ -52,7 +52,6 @@ ul.listing {
 
 body {
   background-image: url('concert.jpeg');
-  background-size: 80%;
   position: sticky;
   background-repeat: no-repeat;
   background-size: cover;
@@ -62,6 +61,7 @@ body {
   display: flex;
   flex-direction: column;
   margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .top-row, .middle-row, .bottom-row {
