@@ -144,6 +144,9 @@ module.exports = function(app) {
   });
 
   app.put("/api/ticket-purchased/:ticketId", function(req, res) {
+
+    let purchasedTicketId 
+
     db.TicketMaster.update({
       purchased: true
     }, {
