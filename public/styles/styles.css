@@ -113,12 +113,25 @@ body {
 }
 
 .section {
-  height: 200px;
   flex-basis: 200px;
   background-color: whitesmoke;
   display: flex;
   flex-flow: wrap column;
   position: relative;
+}
+
+.section-front {
+  position: absolute;
+  opacity: 0.5;
+  background-color: whitesmoke;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+}
+
+.section, .section-front {
+  height: 200px;
+  width: 200px;
 }
 
 .stage {
@@ -149,11 +162,15 @@ body {
 
 .section-row {
   margin: 1px 0.75px;
-  display: none;
   height: 100%;
+  filter: blur(3px);
 }
 
-.section h3, .stage h3 {
+.section-row.unblur {
+  filter: blur(0px);
+}
+
+.stage h3, .section h3  {
   margin: auto;
   text-align: center;
 }
@@ -187,7 +204,7 @@ p.modal-purchase {
   transform: rotate(270deg);
 }
 
-.west, .west h3 {
+.west, .west .section-front {
   transform: rotate(180deg);
 }
 
@@ -195,14 +212,10 @@ p.modal-purchase {
   transform: rotate(90deg);
 }
 
-.north h3 {
+.north .section-front {
   transform: rotate(90deg);
 }
 
-.south h3 {
+.south .section-front {
   transform: rotate(270deg);
-}
-
-.test {
-  display: block;
 }
