@@ -5,6 +5,10 @@
           <div class="card mt-4">
             <div class="card-body">
                 <h1>Your Tickets</h1>
+                {{#if noTix}}
+                  <p>That email does not have any active listings</p>
+                {{/if}}
+
                 {{#each listingArray}}
                 {{#if this.purchased}}
                 {{else}}
@@ -48,7 +52,10 @@
                   {{/if}}
                 {{/each}}
 
-                <a href="/">← Back To Home</a>
+                <a class="home-anchor" href="/">← Back To Home</a>
+                {{#if noTix}}
+                  <a class="try-again-anchor" href="/user-email">Try Again</a>
+                {{/if}}
             </div>
           </div>
         </div>

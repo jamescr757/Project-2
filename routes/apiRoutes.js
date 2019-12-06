@@ -83,7 +83,9 @@ module.exports = function(app) {
       const contextObj = {
         listing: true,
         listingArray: userListing
-      };
+      }
+
+      if (userListing.length === 0) contextObj.noTix = true;
 
       res.render("user-listing", contextObj);
     })

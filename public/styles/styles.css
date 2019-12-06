@@ -41,6 +41,15 @@ ul.listing {
   list-style-type: none;
 }
 
+.home-anchor {
+  padding-right: 8px;
+}
+
+.try-again-anchor {
+  padding-left: 10px;
+  border-left: black solid 1px;
+}
+
 body {
   background-image: url('concert.jpeg');
   background-size: 80%;
