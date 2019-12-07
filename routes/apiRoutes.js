@@ -145,17 +145,34 @@ module.exports = function(app) {
 
   app.put("/api/ticket-purchased/:ticketId", function(req, res) {
 
-    let purchasedTicketId 
-
     db.TicketMaster.update({
       purchased: true
     }, {
       where: {
         ticket_id: req.params.ticketId
       }
-    }).then(function() {
+    })
+    .then(function() {
 
+      res.status(200).end();
+    })
+    .catch(() => {
+      console.log("there was a db query error in put api");
+    });;
+  });
+
+  app.delete("/api/delete-listing/:ticketId", function(req, res) {
+
+    db.TicketMaster.destroy({
+      where: {
+        ticket_id: req.params.ticketId
+      }
+    })
+    .then(function() {
       res.status(204).end();
+    })
+    .catch(() => {
+      console.log("there was a db query error in delete api");
     });
   });
 

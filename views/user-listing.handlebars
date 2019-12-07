@@ -32,7 +32,7 @@
                         </div>
                         <div class="row">
                             <div class="col-3">
-                                <li><p><strong>Seat</strong>:</p> 
+                                <li><p><strong>Seat</strong>:</p>
                             </div>
                             <div class="col-9">
                                 <p>{{this.seat_number}}</p></li>
@@ -48,7 +48,8 @@
                         </div>
                         <div class="row">
                           <div class="col-12">
-                              <li><button type="button" class="btn btn-outline-danger">Deactivate Listing</button></li>
+                              <li><button type="button" class="btn btn-outline-danger deactivate-btn"
+                              data-ticketid="{{this.ticket_id}}">Deactivate Listing</button></li>
                           </div>
                         </div>
                     </div>
@@ -74,7 +75,7 @@
             <label for="name-input">Enter your email to view your listing:</label>
             <input class="form-control" id="user-email" placeholder="jon@gmail.com" type="text">
           </div>
-      </form>  
+      </form>
   </div>
   {{/if}}
 
@@ -89,7 +90,7 @@
             <label for="name-input">Enter your email to recieve your reciept:</label>
             <input class="form-control" id="user-email" placeholder="jon@gmail.com" type="text">
           </div>
-      </form>  
+      </form>
   </div>
   {{/if}}
 
