@@ -1,10 +1,21 @@
 .navbar {
 
   background-color: transparent;
-  border-bottom: solid;
-  border-color: white;
-  color: white;
+  border-bottom: solid rgb(235, 228, 228) 2px;
 
+}
+
+.txt-white{
+
+  color: rgb(235, 228, 228); 
+  font-display: bold;
+
+}
+
+a.hov:hover {
+  color:  white;
+  font-size: larger;
+  line-height: 18pt;
 }
 
 .list-group-item {
@@ -225,3 +236,4 @@ p.modal-subheader {
   padding: 0.5rem 1.1rem;
   font-weight: bold;
 }
+
