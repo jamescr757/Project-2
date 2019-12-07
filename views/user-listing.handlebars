@@ -5,7 +5,7 @@
           <div class="card mt-4">
             <div class="card-body">
                 <h1>Your Active Listings</h1>
-                {{#if noTix}}
+                {{#if notInDatabase}}
                   <p>That email is not in our system</p>
                 {{/if}}
 
@@ -69,11 +69,9 @@
                 {{/each}}
                 <br/>
 
-                {{#if noTix}}
+                {{#if notInDatabase}}
                   <a class="try-again-anchor" href="/user-email">Try Again</a>
-
                 {{else}}
-
                   <a class="try-again-anchor" href="/sold-listings/{{userEmail}}">View Your Sales</a>
                 {{/if}}
 

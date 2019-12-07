@@ -9,7 +9,7 @@
                 {{/if}}
 
                 {{#each listingArray}}
-                {{#if this.purchased}}
+                {{#if this.sold}}
                 <ul class="listing">
                     <div class="container">
                         <div class="row">
@@ -46,7 +46,6 @@
                         </div>
                     </div>
                 </ul>
-                {{else}}
                 {{/if}}
                 {{/each}}
                 <br/>

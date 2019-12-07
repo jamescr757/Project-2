@@ -27,8 +27,6 @@ $(document).ready(() => {
 
     $("#deactivate-modal-btn").on("click", event => {
 
-        location.reload();
-
         const { ticketid, section, row, seat, price, email } = event.target.dataset;
 
         const ticketInfo = { 
@@ -38,6 +36,8 @@ $(document).ready(() => {
             price: price,
             email: email
         };
+
+        location.href = "/user-email/" + email;
 
         $.ajax("/api/delete-email", {
             type: "POST",

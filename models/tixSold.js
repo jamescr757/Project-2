@@ -33,7 +33,7 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        purchased: {
+        sold: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
@@ -48,10 +48,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         email: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                isEmail: true
-            }
+            allowNull: false
         }
 
     }, {

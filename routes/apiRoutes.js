@@ -80,6 +80,72 @@ function deleteFromTicketMaster(ticketId) {
   });
 }
 
+// query sold tix table to see if user email in our system 
+function findEmailTixSold(res, userEmail, contextObj) {
+  
+  db.TixSold.findAll({
+    where: {
+      email: userEmail
+    }
+  })
+  .then(dbArray => {  
+
+    if (dbArray.length === 0) {
+      contextObj.notInDatabase = true;
+      // set no active tix to false b/c handlebars doesn't have else if 
+      contextObj.noActiveTix = false;
+    } else {
+      contextObj.soldTix = true;
+    }
+
+    res.render("user-listing", contextObj);
+  })
+  .catch(error => {
+    // console.log(error.message);
+    console.log("there's been an error finding an email in TixSold");
+  })
+}
+
+// grab face value price from that table
+function grabFaceValueAndCreateNewListing(req, res, rowId) {
+  db.FaceValue.findOne({
+    where: {
+      id: rowId
+    }
+  }).then(rowFaceValue => {
+    insertIntoTicketMaster(req, res, rowFaceValue.price)
+  })
+  .catch(error => {
+    console.log("error while gettig price from face value table");
+  });
+}
+
+function insertIntoTicketMaster(req, res, faceValue) {
+  
+  const { sectionNumber, rowNumber, seatNumber, ticketId, userName, email, price } = req.body;
+
+  db.TicketMaster.create({
+
+    section_number: sectionNumber,
+    row_number: rowNumber,
+    seat_number: seatNumber,
+    ticket_id: ticketId,
+    price: price,
+    face_value: faceValue,
+    user_name: userName,
+    email: email
+
+  })
+  .then(() => {
+    emailer(email, req.body, "seller");
+    res.status(201).end();
+  })
+  .catch((error) => {
+    console.log("there's been a db query error while creating a new listing");
+    res.status(500).end();
+  });
+}
+
 module.exports = function(app) {
   // Get all examples
   app.get("/api/sell-price/:id", function(req, res) {
@@ -99,32 +165,27 @@ module.exports = function(app) {
         email: req.params.email
       }
     })
-    .then(function(userListing) {
+    .then(function(activeListings) {
       // going to be an array of objects
 
       const contextObj = {
         listing: true,
-        listingArray: userListing,
-        userEmail: userListing[0].dataValues.email
+        listingArray: activeListings,
+        userEmail: req.params.email
       }
       
-      if (userListing.length === 0) contextObj.noTix = true;
-      
-      // need to loop through the user's listings and check if they have any where purchased = false
-      let activeTix = 0;
-      for (const element of userListing) {
-        if (!element.dataValues.purchased) {
-          activeTix++;
-          break;
-        }
+      if (activeListings.length === 0) {
+        contextObj.noActiveTix = true;
+        findEmailTixSold(res, req.params.email, contextObj);
+
+      } else {
+        res.render("user-listing", contextObj);
       }
+      
 
-      if (activeTix === 0) contextObj.noActiveTix = true;
-
-      res.render("user-listing", contextObj);
     })
-    .catch(() => {
-      console.log("there's been a db query error");
+    .catch(error => {
+      console.log("error while querying ticket master with an email");
       res.status(500).end();
     });
   });
@@ -159,29 +220,19 @@ module.exports = function(app) {
   });
 
   app.get("/sold-listings/:email", function(req, res) {
-    db.TicketMaster.findAll({
+    db.TixSold.findAll({
       where: {
         email: req.params.email
       }
     })
     .then(function(userListing) {
       // going to be an array of objects
-
       const contextObj = {
         listingArray: userListing,
-        userEmail: userListing[0].dataValues.email
+        userEmail: req.params.email
       }
 
-      // need to loop through the user's listings and check if they have any where purchased = true
-      let soldTix = 0;
-      for (const element of userListing) {
-        if (element.dataValues.purchased) {
-          soldTix++;
-          break;
-        }
-      }
-
-      if (soldTix === 0) contextObj.noSoldTix = true;
+      if (userListing.length === 0) contextObj.noSoldTix = true;
 
       res.render("sold-listings", contextObj);
     })
@@ -193,34 +244,12 @@ module.exports = function(app) {
 
   app.post("/api/new-listing", function(req, res) {
 
-    const { sectionNumber, rowNumber, seatNumber, ticketId, userName, email, price } = req.body;
+    grabFaceValueAndCreateNewListing(req, res, req.body.rowId);
 
-    db.TicketMaster.create({
-
-      section_number: sectionNumber,
-      row_number: rowNumber,
-      seat_number: seatNumber,
-      ticket_id: ticketId,
-      price: price,
-      user_name: userName,
-      email: email
-
-    }).then(() => {
-      emailer(email, req.body, "seller");
-      res.status(201).end();
-    })
-    .catch(() => {
-      console.log("there's been a db query error");
-      res.status(500).end();
-    });
   });
 
   app.get("/api/venue", function(req, res) {
-    db.TicketMaster.findAll({
-      where: {
-        purchased: false
-      }
-    })
+    db.TicketMaster.findAll({})
     .then(function(allTickets) {
       res.json(allTickets);
     })
@@ -260,10 +289,9 @@ module.exports = function(app) {
 
     })
     .then(function() {
-
       res.status(201).end();
     })
-    .catch(() => {
+    .catch(error => {
       console.log("there was a db query error inserting row into tix sold");
       res.status(500).end();
     });;
