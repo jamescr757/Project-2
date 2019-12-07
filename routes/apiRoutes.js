@@ -44,8 +44,12 @@ function emailer(userEmail, ticketObj, userType) {
       emailText(mailOptions, ticketObj, "Your ticket has sold!", "Sale");
       break;
       
-    default: 
+    case "buyer": 
       emailText(mailOptions, ticketObj, "Thank you for your purchase!", "Purchase");
+      break;
+
+    default: 
+      emailText(mailOptions, ticketObj, "Your ticket has been deactivated!", "Deactivated Listing");
       break;
   }
   
@@ -181,12 +185,17 @@ module.exports = function(app) {
 
   app.post("/api/new-sale", function(req, res) {
     emailer(req.body.email, req.body, "sold");
-    res.status(201).end();
+    res.status(200).end();
   });
 
   app.post("/api/new-purchase", function(req, res) {
     emailer(req.body.email, req.body, "buyer");
-    res.status(201).end();
+    res.status(200).end();
+  });
+
+  app.post("/api/delete-email", function(req, res) {
+    emailer(req.body.email, req.body, "deactivate");
+    res.status(200).end();
   });
 
   app.put("/api/ticket-purchased/:ticketId", function(req, res) {

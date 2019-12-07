@@ -101,7 +101,7 @@ $(document).ready(() => {
         $(".modal-body").empty();
 
         $(".modal-body").append(`
-            <p class="modal-purchase">Are you sure you want to purchase this ticket?</p>
+            <p class="modal-subheader">Are you sure you want to purchase this ticket?</p>
             <p class="top">Section Number: ${event.target.dataset.section}</p>
             <p>Row Number: ${event.target.dataset.row}</p>
             <p>Seat Number: ${event.target.dataset.seat}</p>
@@ -158,5 +158,4 @@ $(document).ready(() => {
 });
 
 
-// TODO: deactive button on listing page
 // TODO: deal rating for buyers

@@ -190,7 +190,7 @@ p.purchase {
   color: rgb(7, 255, 7);
 }
 
-p.modal-purchase {
+p.modal-subheader {
   font-weight: bold;
   font-size: 1.25rem;
 }

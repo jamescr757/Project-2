@@ -53,7 +53,14 @@
                         <div class="row">
                           <div class="col-12">
                               <li><button type="button" class="btn btn-outline-danger deactivate-btn"
-                              data-ticketid="{{this.ticket_id}}">Deactivate Listing</button></li>
+                              data-ticketid="{{this.ticket_id}}"
+                              data-section="{{this.section_number}}"
+                              data-row="{{this.row_number}}"
+                              data-seat="{{this.seat_number}}"
+                              data-price="{{this.price}}"
+                              data-email="{{this.email}}"
+                              data-toggle="modal"
+                              data-target="#deactivateModal">Deactivate Listing</button></li>
                           </div>
                         </div>
                     </div>
@@ -105,3 +112,24 @@
 
 </div>
 
+
+    <!-- Modal -->
+<div class="modal fade" id="deactivateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Deactivate Listing</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            
+        </div>
+        <div class="modal-footer">
+            <button id="deactivate-modal-btn" type="button" class="btn btn-danger">Deactivate</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+        </div>
+    </div>
+</div>
