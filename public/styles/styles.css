@@ -3,12 +3,18 @@
   background-color: transparent;
   border-bottom: solid;
   border-color: white;
-  /* color: white; */
+
+}
+
+.txt-white{
+
+  color: white; 
+  font-display: bold;
 
 }
 
 a.hov:hover {
-  color: red;
+  color:  snow;
   font-size: larger;
   line-height:18pt;
 }
@@ -231,3 +237,4 @@ p.modal-purchase {
   padding: 0.5rem 1.1rem;
   font-weight: bold;
 }
+
