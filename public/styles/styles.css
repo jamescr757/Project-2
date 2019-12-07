@@ -219,3 +219,9 @@ p.modal-purchase {
 .south .section-front {
   transform: rotate(270deg);
 }
+
+.btn-outline-danger {
+  border-radius: 0.5rem;
+  padding: 0.5rem 1.1rem;
+  font-weight: bold;
+}
