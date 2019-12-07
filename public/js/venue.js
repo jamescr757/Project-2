@@ -60,14 +60,16 @@ $(document).ready(() => {
     })
 
     $(".section").on("mouseenter", (event) => {
-        $(event.currentTarget).find("h3").hide();
-        $(event.currentTarget).find(".section-row").show();
+        $(event.currentTarget).find(".section-front").hide();
+        $(event.currentTarget).find(".section-row").addClass("unblur");
+        // $(event.currentTarget).find(".section-row").show();
 
     });
 
     $(".section").on("mouseleave", (event) => {
-        $(".section h3").show();
-        $(".section-row").hide();
+        $(".section-front").show();
+        $(".section-row").removeClass("unblur");
+        // $(".section-row").hide();
 
         $(".stage h3").show();
         $(".stage p").remove();
@@ -154,3 +156,7 @@ $(document).ready(() => {
     })
 
 });
+
+
+// TODO: deactive button on listing page
+// TODO: deal rating for buyers

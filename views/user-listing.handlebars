@@ -15,43 +15,49 @@
                 <ul class="listing">
                     <div class="container">
                         <div class="row">
-                            <div class="col-5">
-                                <li><p><strong>Seat Number</strong>: </p>
+                            <div class="col-3">
+                                <li><p><strong>Section</strong>: </p>
                             </div>
-                            <div class="col-7">
-                                    <p>{{this.seat_number}}</p></li>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-5">
-                                <li><p><strong>Section Number</strong>:</p>
-                            </div>
-                            <div class="col-7">
+                            <div class="col-9">
                                     <p>{{this.section_number}}</p></li>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-5">
-                                <li><p><strong>Row Number</strong>:</p> 
+                            <div class="col-3">
+                                <li><p><strong>Row</strong>:</p>
                             </div>
-                            <div class="col-7">
-                                <p>{{this.row_number}}</p></li>
+                            <div class="col-9">
+                                    <p>{{this.row_number}}</p></li>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-5">
-                                <li><p><strong>Listing Price</strong>:</p>
+                            <div class="col-3">
+                                <li><p><strong>Seat</strong>:</p>
                             </div>
-                            <div class="col-7">
+                            <div class="col-9">
+                                <p>{{this.seat_number}}</p></li>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <li><p><strong>Price</strong>:</p>
+                            </div>
+                            <div class="col-9">
                                  <p>${{this.price}}</p></li>
                             </div>
                         </div>
+                        <div class="row">
+                          <div class="col-12">
+                              <li><button type="button" class="btn btn-outline-danger deactivate-btn"
+                              data-ticketid="{{this.ticket_id}}">Deactivate Listing</button></li>
+                          </div>
+                        </div>
                     </div>
                   </ul>
-                  <br>
+                  {{!-- <br> --}}
                   {{/if}}
                 {{/each}}
-
+                <br/>
                 <a class="home-anchor" href="/">← Back To Home</a>
                 {{#if noTix}}
                   <a class="try-again-anchor" href="/user-email">Try Again</a>
@@ -69,7 +75,7 @@
             <label for="name-input">Enter your email to view your listing:</label>
             <input class="form-control" id="user-email" placeholder="jon@gmail.com" type="text">
           </div>
-      </form>  
+      </form>
   </div>
   {{/if}}
 
@@ -84,7 +90,7 @@
             <label for="name-input">Enter your email to recieve your reciept:</label>
             <input class="form-control" id="user-email" placeholder="jon@gmail.com" type="text">
           </div>
-      </form>  
+      </form>
   </div>
   {{/if}}
 
