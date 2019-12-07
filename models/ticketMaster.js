@@ -43,6 +43,10 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.DECIMAL(6, 2),
             allowNull: false
         },
+        face_value: {
+            type: DataTypes.DECIMAL(6, 2),
+            allowNull: false
+        },
         user_name: {
             type: DataTypes.STRING,
             defaultValue: "Master"
@@ -50,7 +54,7 @@ module.exports = function(sequelize, DataTypes) {
         email: {
             type: DataTypes.STRING,
             defaultValue: "app@gmail.com",
-            allowNull: true,
+            allowNull: false,
             validate: {
                 isEmail: true
             }
