@@ -80,14 +80,60 @@ module.exports = function(app) {
     })
     .then(function(userListing) {
       // going to be an array of objects
+
       const contextObj = {
         listing: true,
-        listingArray: userListing
+        listingArray: userListing,
+        userEmail: userListing[0].dataValues.email
+      }
+      
+      if (userListing.length === 0) contextObj.noTix = true;
+      
+      // need to loop through the user's listings and check if they have any where purchased = false
+      let activeTix = 0;
+      for (const element of userListing) {
+        if (!element.dataValues.purchased) {
+          activeTix++;
+          break;
+        }
       }
 
-      if (userListing.length === 0) contextObj.noTix = true;
+      if (activeTix === 0) contextObj.noActiveTix = true;
 
       res.render("user-listing", contextObj);
+    })
+    .catch(() => {
+      console.log("there's been a db query error");
+      res.status(500).end();
+    });
+  });
+
+  app.get("/sold-listings/:email", function(req, res) {
+    db.TicketMaster.findAll({
+      where: {
+        email: req.params.email
+      }
+    })
+    .then(function(userListing) {
+      // going to be an array of objects
+
+      const contextObj = {
+        listingArray: userListing,
+        userEmail: userListing[0].dataValues.email
+      }
+
+      // need to loop through the user's listings and check if they have any where purchased = true
+      let soldTix = 0;
+      for (const element of userListing) {
+        if (element.dataValues.purchased) {
+          soldTix++;
+          break;
+        }
+      }
+
+      if (soldTix === 0) contextObj.noSoldTix = true;
+
+      res.render("sold-listings", contextObj);
     })
     .catch(() => {
       console.log("there's been a db query error");

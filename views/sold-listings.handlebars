@@ -1,21 +1,15 @@
   <div class="container">
-    {{#if listing}}
       <div class="row">
         <div class="col-6">
           <div class="card mt-4">
             <div class="card-body">
-                <h1>Your Active Listings</h1>
-                {{#if noTix}}
-                  <p>That email is not in our system</p>
-                {{/if}}
-
-                {{#if noActiveTix}}
-                  <p>You do not have any active listings</p>
+                <h1>Your Ticket Sales</h1>
+                {{#if noSoldTix}}
+                  <p>You have not sold any tickets</p>
                 {{/if}}
 
                 {{#each listingArray}}
                 {{#if this.purchased}}
-                {{else}}
                 <ul class="listing">
                     <div class="container">
                         <div class="row">
@@ -50,32 +44,19 @@
                                  <p>${{this.price}}</p></li>
                             </div>
                         </div>
-                        <div class="row">
-                          <div class="col-12">
-                              <li><button type="button" class="btn btn-outline-danger deactivate-btn"
-                              data-ticketid="{{this.ticket_id}}">Deactivate Listing</button></li>
-                          </div>
-                        </div>
                     </div>
-                  </ul>
-                  {{/if}}
+                </ul>
+                {{else}}
+                {{/if}}
                 {{/each}}
                 <br/>
-
-                {{#if noTix}}
-                  <a class="try-again-anchor" href="/user-email">Try Again</a>
-
-                {{else}}
-
-                  <a class="try-again-anchor" href="/sold-listings/{{userEmail}}">View Your Sales</a>
-                {{/if}}
-
+                <a class="try-again-anchor" href="/user-email/{{userEmail}}">View Active Listings</a>
                 <a class="home-anchor" href="/">Home Page</a>
+
             </div>
           </div>
         </div>
       </div>
-    {{/if}}
 
   {{#if sellerEmail}}
   <div class="jumbotron">

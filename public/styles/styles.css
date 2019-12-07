@@ -82,12 +82,12 @@ ul.listing {
 }
 
 .home-anchor {
-  padding-right: 8px;
+  padding-left: 10px;
+  border-left: black solid 1px;
 }
 
 .try-again-anchor {
-  padding-left: 10px;
-  border-left: black solid 1px;
+  padding-right: 8px;
 }
 
 body {
