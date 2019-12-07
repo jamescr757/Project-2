@@ -63,6 +63,23 @@ function emailer(userEmail, ticketObj, userType) {
 
 }
 
+// function to delete from TicketMaster table
+// will be nested inside route to render buyer receipt email
+function deleteFromTicketMaster(ticketId) {
+  
+  db.TicketMaster.destroy({
+    where: {
+      ticket_id: ticketId
+    }
+  })
+  .then(function() {
+    console.log("delete from ticket master successful");
+  })
+  .catch(() => {
+    console.log("error in deleteFromTicketMaster");
+  });
+}
+
 module.exports = function(app) {
   // Get all examples
   app.get("/api/sell-price/:id", function(req, res) {
@@ -105,6 +122,35 @@ module.exports = function(app) {
       if (activeTix === 0) contextObj.noActiveTix = true;
 
       res.render("user-listing", contextObj);
+    })
+    .catch(() => {
+      console.log("there's been a db query error");
+      res.status(500).end();
+    });
+  });
+
+  app.get("/user-email/ticket/:id",function(req,res){
+
+    db.TicketMaster.findOne({
+      where: {
+        ticket_id: req.params.id
+      }
+    })
+    .then(function(ticketInfo) {
+
+      const { section_number, row_number, seat_number, price } = ticketInfo.dataValues
+
+      // going to be an array of objects
+      res.render("user-listing", { 
+        buyerEmail: true,
+        section_number,
+        row_number,
+        seat_number,
+        price,
+      });
+    })
+    .then(() => {
+      deleteFromTicketMaster(req.params.id);
     })
     .catch(() => {
       console.log("there's been a db query error");
@@ -198,21 +244,28 @@ module.exports = function(app) {
     res.status(200).end();
   });
 
-  app.put("/api/ticket-purchased/:ticketId", function(req, res) {
+  app.post("/api/sold-ticket", function(req, res) {
 
-    db.TicketMaster.update({
-      purchased: true
-    }, {
-      where: {
-        ticket_id: req.params.ticketId
-      }
+    const { sectionNumber, rowNumber, seatNumber, ticketId, userName, email, price } = req.body;
+
+    db.TixSold.create({
+
+      section_number: sectionNumber,
+      row_number: rowNumber,
+      seat_number: seatNumber,
+      ticket_id: ticketId,
+      price: price,
+      user_name: userName,
+      email: email
+
     })
     .then(function() {
 
-      res.status(200).end();
+      res.status(201).end();
     })
     .catch(() => {
-      console.log("there was a db query error in put api");
+      console.log("there was a db query error inserting row into tix sold");
+      res.status(500).end();
     });;
   });
 
@@ -227,7 +280,8 @@ module.exports = function(app) {
       res.status(204).end();
     })
     .catch(() => {
-      console.log("there was a db query error in delete api");
+      console.log("there was a db query error in deleting from ticket master");
+      res.status(500).end();
     });
   });
 

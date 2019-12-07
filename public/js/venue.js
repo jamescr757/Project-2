@@ -48,6 +48,7 @@ $(document).ready(() => {
             ticketSquareElement.attr("data-seat", `${ticket.seat_number}`);
             ticketSquareElement.attr("data-price", `${ticket.price}`);
             ticketSquareElement.attr("data-email", `${ticket.email}`);
+            ticketSquareElement.attr("data-name", `${ticket.user_name}`);
 
             ticketSquareElement.attr("data-toggle", "modal");
             ticketSquareElement.attr("data-target", "#purchaseModal");
@@ -62,14 +63,12 @@ $(document).ready(() => {
     $(".section").on("mouseenter", (event) => {
         $(event.currentTarget).find(".section-front").hide();
         $(event.currentTarget).find(".section-row").addClass("unblur");
-        // $(event.currentTarget).find(".section-row").show();
 
     });
 
     $(".section").on("mouseleave", (event) => {
         $(".section-front").show();
         $(".section-row").removeClass("unblur");
-        // $(".section-row").hide();
 
         $(".stage h3").show();
         $(".stage p").remove();
@@ -116,36 +115,29 @@ $(document).ready(() => {
         purchaseBtnElement.attr("data-seat", `${event.target.dataset.seat}`);
         purchaseBtnElement.attr("data-price", `${event.target.dataset.price}`);
         purchaseBtnElement.attr("data-email", `${event.target.dataset.email}`);
+        purchaseBtnElement.attr("data-name", `${event.target.dataset.name}`);
 
     }
 
     $("#purchase-btn").on("click", (event) => {
 
-        const ticketId = event.target.dataset.id;
+        const targetData = event.target.dataset;
 
-        location.href = "/user-email/ticket/" + ticketId;
+        location.href = "/user-email/ticket/" + targetData.id;
 
-        const ticketData = {
-            sectionNumber: event.target.dataset.section,
-            rowNumber: event.target.dataset.row,
-            seatNumber: event.target.dataset.seat,
-            price: event.target.dataset.price,
-            email: event.target.dataset.email
+        const ticketInfo = {
+            ticketId: targetData.id,
+            sectionNumber: targetData.section,
+            rowNumber: targetData.row,
+            seatNumber: targetData.seat,
+            price: targetData.price,
+            email: targetData.email,
+            userName: targetData.name
         }
-
-        $.ajax("/api/ticket-purchased/" + ticketId, {
-            type: "PUT"
-        })
-        .then(() => {
-            console.log("update successful");
-        })
-        .catch(() => {
-            console.log("there's been an error trying to update the database");
-        });
 
         $.ajax("/api/new-sale", {
             type: "POST",
-            data: ticketData
+            data: ticketInfo
         })
         .then(() => {
             console.log("seller email successful");
@@ -153,9 +145,18 @@ $(document).ready(() => {
         .catch(() => {
             console.log("there's been an error trying to process a new sale");
         });
+
+        $.ajax("/api/sold-ticket", {
+            type: "POST",
+            data: ticketInfo
+        })
+        .then(() => {
+            console.log("adding new row successful");
+        })
+        .catch(() => {
+            console.log("there's been an error trying to insert into tixSold");
+        });
+
     })
 
 });
-
-
-// TODO: deal rating for buyers

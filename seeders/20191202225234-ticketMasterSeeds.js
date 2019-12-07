@@ -877,7 +877,7 @@ module.exports = {
         seat_number: 3,
         ticket_id: 993,
         price: 85.00,
-        email: "app@gmail.com",
+        email: "jamesriddle757@gmail.com",
         face_value: 80.00
       },
       {
@@ -886,7 +886,7 @@ module.exports = {
         seat_number: 10,
         ticket_id: 1030,
         price: 80.00,
-        email: "app@gmail.com",
+        email: "jamesriddle757@gmail.com",
         face_value: 70.00
       },
       {
@@ -895,7 +895,7 @@ module.exports = {
         seat_number: 20,
         ticket_id: 1040,
         price: 80.00,
-        email: "app@gmail.com",
+        email: "jamesriddle757@gmail.com",
         face_value: 70.00
       },
       {
@@ -1714,7 +1714,7 @@ module.exports = {
         seat_number: 4,
         ticket_id: 1894,
         price: 304.99,
-        email: "app@gmail.com",
+        email: "jamesriddle757@gmail.com",
         face_value: 300.00
       },
       {
