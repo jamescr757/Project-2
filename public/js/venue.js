@@ -1,5 +1,79 @@
 $(document).ready(() => {
 
+    // calculate value score based on face value and listing price
+    // subtract listing price from face value
+    // divide by face value and multiply by 100 to get percent difference
+    // use a proportion to scale percent difference to number between -5 and 5
+    // add scaled number to 6 and convert to float with one decimal
+    // if number above 10 or below 1 set the score to 10.0 or 1.0
+    // return value score
+    // passed tests
+    function valueScoreCalc(price, faceValue) {
+        price = parseFloat(price);
+        faceValue = parseFloat(faceValue);
+    
+        const difference = faceValue - price;
+        const percentDiff = (difference / faceValue) * 100;
+        // scaled difference of 2.0 would be 20% off faceValue
+        const scaledDifference = 2.0 * percentDiff / 20;
+        
+        // value score will be a string when using to fixed
+        let valueScore = (3 + scaledDifference).toFixed(1);
+    
+        if (valueScore > 4.9) return "5.0";
+        
+        else if (valueScore < 0) return "0.0";
+    
+        else return valueScore;
+    } 
+
+    // helper function for adding seat color 
+    function addSeatColor(seatElement, color) {
+        seatElement.css({
+            backgroundColor: color
+        });
+    }
+
+    // helper function for adding score string data attribue
+    function addScoreRating(seatElement, rating) {
+        seatElement.attr("data-rating", `${rating}`);
+    }
+
+    // determine color of seat based on value score
+    // input seat element and add css background color property
+    // switch case with expression true 
+    function seatColorAndRating(valueScore, seatElement) {
+        
+        switch (true) {
+
+            case valueScore == 5.0:
+                addSeatColor(seatElement, "rgb(0, 255, 30)");
+                addScoreRating(seatElement, "Excellent");
+                break;
+            case valueScore >= 4.0:
+                addSeatColor(seatElement, "rgb(0, 255, 30)");
+                addScoreRating(seatElement, "Great");
+                break;
+            case valueScore >= 3.0:
+                addSeatColor(seatElement, "rgb(10, 155, 20)");
+                addScoreRating(seatElement, "Good");
+                break;
+            case valueScore >= 2.0:
+                addSeatColor(seatElement, "rgb(255, 138, 138)");
+                addScoreRating(seatElement, "Okay");
+                break;
+            case valueScore >= 1.0:
+                addSeatColor(seatElement, "rgb(185, 0, 0)");
+                addScoreRating(seatElement, "Bad");
+                break;
+            default:
+                addSeatColor(seatElement, "rgb(185, 0, 0)");
+                addScoreRating(seatElement, "Terrible");
+                break;
+            
+        }
+    }
+
     for (rowNum = 1; rowNum <= 20; rowNum++) {
 
         $(".section").append(`
@@ -43,10 +117,15 @@ $(document).ready(() => {
 
             ticketSquareElement.addClass("available");
 
+            const valueScore = valueScoreCalc(ticket.price, ticket.face_value);
+
+            seatColorAndRating(valueScore, ticketSquareElement);
+
             ticketSquareElement.attr("data-section", `${ticket.section_number}`);
             ticketSquareElement.attr("data-row", `${ticket.row_number}`);
             ticketSquareElement.attr("data-seat", `${ticket.seat_number}`);
             ticketSquareElement.attr("data-price", `${ticket.price}`);
+            ticketSquareElement.attr("data-score", `${valueScore}`);
             ticketSquareElement.attr("data-email", `${ticket.email}`);
             ticketSquareElement.attr("data-name", `${ticket.user_name}`);
 
@@ -84,11 +163,14 @@ $(document).ready(() => {
             $(".stage p").remove();
             $(".stage button").remove();
 
+            const { section, row, seat, price, score, rating } = event.target.dataset;
+
             $(".stage").append(`
-                <p class="top">Section Number: ${event.target.dataset.section}</p>
-                <p>Row Number: ${event.target.dataset.row}</p>
-                <p>Seat Number: ${event.target.dataset.seat}</p>
-                <p>Price: $${event.target.dataset.price}</p>
+                <p class="top">Section Number: ${section}</p>
+                <p>Row Number: ${row}</p>
+                <p>Seat Number: ${seat}</p>
+                <p>Price: $${price}</p>
+                <p>Value: ${rating} (${score}/5)</p>
                 <p class="purchase">Click seat to purchase!</p>
             `)
         }
@@ -97,25 +179,28 @@ $(document).ready(() => {
 
     function seatClick(event) {
 
+        const { id, section, row, seat, price, email, name, score, rating } = event.target.dataset;
+
         $(".modal-body").empty();
 
         $(".modal-body").append(`
             <p class="modal-subheader">Are you sure you want to purchase this ticket?</p>
-            <p class="top">Section Number: ${event.target.dataset.section}</p>
-            <p>Row Number: ${event.target.dataset.row}</p>
-            <p>Seat Number: ${event.target.dataset.seat}</p>
-            <p>Price: $${event.target.dataset.price}</p>
+            <p class="top">Section Number: ${section}</p>
+            <p>Row Number: ${row}</p>
+            <p>Seat Number: ${seat}</p>
+            <p class="bold-p">Price: $${price}</p>
+            <p class="bold-p">Value: ${rating} (${score}/5)</p>
         `);
 
         const purchaseBtnElement = $("#purchase-btn");
 
-        purchaseBtnElement.attr("data-id", `${event.target.dataset.id}`);
-        purchaseBtnElement.attr("data-section", `${event.target.dataset.section}`);
-        purchaseBtnElement.attr("data-row", `${event.target.dataset.row}`);
-        purchaseBtnElement.attr("data-seat", `${event.target.dataset.seat}`);
-        purchaseBtnElement.attr("data-price", `${event.target.dataset.price}`);
-        purchaseBtnElement.attr("data-email", `${event.target.dataset.email}`);
-        purchaseBtnElement.attr("data-name", `${event.target.dataset.name}`);
+        purchaseBtnElement.attr("data-id", `${id}`);
+        purchaseBtnElement.attr("data-section", `${section}`);
+        purchaseBtnElement.attr("data-row", `${row}`);
+        purchaseBtnElement.attr("data-seat", `${seat}`);
+        purchaseBtnElement.attr("data-price", `${price}`);
+        purchaseBtnElement.attr("data-email", `${email}`);
+        purchaseBtnElement.attr("data-name", `${name}`);
 
     }
 
@@ -140,7 +225,7 @@ $(document).ready(() => {
             data: ticketInfo
         })
         .then(() => {
-            console.log("seller email successful");
+            // console.log("seller email successful");
         })
         .catch(() => {
             console.log("there's been an error trying to process a new sale");
@@ -151,7 +236,7 @@ $(document).ready(() => {
             data: ticketInfo
         })
         .then(() => {
-            console.log("adding new row successful");
+            // console.log("adding new row successful");
         })
         .catch(() => {
             console.log("there's been an error trying to insert into tixSold");

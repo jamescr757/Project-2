@@ -44,9 +44,9 @@ $(document).ready(() => {
             data: ticketInfo
         })
         .then(() => {
-            console.log("deactivate email successful");
+            // console.log("deactivate email successful");
         })
-        .catch(() => {
+        .catch(error => {
             console.log("there was an error while trying to send a deactivate email");
         });
         
@@ -54,9 +54,9 @@ $(document).ready(() => {
             type: "DELETE"
         })
         .then(() => {
-            console.log("delete from db successful");
+            // console.log("delete from db successful");
         })
-        .catch(() => {
+        .catch(error => {
             console.log("there was an error while trying to delete from the database");
         });
 

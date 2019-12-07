@@ -1713,25 +1713,61 @@ module.exports = {
         row_number: 4,
         seat_number: 4,
         ticket_id: 1894,
-        price: 304.99,
+        price: 270.00,
         email: "jamesriddle757@gmail.com",
         face_value: 300.00
       },
       {
         section_number: 4,
         row_number: 4,
-        seat_number: 5,
-        ticket_id: 1895,
-        price: 304.99,
+        seat_number: 2,
+        ticket_id: 1892,
+        price: 270.00,
         email: "app@gmail.com",
         face_value: 300.00
       },
       {
         section_number: 4,
         row_number: 4,
-        seat_number: 6,
-        ticket_id: 1896,
-        price: 304.99,
+        seat_number: 3,
+        ticket_id: 1893,
+        price: 270.00,
+        email: "app@gmail.com",
+        face_value: 300.00
+      },
+      {
+        section_number: 4,
+        row_number: 4,
+        seat_number: 8,
+        ticket_id: 1898,
+        price: 315.00,
+        email: "app@gmail.com",
+        face_value: 300.00
+      },
+      {
+        section_number: 4,
+        row_number: 4,
+        seat_number: 9,
+        ticket_id: 1899,
+        price: 315.00,
+        email: "app@gmail.com",
+        face_value: 300.00
+      },
+      {
+        section_number: 4,
+        row_number: 4,
+        seat_number: 21,
+        ticket_id: 1911,
+        price: 360.00,
+        email: "app@gmail.com",
+        face_value: 300.00
+      },
+      {
+        section_number: 4,
+        row_number: 4,
+        seat_number: 22,
+        ticket_id: 1912,
+        price: 360.00,
         email: "app@gmail.com",
         face_value: 300.00
       },

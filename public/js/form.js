@@ -107,7 +107,7 @@ $(document).ready(() => {
             data: userData
         })
         .then(() => {
-            console.log("buyer email successful");
+            // console.log("buyer email successful");
         })
         .catch(() => {
             console.log("there's been an error trying to process a new purchase");
