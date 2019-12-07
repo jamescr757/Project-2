@@ -3,8 +3,20 @@
   background-color: transparent;
   border-bottom: solid;
   border-color: white;
-  color: white;
 
+}
+
+.txt-white{
+
+  color: white; 
+  font-display: bold;
+
+}
+
+a.hov:hover {
+  color:  snow;
+  font-size: larger;
+  line-height:18pt;
 }
 
 .list-group-item {
@@ -225,3 +237,4 @@ p.modal-subheader {
   padding: 0.5rem 1.1rem;
   font-weight: bold;
 }
+
