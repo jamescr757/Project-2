@@ -27,18 +27,6 @@ $(document).ready(() => {
         else return valueScore;
     } 
 
-    // helper function for adding seat color 
-    function addSeatColor(seatElement, color) {
-        seatElement.css({
-            backgroundColor: color
-        });
-    }
-
-    // helper function for adding score string data attribue
-    function addScoreRating(seatElement, rating) {
-        seatElement.attr("data-rating", `${rating}`);
-    }
-
     // determine color of seat based on value score
     // input seat element and add css background color property
     // switch case with expression true 
@@ -47,28 +35,28 @@ $(document).ready(() => {
         switch (true) {
 
             case valueScore == 5.0:
-                addSeatColor(seatElement, "rgb(0, 255, 30)");
-                addScoreRating(seatElement, "Excellent");
+                seatElement.addClass("neon-green");
+                seatElement.attr("data-rating", "Excellent");
                 break;
             case valueScore >= 4.0:
-                addSeatColor(seatElement, "rgb(0, 255, 30)");
-                addScoreRating(seatElement, "Great");
+                seatElement.addClass("neon-green");
+                seatElement.attr("data-rating", "Great");
                 break;
             case valueScore >= 3.0:
-                addSeatColor(seatElement, "rgb(10, 155, 20)");
-                addScoreRating(seatElement, "Good");
+                seatElement.addClass("green");
+                seatElement.attr("data-rating", "Good");
                 break;
             case valueScore >= 2.0:
-                addSeatColor(seatElement, "rgb(255, 138, 138)");
-                addScoreRating(seatElement, "Okay");
+                seatElement.addClass("pink");
+                seatElement.attr("data-rating", "Okay");
                 break;
             case valueScore >= 1.0:
-                addSeatColor(seatElement, "rgb(185, 0, 0)");
-                addScoreRating(seatElement, "Bad");
+                seatElement.addClass("red");
+                seatElement.attr("data-rating", "Bad");
                 break;
             default:
-                addSeatColor(seatElement, "rgb(185, 0, 0)");
-                addScoreRating(seatElement, "Terrible");
+                seatElement.addClass("red");
+                seatElement.attr("data-rating", "Terrible");
                 break;
             
         }

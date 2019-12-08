@@ -122,7 +122,6 @@ module.exports = function(app) {
         res.render("user-listing", contextObj);
       }
       
-
     })
     .catch(error => {
       console.log("error while querying ticket master with an email");
