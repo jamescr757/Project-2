@@ -170,7 +170,7 @@ $(document).ready(() => {
                 <p>Row Number: ${row}</p>
                 <p>Seat Number: ${seat}</p>
                 <p>Price: $${price}</p>
-                <p>Value: ${rating} (${score}/5)</p>
+                <p>Value: ${rating} (${score}/5.0)</p>
                 <p class="purchase">Click seat to purchase!</p>
             `)
         }
@@ -188,8 +188,8 @@ $(document).ready(() => {
             <p class="top">Section Number: ${section}</p>
             <p>Row Number: ${row}</p>
             <p>Seat Number: ${seat}</p>
-            <p class="bold-p">Price: $${price}</p>
-            <p class="bold-p">Value: ${rating} (${score}/5)</p>
+            <p>Price: <b>$${price}</b></p>
+            <p>Value: <b>${rating} (${score}/5.0)</b></p>
         `);
 
         const purchaseBtnElement = $("#purchase-btn");
