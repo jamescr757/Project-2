@@ -12,7 +12,7 @@ module.exports = {
         row_number: 1,
         seat_number: 10,
         ticket_id: 10,
-        price: 500.00,
+        price: 550.00,
         email: "app@gmail.com",
         face_value: 500.00
       },
@@ -21,7 +21,7 @@ module.exports = {
         row_number: 1,
         seat_number: 11,
         ticket_id: 11,
-        price: 500.00,
+        price: 550.00,
         email: "app@gmail.com",
         face_value: 500.00
       },
@@ -30,7 +30,7 @@ module.exports = {
         row_number: 1,
         seat_number: 12,
         ticket_id: 12,
-        price: 500.00,
+        price: 550.00,
         email: "app@gmail.com",
         face_value: 500.00
       },
@@ -39,7 +39,7 @@ module.exports = {
         row_number: 1,
         seat_number: 13,
         ticket_id: 13,
-        price: 500.00,
+        price: 550.00,
         email: "app@gmail.com",
         face_value: 500.00
       },
@@ -525,7 +525,7 @@ module.exports = {
         row_number: 2,
         seat_number: 12,
         ticket_id: 642,
-        price: 380.00,
+        price: 390.00,
         email: "app@gmail.com",
         face_value: 380.00
       },
@@ -534,7 +534,7 @@ module.exports = {
         row_number: 2,
         seat_number: 13,
         ticket_id: 643,
-        price: 380.00,
+        price: 390.00,
         email: "app@gmail.com",
         face_value: 380.00
       },
@@ -669,7 +669,7 @@ module.exports = {
         row_number: 6,
         seat_number: 12,
         ticket_id: 762,
-        price: 230.00,
+        price: 270.00,
         email: "app@gmail.com",
         face_value: 240.00
       },
@@ -678,7 +678,7 @@ module.exports = {
         row_number: 6,
         seat_number: 13,
         ticket_id: 763,
-        price: 230.00,
+        price: 270.00,
         email: "app@gmail.com",
         face_value: 240.00
       },
@@ -687,7 +687,7 @@ module.exports = {
         row_number: 6,
         seat_number: 14,
         ticket_id: 764,
-        price: 230.00,
+        price: 270.00,
         email: "app@gmail.com",
         face_value: 240.00
       },
@@ -696,7 +696,7 @@ module.exports = {
         row_number: 6,
         seat_number: 15,
         ticket_id: 765,
-        price: 230.00,
+        price: 270.00,
         email: "app@gmail.com",
         face_value: 240.00
       },
@@ -825,6 +825,69 @@ module.exports = {
         price: 99.99,
         email: "app@gmail.com",
         face_value: 110.00
+      },
+      {
+        section_number: 2,
+        row_number: 12,
+        seat_number: 10,
+        ticket_id: 940,
+        price: 104.99,
+        email: "app@gmail.com",
+        face_value: 100.00
+      },
+      {
+        section_number: 2,
+        row_number: 12,
+        seat_number: 11,
+        ticket_id: 941,
+        price: 104.99,
+        email: "app@gmail.com",
+        face_value: 100.00
+      },
+      {
+        section_number: 2,
+        row_number: 12,
+        seat_number: 12,
+        ticket_id: 942,
+        price: 104.99,
+        email: "app@gmail.com",
+        face_value: 100.00
+      },
+      {
+        section_number: 2,
+        row_number: 12,
+        seat_number: 13,
+        ticket_id: 943,
+        price: 104.99,
+        email: "app@gmail.com",
+        face_value: 100.00
+      },
+      {
+        section_number: 2,
+        row_number: 12,
+        seat_number: 25,
+        ticket_id: 955,
+        price: 109.99,
+        email: "app@gmail.com",
+        face_value: 100.00
+      },
+      {
+        section_number: 2,
+        row_number: 12,
+        seat_number: 26,
+        ticket_id: 956,
+        price: 109.99,
+        email: "app@gmail.com",
+        face_value: 100.00
+      },
+      {
+        section_number: 2,
+        row_number: 12,
+        seat_number: 27,
+        ticket_id: 957,
+        price: 109.99,
+        email: "app@gmail.com",
+        face_value: 100.00
       },
       {
         section_number: 2,
@@ -1053,6 +1116,42 @@ module.exports = {
       },
       {
         section_number: 3,
+        row_number: 3,
+        seat_number: 27,
+        ticket_id: 1287,
+        price: 480.00,
+        email: "app@gmail.com",
+        face_value: 440.00
+      },
+      {
+        section_number: 3,
+        row_number: 3,
+        seat_number: 28,
+        ticket_id: 1288,
+        price: 480.00,
+        email: "app@gmail.com",
+        face_value: 440.00
+      },
+      {
+        section_number: 3,
+        row_number: 3,
+        seat_number: 29,
+        ticket_id: 1289,
+        price: 480.00,
+        email: "app@gmail.com",
+        face_value: 440.00
+      },
+      {
+        section_number: 3,
+        row_number: 3,
+        seat_number: 30,
+        ticket_id: 1290,
+        price: 480.00,
+        email: "app@gmail.com",
+        face_value: 440.00
+      },
+      {
+        section_number: 3,
         row_number: 4,
         seat_number: 3,
         ticket_id: 1293,
@@ -1084,6 +1183,33 @@ module.exports = {
         seat_number: 6,
         ticket_id: 1296,
         price: 394.99,
+        email: "app@gmail.com",
+        face_value: 400.00
+      },
+      {
+        section_number: 3,
+        row_number: 4,
+        seat_number: 18,
+        ticket_id: 1308,
+        price: 405.00,
+        email: "app@gmail.com",
+        face_value: 400.00
+      },
+      {
+        section_number: 3,
+        row_number: 4,
+        seat_number: 19,
+        ticket_id: 1309,
+        price: 405.00,
+        email: "app@gmail.com",
+        face_value: 400.00
+      },
+      {
+        section_number: 3,
+        row_number: 4,
+        seat_number: 18,
+        ticket_id: 1310,
+        price: 405.00,
         email: "app@gmail.com",
         face_value: 400.00
       },
@@ -1152,6 +1278,42 @@ module.exports = {
       },
       {
         section_number: 3,
+        row_number: 6,
+        seat_number: 24,
+        ticket_id: 1374,
+        price: 299.99,
+        email: "app@gmail.com",
+        face_value: 340.00
+      },
+      {
+        section_number: 3,
+        row_number: 6,
+        seat_number: 25,
+        ticket_id: 1375,
+        price: 299.99,
+        email: "app@gmail.com",
+        face_value: 340.00
+      },
+      {
+        section_number: 3,
+        row_number: 6,
+        seat_number: 26,
+        ticket_id: 1376,
+        price: 299.99,
+        email: "app@gmail.com",
+        face_value: 340.00
+      },
+      {
+        section_number: 3,
+        row_number: 6,
+        seat_number: 27,
+        ticket_id: 1377,
+        price: 299.99,
+        email: "app@gmail.com",
+        face_value: 340.00
+      },
+      {
+        section_number: 3,
         row_number: 8,
         seat_number: 15,
         ticket_id: 1425,
@@ -1203,6 +1365,51 @@ module.exports = {
         price: 260.00,
         email: "app@gmail.com",
         face_value: 250.00
+      },
+      {
+        section_number: 3,
+        row_number: 10,
+        seat_number: 20,
+        ticket_id: 1490,
+        price: 199.99,
+        email: "app@gmail.com",
+        face_value: 220.00
+      },
+      {
+        section_number: 3,
+        row_number: 10,
+        seat_number: 21,
+        ticket_id: 1491,
+        price: 199.99,
+        email: "app@gmail.com",
+        face_value: 220.00
+      },
+      {
+        section_number: 3,
+        row_number: 10,
+        seat_number: 28,
+        ticket_id: 1498,
+        price: 189.99,
+        email: "app@gmail.com",
+        face_value: 220.00
+      },
+      {
+        section_number: 3,
+        row_number: 10,
+        seat_number: 29,
+        ticket_id: 1499,
+        price: 189.99,
+        email: "app@gmail.com",
+        face_value: 220.00
+      },
+      {
+        section_number: 3,
+        row_number: 10,
+        seat_number: 30,
+        ticket_id: 1500,
+        price: 189.99,
+        email: "app@gmail.com",
+        face_value: 220.00
       },
       {
         section_number: 3,
