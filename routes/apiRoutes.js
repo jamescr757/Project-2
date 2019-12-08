@@ -1,67 +1,7 @@
 var db = require("../models");
 
-const nodemailer = require("nodemailer");
-require("dotenv").config();
-
-// helper function for email body text
-function emailText(mailOptions, ticketObj, headlineString, typeString) {
-  
-  mailOptions.subject = `${typeString} Confirmation`;
-
-  mailOptions.text = `
-  ${headlineString}
-  
-    Section: ${ticketObj.sectionNumber}
-    Row: ${ticketObj.rowNumber}
-    Seat: ${ticketObj.seatNumber}
-    ${typeString} Price: $${ticketObj.price}
-  `
-}
-
-// function to send a confirmation email 
-function emailer(userEmail, ticketObj, userType) {
-
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'jamesriddle@utexas.edu',
-      pass: process.env.GMAIL_PASS
-    }
-  });
-  
-  const mailOptions = {
-      from: 'jamesriddle@utexas.edu',
-      to: userEmail
-  }
-
-  switch (userType) {
-
-    case "seller":
-      emailText(mailOptions, ticketObj, "Your ticket has been listed!", "Listing");
-      break;
-      
-    case "sold": 
-      emailText(mailOptions, ticketObj, "Your ticket has sold!", "Sale");
-      break;
-      
-    case "buyer": 
-      emailText(mailOptions, ticketObj, "Thank you for your purchase!", "Purchase");
-      break;
-
-    default: 
-      emailText(mailOptions, ticketObj, "Your ticket has been deactivated!", "Deactivated Listing");
-      break;
-  }
-  
-  transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-  });
-
-}
+const Email = require("../public/js/email");
+const mailer = new Email;
 
 // function to delete from TicketMaster table
 // will be nested inside route to render buyer receipt email
@@ -137,7 +77,7 @@ function insertIntoTicketMaster(req, res, faceValue) {
 
   })
   .then(() => {
-    emailer(email, req.body, "seller");
+    mailer.emailer(email, req.body, "seller");
     res.status(201).end();
   })
   .catch((error) => {
@@ -259,17 +199,17 @@ module.exports = function(app) {
   });
 
   app.post("/api/new-sale", function(req, res) {
-    emailer(req.body.email, req.body, "sold");
+    mailer.emailer(req.body.email, req.body, "sold");
     res.status(200).end();
   });
 
   app.post("/api/new-purchase", function(req, res) {
-    emailer(req.body.email, req.body, "buyer");
+    mailer.emailer(req.body.email, req.body, "buyer");
     res.status(200).end();
   });
 
   app.post("/api/delete-email", function(req, res) {
-    emailer(req.body.email, req.body, "deactivate");
+    mailer.emailer(req.body.email, req.body, "deactivate");
     res.status(200).end();
   });
 
