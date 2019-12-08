@@ -102,7 +102,7 @@ $(document).ready(() => {
             price: price
         }
 
-        $.ajax("/api/new-purchase", {
+        $.ajax("/email/purchase", {
             type: "POST",
             data: userData
         })

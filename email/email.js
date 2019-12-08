@@ -33,7 +33,7 @@ function Email() {
         
         switch (userType) {
     
-        case "seller":
+        case "listing":
             this.emailText(mailOptions, ticketObj, "Your ticket has been listed!", "Listing");
             break;
             
@@ -41,7 +41,7 @@ function Email() {
             this.emailText(mailOptions, ticketObj, "Your ticket has sold!", "Sale");
             break;
             
-        case "buyer": 
+        case "purchase": 
             this.emailText(mailOptions, ticketObj, "Thank you for your purchase!", "Purchase");
             break;
     

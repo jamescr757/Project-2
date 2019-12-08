@@ -1,6 +1,6 @@
 var db = require("../models");
 
-const Email = require("../public/js/email");
+const Email = require("../email/email");
 const mailer = new Email;
 
 // function to delete from TicketMaster table
@@ -77,7 +77,7 @@ function insertIntoTicketMaster(req, res, faceValue) {
 
   })
   .then(() => {
-    mailer.emailer(email, req.body, "seller");
+    mailer.emailer(email, req.body, "listing");
     res.status(201).end();
   })
   .catch((error) => {
@@ -196,21 +196,6 @@ module.exports = function(app) {
     .catch(() => {
       console.log("there's been a db query error");
     });
-  });
-
-  app.post("/api/new-sale", function(req, res) {
-    mailer.emailer(req.body.email, req.body, "sold");
-    res.status(200).end();
-  });
-
-  app.post("/api/new-purchase", function(req, res) {
-    mailer.emailer(req.body.email, req.body, "buyer");
-    res.status(200).end();
-  });
-
-  app.post("/api/delete-email", function(req, res) {
-    mailer.emailer(req.body.email, req.body, "deactivate");
-    res.status(200).end();
   });
 
   app.post("/api/sold-ticket", function(req, res) {

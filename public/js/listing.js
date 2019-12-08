@@ -48,7 +48,7 @@ $(document).ready(() => {
             console.log("there was an error while trying to delete from the database");
         });
 
-        $.ajax("/api/delete-email", {
+        $.ajax("/email/deactivate", {
             type: "POST",
             data: ticketInfo
         })

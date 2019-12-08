@@ -220,7 +220,7 @@ $(document).ready(() => {
             userName: targetData.name
         }
 
-        $.ajax("/api/new-sale", {
+        $.ajax("/email/sold", {
             type: "POST",
             data: ticketInfo
         })
