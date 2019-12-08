@@ -37,7 +37,15 @@ $(document).ready(() => {
             email: email
         };
 
-        location.href = "/user-email/" + email;
+        $.ajax("/api/delete-listing/" + ticketid, {
+            type: "DELETE"
+        })
+        .then(() => {
+            // console.log("delete from db successful");
+        })
+        .catch(error => {
+            console.log("there was an error while trying to delete from the database");
+        });
 
         $.ajax("/api/delete-email", {
             type: "POST",
@@ -49,16 +57,8 @@ $(document).ready(() => {
         .catch(error => {
             console.log("there was an error while trying to send a deactivate email");
         });
-        
-        $.ajax("/api/delete-listing/" + ticketid, {
-            type: "DELETE"
-        })
-        .then(() => {
-            // console.log("delete from db successful");
-        })
-        .catch(error => {
-            console.log("there was an error while trying to delete from the database");
-        });
+
+        location.href = "/user-email/" + email;
 
     });
 
