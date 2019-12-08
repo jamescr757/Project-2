@@ -42,6 +42,7 @@ $(document).ready(() => {
         })
         .then(() => {
             // console.log("delete from db successful");
+            location.href = "/user-email/" + email;
         })
         .catch(error => {
             console.log("there was an error while trying to delete from the database");
@@ -57,8 +58,6 @@ $(document).ready(() => {
         .catch(error => {
             console.log("there was an error while trying to send a deactivate email");
         });
-
-        location.href = "/user-email/" + email;
 
     });
 
