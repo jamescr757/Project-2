@@ -1,10 +1,10 @@
-  <div class="container">
+  <div class="container listing-container">
     {{#if listing}}
-      <div class="row">
-        <div class="col-6">
-          <div class="card mt-4">
+      <div class="row justify-content-center">
+        <div class="col-5">
+          <div class="card mt-3">
             <div class="card-body">
-                <h1>Your Active Listings</h1>
+                <h1 class="listing-h1">Your Active Listings</h1>
                 {{#if notInDatabase}}
                   <p>That email is not in our system</p>
                 {{/if}}
@@ -17,7 +17,6 @@
                 {{#if this.purchased}}
                 {{else}}
                 <ul class="listing">
-                    <div class="container">
                         <div class="row">
                             <div class="col-3">
                                 <li><p><strong>Section</strong>: </p>
@@ -63,11 +62,11 @@
                               data-target="#deactivateModal">Deactivate Listing</button></li>
                           </div>
                         </div>
-                    </div>
                   </ul>
+                  <br/>
                   {{/if}}
                 {{/each}}
-                <br/>
+                
 
                 {{#if notInDatabase}}
                   <a class="try-again-anchor" href="/user-email">Try Again</a>

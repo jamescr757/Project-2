@@ -39,9 +39,9 @@ h4{
     font-family: 'Open Sans', sans-serif, bold;
 }
 
-.btn-lg{
+.btn-lg {
     
-    border:black solid .1rem;
+    border:black solid .2rem;
     color:white;
     border-radius: 10px;
     background-color:black;
@@ -50,11 +50,16 @@ h4{
     margin: 10px;
 }
 
-.btn:hover{
+.btn:hover {
     background-color: white;
     border: white solid .2rem;
     color:black;
-    
+}
+
+.btn-lg:active {
+  background-color: black;
+  border:black solid .2rem;
+  color:white;
 }
 
 a:active{
