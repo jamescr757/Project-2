@@ -53,13 +53,14 @@ $(document).ready(() => {
         const sectionNumber = parseInt($("#ticket-section").val().trim());
         const rowNumber = parseInt($("#row-input").val().trim());
         const seatNumber = parseInt($("#seat-input").val().trim());
+        const rowId = rowIdGenerator(rowNumber, sectionNumber);
         const ticketId = ticketIdGenerator(sectionNumber, rowNumber, seatNumber);
 
         const userName = $("#name-input").val().trim();
         const email = $("#email-input").val().trim();
         const price = parseFloat($("#user-price").val().trim());
 
-        const userData = { sectionNumber, rowNumber, seatNumber, ticketId, userName, email, price }
+        const userData = { sectionNumber, rowNumber, seatNumber, ticketId, userName, email, price, rowId }
 
         $.ajax("/api/new-listing", {
             type: "POST",
@@ -89,6 +90,8 @@ $(document).ready(() => {
     $("#buyer-email-form").on("submit", (event) => {
         event.preventDefault();
 
+        location.href = "/buyer-confirmation";
+
         const { section, row, seat, price } = event.target.dataset
 
         const userData = {
@@ -104,14 +107,11 @@ $(document).ready(() => {
             data: userData
         })
         .then(() => {
-            console.log("buyer email successful");
+            // console.log("buyer email successful");
         })
         .catch(() => {
             console.log("there's been an error trying to process a new purchase");
         });
-
-        location.href = "/buyer-confirmation";
-        
     });
 
     $("#seller-email-form").on("submit", (event) => {

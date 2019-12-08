@@ -1,21 +1,15 @@
   <div class="container">
-    {{#if listing}}
       <div class="row">
         <div class="col-6">
           <div class="card mt-4">
             <div class="card-body">
-                <h1>Your Active Listings</h1>
-                {{#if notInDatabase}}
-                  <p>That email is not in our system</p>
-                {{/if}}
-
-                {{#if noActiveTix}}
-                  <p>You do not have any active listings</p>
+                <h1>Your Ticket Sales</h1>
+                {{#if noSoldTix}}
+                  <p>You have not sold any tickets</p>
                 {{/if}}
 
                 {{#each listingArray}}
-                {{#if this.purchased}}
-                {{else}}
+                {{#if this.sold}}
                 <ul class="listing">
                     <div class="container">
                         <div class="row">
@@ -50,37 +44,18 @@
                                  <p>${{this.price}}</p></li>
                             </div>
                         </div>
-                        <div class="row">
-                          <div class="col-12">
-                              <li><button type="button" class="btn btn-outline-danger deactivate-btn"
-                              data-ticketid="{{this.ticket_id}}"
-                              data-section="{{this.section_number}}"
-                              data-row="{{this.row_number}}"
-                              data-seat="{{this.seat_number}}"
-                              data-price="{{this.price}}"
-                              data-email="{{this.email}}"
-                              data-toggle="modal"
-                              data-target="#deactivateModal">Deactivate Listing</button></li>
-                          </div>
-                        </div>
                     </div>
-                  </ul>
-                  {{/if}}
+                </ul>
+                {{/if}}
                 {{/each}}
                 <br/>
-
-                {{#if notInDatabase}}
-                  <a class="try-again-anchor" href="/user-email">Try Again</a>
-                {{else}}
-                  <a class="try-again-anchor" href="/sold-listings/{{userEmail}}">View Your Sales</a>
-                {{/if}}
-
+                <a class="try-again-anchor" href="/user-email/{{userEmail}}">View Active Listings</a>
                 <a class="home-anchor" href="/">Home Page</a>
+
             </div>
           </div>
         </div>
       </div>
-    {{/if}}
 
   {{#if sellerEmail}}
   <div class="jumbotron">
@@ -111,23 +86,3 @@
 </div>
 
 
-    <!-- Modal -->
-<div class="modal fade" id="deactivateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenterTitle">Deactivate Listing</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            
-        </div>
-        <div class="modal-footer">
-            <button id="deactivate-modal-btn" type="button" class="btn btn-danger">Deactivate</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        </div>
-        </div>
-    </div>
-</div>

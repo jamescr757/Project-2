@@ -44,8 +44,12 @@ function emailer(userEmail, ticketObj, userType) {
       emailText(mailOptions, ticketObj, "Your ticket has sold!", "Sale");
       break;
       
-    default: 
+    case "buyer": 
       emailText(mailOptions, ticketObj, "Thank you for your purchase!", "Purchase");
+      break;
+
+    default: 
+      emailText(mailOptions, ticketObj, "Your ticket has been deactivated!", "Deactivated Listing");
       break;
   }
   
@@ -57,6 +61,89 @@ function emailer(userEmail, ticketObj, userType) {
     }
   });
 
+}
+
+// function to delete from TicketMaster table
+// will be nested inside route to render buyer receipt email
+function deleteFromTicketMaster(ticketId) {
+  
+  db.TicketMaster.destroy({
+    where: {
+      ticket_id: ticketId
+    }
+  })
+  .then(function() {
+    console.log("delete from ticket master successful");
+  })
+  .catch(() => {
+    console.log("error in deleteFromTicketMaster");
+  });
+}
+
+// query sold tix table to see if user email in our system 
+function findEmailTixSold(res, userEmail, contextObj) {
+  
+  db.TixSold.findAll({
+    where: {
+      email: userEmail
+    }
+  })
+  .then(dbArray => {  
+
+    if (dbArray.length === 0) {
+      contextObj.notInDatabase = true;
+      // set no active tix to false b/c handlebars doesn't have else if 
+      contextObj.noActiveTix = false;
+    } else {
+      contextObj.soldTix = true;
+    }
+
+    res.render("user-listing", contextObj);
+  })
+  .catch(error => {
+    // console.log(error.message);
+    console.log("there's been an error finding an email in TixSold");
+  })
+}
+
+// grab face value price from that table
+function grabFaceValueAndCreateNewListing(req, res, rowId) {
+  db.FaceValue.findOne({
+    where: {
+      id: rowId
+    }
+  }).then(rowFaceValue => {
+    insertIntoTicketMaster(req, res, rowFaceValue.price)
+  })
+  .catch(error => {
+    console.log("error while gettig price from face value table");
+  });
+}
+
+function insertIntoTicketMaster(req, res, faceValue) {
+  
+  const { sectionNumber, rowNumber, seatNumber, ticketId, userName, email, price } = req.body;
+
+  db.TicketMaster.create({
+
+    section_number: sectionNumber,
+    row_number: rowNumber,
+    seat_number: seatNumber,
+    ticket_id: ticketId,
+    price: price,
+    face_value: faceValue,
+    user_name: userName,
+    email: email
+
+  })
+  .then(() => {
+    emailer(email, req.body, "seller");
+    res.status(201).end();
+  })
+  .catch((error) => {
+    console.log("there's been a db query error while creating a new listing");
+    res.status(500).end();
+  });
 }
 
 module.exports = function(app) {
@@ -78,16 +165,76 @@ module.exports = function(app) {
         email: req.params.email
       }
     })
+    .then(function(activeListings) {
+      // going to be an array of objects
+
+      const contextObj = {
+        listing: true,
+        listingArray: activeListings,
+        userEmail: req.params.email
+      }
+      
+      if (activeListings.length === 0) {
+        contextObj.noActiveTix = true;
+        findEmailTixSold(res, req.params.email, contextObj);
+
+      } else {
+        res.render("user-listing", contextObj);
+      }
+      
+
+    })
+    .catch(error => {
+      console.log("error while querying ticket master with an email");
+      res.status(500).end();
+    });
+  });
+
+  app.get("/user-email/ticket/:id",function(req,res){
+
+    db.TicketMaster.findOne({
+      where: {
+        ticket_id: req.params.id
+      }
+    })
+    .then(function(ticketInfo) {
+
+      const { section_number, row_number, seat_number, price } = ticketInfo.dataValues
+
+      // going to be an array of objects
+      res.render("user-listing", { 
+        buyerEmail: true,
+        section_number,
+        row_number,
+        seat_number,
+        price,
+      });
+    })
+    .then(() => {
+      deleteFromTicketMaster(req.params.id);
+    })
+    .catch(() => {
+      console.log("there's been a db query error");
+      res.status(500).end();
+    });
+  });
+
+  app.get("/sold-listings/:email", function(req, res) {
+    db.TixSold.findAll({
+      where: {
+        email: req.params.email
+      }
+    })
     .then(function(userListing) {
       // going to be an array of objects
       const contextObj = {
-        listing: true,
-        listingArray: userListing
+        listingArray: userListing,
+        userEmail: req.params.email
       }
 
-      if (userListing.length === 0) contextObj.noTix = true;
+      if (userListing.length === 0) contextObj.noSoldTix = true;
 
-      res.render("user-listing", contextObj);
+      res.render("sold-listings", contextObj);
     })
     .catch(() => {
       console.log("there's been a db query error");
@@ -97,34 +244,12 @@ module.exports = function(app) {
 
   app.post("/api/new-listing", function(req, res) {
 
-    const { sectionNumber, rowNumber, seatNumber, ticketId, userName, email, price } = req.body;
+    grabFaceValueAndCreateNewListing(req, res, req.body.rowId);
 
-    db.TicketMaster.create({
-
-      section_number: sectionNumber,
-      row_number: rowNumber,
-      seat_number: seatNumber,
-      ticket_id: ticketId,
-      price: price,
-      user_name: userName,
-      email: email
-
-    }).then(() => {
-      emailer(email, req.body, "seller");
-      res.status(201).end();
-    })
-    .catch(() => {
-      console.log("there's been a db query error");
-      res.status(500).end();
-    });
   });
 
   app.get("/api/venue", function(req, res) {
-    db.TicketMaster.findAll({
-      where: {
-        purchased: false
-      }
-    })
+    db.TicketMaster.findAll({})
     .then(function(allTickets) {
       res.json(allTickets);
     })
@@ -135,27 +260,56 @@ module.exports = function(app) {
 
   app.post("/api/new-sale", function(req, res) {
     emailer(req.body.email, req.body, "sold");
-    res.status(201).end();
+    res.status(200).end();
   });
 
   app.post("/api/new-purchase", function(req, res) {
     emailer(req.body.email, req.body, "buyer");
-    res.status(201).end();
+    res.status(200).end();
   });
 
-  app.put("/api/ticket-purchased/:ticketId", function(req, res) {
+  app.post("/api/delete-email", function(req, res) {
+    emailer(req.body.email, req.body, "deactivate");
+    res.status(200).end();
+  });
 
-    let purchasedTicketId 
+  app.post("/api/sold-ticket", function(req, res) {
 
-    db.TicketMaster.update({
-      purchased: true
-    }, {
+    const { sectionNumber, rowNumber, seatNumber, ticketId, userName, email, price } = req.body;
+
+    db.TixSold.create({
+
+      section_number: sectionNumber,
+      row_number: rowNumber,
+      seat_number: seatNumber,
+      ticket_id: ticketId,
+      price: price,
+      user_name: userName,
+      email: email
+
+    })
+    .then(function() {
+      res.status(201).end();
+    })
+    .catch(error => {
+      console.log("there was a db query error inserting row into tix sold");
+      res.status(500).end();
+    });;
+  });
+
+  app.delete("/api/delete-listing/:ticketId", function(req, res) {
+
+    db.TicketMaster.destroy({
       where: {
         ticket_id: req.params.ticketId
       }
-    }).then(function() {
-
+    })
+    .then(function() {
       res.status(204).end();
+    })
+    .catch(() => {
+      console.log("there was a db query error in deleting from ticket master");
+      res.status(500).end();
     });
   });
 

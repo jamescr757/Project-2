@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
     
-    const TicketMaster = sequelize.define("TicketMaster", {
+    const TixSold = sequelize.define("TixSold", {
 
         section_number: {
             type: DataTypes.INTEGER,
@@ -31,19 +31,14 @@ module.exports = function(sequelize, DataTypes) {
         },
         ticket_id: {
             type: DataTypes.INTEGER,
-            allowNull: false,
-            unique: true
-        },
-        purchased: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: false
-        },
-        price: {
-            type: DataTypes.DECIMAL(6, 2),
             allowNull: false
         },
-        face_value: {
+        sold: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: true
+        },
+        price: {
             type: DataTypes.DECIMAL(6, 2),
             allowNull: false
         },
@@ -53,11 +48,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         email: {
             type: DataTypes.STRING,
-            defaultValue: "app@gmail.com",
-            allowNull: false,
-            validate: {
-                isEmail: true
-            }
+            allowNull: false
         }
 
     }, {
@@ -67,6 +58,6 @@ module.exports = function(sequelize, DataTypes) {
         timestamps: false
     });
 
-    return TicketMaster;
+    return TixSold;
   };
   

@@ -1,8 +1,31 @@
+.navbar {
+
+  background-color: transparent;
+  border-bottom: solid rgb(235, 228, 228) 2px;
+
+}
+
+.txt-white{
+
+  color: rgb(235, 228, 228); 
+  font-display: bold;
+
+}
+
+a.hov:hover {
+  color:  white;
+  font-size: larger;
+  line-height: 18pt;
+}
+
 .list-group-item {
   line-height: 2.5;
+
 }
+
 h1,h2 {
   font-family: 'Bebas Neue', cursive;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .post-pass {
@@ -36,9 +59,33 @@ h1,h2 {
 
 #form-info {
   opacity: 0;
+
 }
-.btn-sellticket {
-  margin: 70px;
+
+.display-2 {
+  font-family: 'Bebas Neue', cursive; 
+  color:black;
+  line-height: 90%;
+}
+
+.btn-lg{
+  border:black solid .1rem;
+    color:white;
+    border-radius: 10px;
+    background-color:black;
+    color:white;
+    padding: 13px;
+    margin: 10px;
+}
+
+.btn-lg:hover{
+    background-color: white;
+    border:black solid .2rem;
+    color:black;
+}
+
+.display-3{
+  font-family: 'Bebas Neue', cursive; 
 }
 
 ul.listing {
@@ -46,26 +93,28 @@ ul.listing {
 }
 
 .home-anchor {
-  padding-right: 8px;
-}
-
-.try-again-anchor {
   padding-left: 10px;
   border-left: black solid 1px;
 }
 
+.try-again-anchor {
+  padding-right: 8px;
+}
+
 body {
   background-image: url('concert.jpeg');
-  background-size: 80%;
   position: sticky;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
+  min-height: 100vh;
 }
 
 .main-container {
   display: flex;
   flex-direction: column;
   margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .top-row, .middle-row, .bottom-row {
@@ -76,7 +125,6 @@ body {
 }
 
 .section {
-  height: 200px;
   flex-basis: 200px;
   background-color: whitesmoke;
   display: flex;
@@ -84,9 +132,23 @@ body {
   position: relative;
 }
 
+.section-front {
+  position: absolute;
+  opacity: 0.5;
+  background-color: whitesmoke;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+}
+
+.section, .section-front {
+  height: 200px;
+  width: 200px;
+}
+
 .stage {
-  height: 250px;
-  flex-basis: 250px;
+  height: 265px;
+  flex-basis: 265px;
   background-color: black;
   margin: 2rem;
   display: flex;
@@ -101,33 +163,37 @@ body {
 }
 
 .seat.available {
-  background-color: rgb(28, 235, 28);
   cursor: pointer;
 }
 
 .seat.available:hover {
-  transform: scale(1.5);
+  border: black solid 0.05px;
+  transform: scale(2.5);
 }
 
 .section-row {
   margin: 1px 0.75px;
-  display: none;
   height: 100%;
+  filter: blur(3px);
 }
 
-.section h3, .stage h3 {
+.section-row.unblur {
+  filter: blur(0px);
+}
+
+.stage h3, .section h3  {
   margin: auto;
   text-align: center;
 }
 
 .stage p.top {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
 .stage p {
   margin: 0;
-  margin-bottom: 0.75rem;
-  margin-left: 1.5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 1.25rem;
   font-size: 1.25rem;
 }
 
@@ -135,7 +201,11 @@ p.purchase {
   color: rgb(7, 255, 7);
 }
 
-p.modal-purchase {
+p.bold-p {
+  font-weight: bold;
+}
+
+p.modal-subheader {
   font-weight: bold;
   font-size: 1.25rem;
 }
@@ -149,7 +219,7 @@ p.modal-purchase {
   transform: rotate(270deg);
 }
 
-.west, .west h3 {
+.west, .west .section-front {
   transform: rotate(180deg);
 }
 
@@ -157,14 +227,16 @@ p.modal-purchase {
   transform: rotate(90deg);
 }
 
-.north h3 {
+.north .section-front {
   transform: rotate(90deg);
 }
 
-.south h3 {
+.south .section-front {
   transform: rotate(270deg);
 }
 
-.test {
-  display: block;
+.btn-outline-danger {
+  border-radius: 0.5rem;
+  padding: 0.5rem 1.1rem;
+  font-weight: bold;
 }
