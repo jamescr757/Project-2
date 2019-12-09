@@ -24,19 +24,17 @@ $(document).ready(() => {
 
         const rowId = rowIdGenerator(rowNumber, sectionNumber);
         
-        if (rowNumber > 20) {
+        if (sectionNumber < 1 || sectionNumber > 4) userMessage("Please input a valid section number");
 
-            userMessage("Please input a valid row number");
+        else if (rowNumber < 1 || rowNumber > 20) userMessage("Please input a valid row number");
             
-        } else if (seatNumber > 30) {
+        else if (seatNumber < 1 || seatNumber > 30) userMessage("Please input a valid seat number");
 
-            userMessage("Please input a valid seat number");
+        else if (!$("#name-input").val()) userMessage("Please input your name");
 
-        } else if (!$("#name-input").val()) {
+        else if (!$("#email-input").val()) userMessage("Please input your email");
 
-            userMessage("Please input your name");
-
-        } else {
+        else {
 
             $.ajax("/api/sell-price/" + rowId, {
                 type: "GET"
@@ -45,8 +43,7 @@ $(document).ready(() => {
                 userMessage(`Suggested price for a quick sale is $${(response.price * 0.9).toFixed(2)}`);
             })
             .catch(() => {
-                // need to tell user to input valid section/row number
-                userMessage("Please input a valid section number");
+                userMessage("Please input a valid information");
             })
         }
     })

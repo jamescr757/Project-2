@@ -203,6 +203,21 @@ $(document).ready(() => {
         }
     })
 
+    // ajax post request 
+    function ajaxPOST(path, ticketInfo, message) {
+        
+        $.ajax(path, {
+            type: "POST",
+            data: ticketInfo
+        })
+        .then(() => {
+            // console.log("ajax post successful");
+        })
+        .catch(() => {
+            console.log(`there's been an error trying to ${message}`);
+        });
+    }
+
     $("#purchase-btn").on("click", (event) => {
 
         const { ticketid, name, section, row, seat, price, email } = event.target.dataset;
@@ -219,27 +234,31 @@ $(document).ready(() => {
             userName: name
         }
 
-        $.ajax("/email/sold", {
-            type: "POST",
-            data: ticketInfo
-        })
-        .then(() => {
-            // console.log("seller email successful");
-        })
-        .catch(() => {
-            console.log("there's been an error trying to process a new sale");
-        });
+        ajaxPOST("/email/sold", ticketInfo, "email a seller");
 
-        $.ajax("/api/sold-ticket", {
-            type: "POST",
-            data: ticketInfo
-        })
-        .then(() => {
-            // console.log("adding new row successful");
-        })
-        .catch(() => {
-            console.log("there's been an error trying to insert into tixSold");
-        });
+        ajaxPOST("/api/sold-ticket", ticketInfo, "insert into tixSold");
+
+        // $.ajax("/email/sold", {
+        //     type: "POST",
+        //     data: ticketInfo
+        // })
+        // .then(() => {
+        //     // console.log("seller email successful");
+        // })
+        // .catch(() => {
+        //     console.log("there's been an error trying to process a new sale");
+        // });
+
+        // $.ajax("/api/sold-ticket", {
+        //     type: "POST",
+        //     data: ticketInfo
+        // })
+        // .then(() => {
+        //     // console.log("adding new row successful");
+        // })
+        // .catch(() => {
+        //     console.log("there's been an error trying to insert into tixSold");
+        // });
     })
 
 });
