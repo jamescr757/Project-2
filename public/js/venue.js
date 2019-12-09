@@ -27,6 +27,13 @@ $(document).ready(() => {
         else return valueScore;
     } 
 
+    // helper function for adding data-rating and seat color class
+    function addColorAndRating(seatElement, seatColor, rating) {
+
+        seatElement.addClass(`${seatColor}`);
+        seatElement.attr("data-rating", `${rating}`);
+    }
+
     // determine color of seat based on value score
     // input seat element and add css background color property
     // switch case with expression true 
@@ -35,31 +42,33 @@ $(document).ready(() => {
         switch (true) {
 
             case valueScore == 5.0:
-                seatElement.addClass("neon-green");
-                seatElement.attr("data-rating", "Excellent");
+                addColorAndRating(seatElement, "neon-green", "Excellent");
                 break;
             case valueScore >= 4.0:
-                seatElement.addClass("neon-green");
-                seatElement.attr("data-rating", "Great");
+                addColorAndRating(seatElement, "neon-green", "Great");
                 break;
             case valueScore >= 3.0:
-                seatElement.addClass("green");
-                seatElement.attr("data-rating", "Good");
+                addColorAndRating(seatElement, "green", "Good");
                 break;
             case valueScore >= 2.0:
-                seatElement.addClass("pink");
-                seatElement.attr("data-rating", "Okay");
+                addColorAndRating(seatElement, "pink", "Okay");
                 break;
             case valueScore >= 1.0:
-                seatElement.addClass("red");
-                seatElement.attr("data-rating", "Bad");
+                addColorAndRating(seatElement, "red", "Bad");
                 break;
             default:
-                seatElement.addClass("red");
-                seatElement.attr("data-rating", "Terrible");
+                addColorAndRating(seatElement, "red", "Terrible");
                 break;
-            
         }
+    }
+
+    // append seat to specific section; add data-ticketid
+    function appendSeatToSection(section, rowNum, ticketId) {
+
+        $(`.section.${section} .row-${rowNum}`).append(`
+            <div class="seat" data-ticketid="${ticketId}">
+            </div>
+        `);
     }
 
     // create seats
@@ -71,27 +80,15 @@ $(document).ready(() => {
 
         for (seatNum = 1; seatNum <= 30; seatNum++) {
             
-            let id = (rowNum - 1) * 30 + seatNum;
+            const ticketid = (rowNum - 1) * 30 + seatNum;
 
-            $(`.section.north .row-${rowNum}`).append(`
-                <div class="seat" data-ticketid="${id}">
-                </div>
-            `);
+            appendSeatToSection("north", rowNum, ticketid);
 
-            $(`.section.east .row-${rowNum}`).append(`
-                <div class="seat" data-ticketid="${id + 600}">
-                </div>
-            `);
+            appendSeatToSection("east", rowNum, ticketid + 600);
 
-            $(`.section.south .row-${rowNum}`).append(`
-                <div class="seat" data-ticketid="${id + 1200}">
-                </div>
-            `);
+            appendSeatToSection("south", rowNum, ticketid + 1200);
 
-            $(`.section.west .row-${rowNum}`).append(`
-                <div class="seat" data-ticketid="${id + 1800}">
-                </div>
-            `);
+            appendSeatToSection("west", rowNum, ticketid + 1800);
         }
     }
 
@@ -104,6 +101,44 @@ $(document).ready(() => {
         domElement.attr("data-email", `${datasetObj.email}`);
     }
 
+    // append info to stage or modal
+    function appendSeatInfo(elementClassName, datasetObj) {
+
+        const { section, row, seat, price, score, rating } = datasetObj;
+        
+        $(`.${elementClassName}`).empty();
+
+        $(`.modal-body`).append(`
+            <p class="modal-subheader">Are you sure you want to purchase this ticket?</p>
+        `);
+
+        $(`.${elementClassName}`).append(`
+            <p class="top">Section Number: ${section}</p>
+            <p>Row Number: ${row}</p>
+            <p>Seat Number: ${seat}</p>
+            <p>Price: <b>$${price}</b></p>
+            <p>Value: <b>${rating} (${score}/5.0)</b></p>
+        `);
+
+        $(`.stage`).append(`
+            <p class="purchase">Click seat to purchase!</p>
+        `);
+    }
+
+    function seatClick(event) {
+
+        appendSeatInfo("modal-body", event.target.dataset);
+
+        const purchaseBtnElement = $("#purchase-btn");
+
+        purchaseBtnElement.attr("data-ticketid", `${event.target.dataset.ticketid}`);
+        purchaseBtnElement.attr("data-name", `${event.target.dataset.name}`);
+
+        // helper function adds section, row, seat, price, email to dataset
+        dataAdder(purchaseBtnElement, event.target.dataset);
+    }
+
+    // get all tickets for sale in Ticket Master table
     $.ajax("api/venue", {
         type: "GET"
     })
@@ -127,12 +162,11 @@ $(document).ready(() => {
 
             ticketSquareElement.attr("data-score", `${valueScore}`);
             ticketSquareElement.attr("data-name", `${ticket.user_name}`);
+            ticketSquareElement.attr("data-toggle", "modal");
+            ticketSquareElement.attr("data-target", "#purchaseModal");
 
             // helper function adds section, row, seat, price, email to dataset
             dataAdder(ticketSquareElement, datasetObj);
-
-            ticketSquareElement.attr("data-toggle", "modal");
-            ticketSquareElement.attr("data-target", "#purchaseModal");
             
             ticketSquareElement.on("click", seatClick);
         }
@@ -165,59 +199,24 @@ $(document).ready(() => {
             $(".stage p").remove();
             $(".stage button").remove();
 
-            const { section, row, seat, price, score, rating } = event.target.dataset;
-
-            $(".stage").append(`
-                <p class="top">Section Number: ${section}</p>
-                <p>Row Number: ${row}</p>
-                <p>Seat Number: ${seat}</p>
-                <p>Price: $${price}</p>
-                <p>Value: ${rating} (${score}/5.0)</p>
-                <p class="purchase">Click seat to purchase!</p>
-            `)
+            appendSeatInfo("stage", event.target.dataset);
         }
     })
 
-
-    function seatClick(event) {
-
-        const { id, name, score, rating } = event.target.dataset;
-
-        $(".modal-body").empty();
-
-        $(".modal-body").append(`
-            <p class="modal-subheader">Are you sure you want to purchase this ticket?</p>
-            <p class="top">Section Number: ${event.target.dataset.section}</p>
-            <p>Row Number: ${event.target.dataset.row}</p>
-            <p>Seat Number: ${event.target.dataset.seat}</p>
-            <p>Price: <b>$${event.target.dataset.price}</b></p>
-            <p>Value: <b>${rating} (${score}/5.0)</b></p>
-        `);
-
-        const purchaseBtnElement = $("#purchase-btn");
-
-        purchaseBtnElement.attr("data-ticketid", `${id}`);
-        purchaseBtnElement.attr("data-name", `${name}`);
-
-        // helper function adds section, row, seat, price, email to dataset
-        dataAdder(purchaseBtnElement, event.target.dataset);
-
-    }
-
     $("#purchase-btn").on("click", (event) => {
 
-        const targetData = event.target.dataset;
+        const { ticketid, name, section, row, seat, price, email } = event.target.dataset;
 
-        location.href = "/user-email/ticket/" + targetData.id;
+        location.href = "/user-email/ticket/" + ticketid;
 
         const ticketInfo = {
-            ticketId: targetData.id,
-            sectionNumber: targetData.section,
-            rowNumber: targetData.row,
-            seatNumber: targetData.seat,
-            price: targetData.price,
-            email: targetData.email,
-            userName: targetData.name
+            ticketId: ticketid,
+            sectionNumber: section,
+            rowNumber: row,
+            seatNumber: seat,
+            price: price,
+            email: email,
+            userName: name
         }
 
         $.ajax("/email/sold", {
@@ -241,7 +240,6 @@ $(document).ready(() => {
         .catch(() => {
             console.log("there's been an error trying to insert into tixSold");
         });
-
     })
 
 });

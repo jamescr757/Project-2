@@ -29,7 +29,6 @@ $(document).ready(() => {
 
         // helper function adds section, row, seat, price, email to dataset
         dataAdder(deactivateBtnElement, event.target.dataset);
-
     });
 
     $("#deactivate-modal-btn").on("click", event => {
