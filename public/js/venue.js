@@ -238,27 +238,6 @@ $(document).ready(() => {
 
         ajaxPOST("/api/sold-ticket", ticketInfo, "insert into tixSold");
 
-        // $.ajax("/email/sold", {
-        //     type: "POST",
-        //     data: ticketInfo
-        // })
-        // .then(() => {
-        //     // console.log("seller email successful");
-        // })
-        // .catch(() => {
-        //     console.log("there's been an error trying to process a new sale");
-        // });
-
-        // $.ajax("/api/sold-ticket", {
-        //     type: "POST",
-        //     data: ticketInfo
-        // })
-        // .then(() => {
-        //     // console.log("adding new row successful");
-        // })
-        // .catch(() => {
-        //     console.log("there's been an error trying to insert into tixSold");
-        // });
     })
 
 });
