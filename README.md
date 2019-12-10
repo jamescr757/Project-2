@@ -36,8 +36,10 @@ Project 2
 
 
 
-### A Couple Disclaimers
+### A Few Disclaimers
 
 1. I tried to make it easy to find the front-end code because it's important to understand what the front-end is requesting (you don't have to fully understand how the front-end js is working but hopefully you can follow what it's doing by how I named everything)
 
 2. I like to console log my own error message, so it's clear where the error occurred. If I'm not sure why the error occurred, I can then print the entire error with `console.log(error)` and run the code again to see it in the console. Sometimes seeing that massive error in the console first makes me upset, and it's difficult to parse through it and figure out where the actual error occurred. IMO, I like doing it the way I currently have the code written better.  
+
+3. At the end, you can checkout to the master/stable branch to see the working code
