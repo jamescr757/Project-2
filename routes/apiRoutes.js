@@ -5,31 +5,35 @@ const mailer = new Email;
 
 // function to delete from TicketMaster table
 // this function fires when user clicks deactivate button
-function deleteFromTicketMaster(ticketId) {
+function deleteFromTicketMaster(res, ticketId) {
   
-  db.TicketMaster.destroy({
-    where: {
-      ticket_id: ticketId
-    }
-  })
-  .then(function() {
-    console.log("delete from ticket master successful");
-  })
-  .catch(error => {
-    // can console.log the error to see more information about the error
-    console.log("error in deleteFromTicketMaster");
-  });
+  // db.
+  
+  // delete from Ticket Master table using the ticket's id
+
+
+  // .then(
+
+  //   console.log("delete from ticket master successful");
+  //   tell the front-end that delete was successful with a status code
+
+  // )
+  // .catch(error => {
+  //   // can console.log the error to see more information about the error
+  //   console.log("error in deleteFromTicketMaster");
+  // });
 }
 
 // query sold tix table to see if user email in our system 
 function findEmailTixSold(res, userEmail, contextObj) {
   
-  db.TixSold.findAll({
-    where: {
-      email: userEmail
-    }
-  })
-  .then(dbArray => {  
+  // db.
+
+
+  // check if userEmail is in the TixSold table
+
+
+  // .then(dbArray => {  
 
     if (dbArray.length === 0) {
       contextObj.notInDatabase = true;
@@ -39,12 +43,14 @@ function findEmailTixSold(res, userEmail, contextObj) {
       contextObj.soldTix = true;
     }
 
-    res.render("user-listing", contextObj);
-  })
-  .catch(error => {
+    // after adding booleans to the context object with the if statement above, we want to render the user-listing handlebars page with the contextObj
+
+    
+  // })
+  // .catch(error => {
   // can console.log the error to see more information about the error
     console.log("there's been an error finding an email in TixSold");
-  })
+  // })
 }
 
 // grab face value price from that table
@@ -120,35 +126,43 @@ module.exports = function(app) {
     // });
   });
 
+  // this route gets hit after the user enter's their email to view their listings 
+  // front-end code on line 112-116
+  // want to check if the entered email is in our database
   app.get("/user-email/:email", function(req, res) {
-    db.TicketMaster.findAll({
-      where: {
-        email: req.params.email
-      }
-    })
-    .then(function(activeListings) {
-      // going to be an array of objects
 
+    // db.
+
+    // first look in TicketMaster table for the email
+
+
+    // .then(function(activeListings) {
+      // going to be an array of objects
+      // going to send the data to a handlebars file so creating a contextObj
       const contextObj = {
         listing: true,
         listingArray: activeListings,
         userEmail: req.params.email
       }
       
+      // if the entered email is not in TicketMaster, want to check if it's in our TixSold table 
       if (activeListings.length === 0) {
         contextObj.noActiveTix = true;
         findEmailTixSold(res, req.params.email, contextObj);
 
       } else {
-        res.render("user-listing", contextObj);
+
+      // if email query returns an array with data in it, we can go ahead and render the handlebars page without checking TixSold table 
+      // render the user-listing handlebars page with the contextObj
+
       }
       
-    })
-    .catch(error => {
+    // })
+    // .catch(error => {
       // can console.log the error to see more information about the error
       console.log("error while querying ticket master with an email");
       res.status(500).end();
-    });
+    // });
   });
 
   app.get("/user-email/ticket/:id",function(req,res){
@@ -266,7 +280,7 @@ module.exports = function(app) {
   // front-end js starts on line 34 of listing.js
   app.delete("/api/delete-listing/:ticketId", function(req, res) {
 
-    deleteFromTicketMaster(req.params.ticketId);
+    deleteFromTicketMaster(res, req.params.ticketId);
 
   });
 
