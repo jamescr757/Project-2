@@ -191,6 +191,22 @@ body {
   transform: scale(2.5);
 }
 
+.seat.neon-green {
+  background-color: rgb(0, 255, 30);
+}
+
+.seat.green {
+  background-color: rgb(10, 155, 20);
+}
+
+.seat.pink {
+  background-color: rgb(255, 138, 138);
+}
+
+.seat.red {
+  background-color: rgb(185, 0, 0);
+}
+
 .section-row {
   margin: 1px 0.75px;
   height: 100%;

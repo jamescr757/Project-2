@@ -1,5 +1,14 @@
 $(document).ready(() => {
 
+    // passed tests
+    function dataAdder(domElement, datasetObj) {
+        domElement.attr("data-section", `${datasetObj.section}`);
+        domElement.attr("data-row", `${datasetObj.row}`);
+        domElement.attr("data-seat", `${datasetObj.seat}`);
+        domElement.attr("data-price", `${datasetObj.price}`);
+        domElement.attr("data-email", `${datasetObj.email}`);
+    }
+
     $(".deactivate-btn").on("click", event => {
 
         event.preventDefault();
@@ -17,12 +26,9 @@ $(document).ready(() => {
         const deactivateBtnElement = $("#deactivate-modal-btn");
 
         deactivateBtnElement.attr("data-ticketid", `${event.target.dataset.ticketid}`);
-        deactivateBtnElement.attr("data-section", `${event.target.dataset.section}`);
-        deactivateBtnElement.attr("data-row", `${event.target.dataset.row}`);
-        deactivateBtnElement.attr("data-seat", `${event.target.dataset.seat}`);
-        deactivateBtnElement.attr("data-price", `${event.target.dataset.price}`);
-        deactivateBtnElement.attr("data-email", `${event.target.dataset.email}`);
 
+        // helper function adds section, row, seat, price, email to dataset
+        dataAdder(deactivateBtnElement, event.target.dataset);
     });
 
     $("#deactivate-modal-btn").on("click", event => {
@@ -48,7 +54,7 @@ $(document).ready(() => {
             console.log("there was an error while trying to delete from the database");
         });
 
-        $.ajax("/api/delete-email", {
+        $.ajax("/email/deactivate", {
             type: "POST",
             data: ticketInfo
         })
@@ -60,6 +66,9 @@ $(document).ready(() => {
         });
 
     });
+
+
+    // TODO: modify listing price button 
 
    
 

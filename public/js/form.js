@@ -2,14 +2,18 @@ $(document).ready(() => {
 
      // convert section and row number into id number
     function rowIdGenerator(rowNum, sectionNum) {
-        const idNum = (sectionNum - 1) * 20 + rowNum;
-        return idNum;
+        return (sectionNum - 1) * 20 + rowNum;
     }
 
     // convert seat into unique ticket id
     function ticketIdGenerator(sectionNum, rowNum, seatNum) {
-        const ticketId = (sectionNum - 1) * 600 + (rowNum - 1) * 30 + seatNum;
-        return ticketId;
+        return (sectionNum - 1) * 600 + (rowNum - 1) * 30 + seatNum;
+    }
+
+    // function to display info to user based on form inputs
+    function userMessage(message) {
+        $("#form-info").text(message);
+        $("#form-info").css("opacity", 1);
     }
 
     $("#user-price").on("focus", () => {
@@ -20,28 +24,26 @@ $(document).ready(() => {
 
         const rowId = rowIdGenerator(rowNumber, sectionNumber);
         
-        if (rowNumber > 20) {
-            $("#form-info").text("Please input a valid row number");
-            $("#form-info").css("opacity", 1);
-            
-        } else if (seatNumber > 30) {
-            $("#form-info").text("Please input a valid seat number");
-            $("#form-info").css("opacity", 1);
+        if (sectionNumber < 1 || sectionNumber > 4) userMessage("Please input a valid section number");
 
-        } else {
+        else if (rowNumber < 1 || rowNumber > 20) userMessage("Please input a valid row number");
+            
+        else if (seatNumber < 1 || seatNumber > 30) userMessage("Please input a valid seat number");
+
+        else if (!$("#name-input").val()) userMessage("Please input your name");
+
+        else if (!$("#email-input").val()) userMessage("Please input your email");
+
+        else {
 
             $.ajax("/api/sell-price/" + rowId, {
                 type: "GET"
             })
             .then(response => {
-                // target info span at bottom of form
-                $("#form-info").text(`Suggested price is $${response.price}`);
-                $("#form-info").css("opacity", 1);
+                userMessage(`Suggested price for a quick sale is $${(response.price * 0.9).toFixed(2)}`);
             })
             .catch(() => {
-                // need to tell user to input valid section/row number
-                $("#form-info").text("Please input a valid section number");
-                $("#form-info").css("opacity", 1);
+                userMessage("Please input a valid information");
             })
         }
     })
@@ -70,8 +72,7 @@ $(document).ready(() => {
             location.href = "/seller-confirmation"
         })
         .catch(() => {
-            $("#form-info").text("The information provided is invalid or that ticket is already for sale.");
-            $("#form-info").css("opacity", 1);
+            userMessage("The information provided is invalid or that ticket is already for sale");
         })
     });
 
@@ -79,12 +80,6 @@ $(document).ready(() => {
     $("#user-price").on("blur", () => { 
 
         $("#form-info").css("opacity", 0);
-    });
-
-    $("#my-listing").on("click", function(event) {
-
-        event.preventDefault();
-
     });
 
     $("#buyer-email-form").on("submit", (event) => {
@@ -102,7 +97,7 @@ $(document).ready(() => {
             price: price
         }
 
-        $.ajax("/api/new-purchase", {
+        $.ajax("/email/purchase", {
             type: "POST",
             data: userData
         })
@@ -117,11 +112,8 @@ $(document).ready(() => {
     $("#seller-email-form").on("submit", (event) => {
         event.preventDefault();
 
-        const userData = {
-            email: $("#user-email").val().trim()
-        }
-        
-        location.href = "/user-email/" + userData.email;
+        const email = $("#user-email").val().trim();
+        location.href = "/user-email/" + email;
     });
 
 });

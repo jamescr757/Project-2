@@ -5,7 +5,7 @@ $(document).ready(() => {
     // divide by face value and multiply by 100 to get percent difference
     // use a proportion to scale percent difference to number between -5 and 5
     // add scaled number to 6 and convert to float with one decimal
-    // if number above 10 or below 1 set the score to 10.0 or 1.0
+    // if number above 5 or below 5 set the score to 5.0 or 0.0
     // return value score
     // passed tests
     function valueScoreCalc(price, faceValue) {
@@ -27,15 +27,10 @@ $(document).ready(() => {
         else return valueScore;
     } 
 
-    // helper function for adding seat color 
-    function addSeatColor(seatElement, color) {
-        seatElement.css({
-            backgroundColor: color
-        });
-    }
+    // helper function for adding data-rating and seat color class
+    function addColorAndRating(seatElement, seatColor, rating) {
 
-    // helper function for adding score string data attribue
-    function addScoreRating(seatElement, rating) {
+        seatElement.addClass(`${seatColor}`);
         seatElement.attr("data-rating", `${rating}`);
     }
 
@@ -47,33 +42,36 @@ $(document).ready(() => {
         switch (true) {
 
             case valueScore == 5.0:
-                addSeatColor(seatElement, "rgb(0, 255, 30)");
-                addScoreRating(seatElement, "Excellent");
+                addColorAndRating(seatElement, "neon-green", "Excellent");
                 break;
             case valueScore >= 4.0:
-                addSeatColor(seatElement, "rgb(0, 255, 30)");
-                addScoreRating(seatElement, "Great");
+                addColorAndRating(seatElement, "neon-green", "Great");
                 break;
             case valueScore >= 3.0:
-                addSeatColor(seatElement, "rgb(10, 155, 20)");
-                addScoreRating(seatElement, "Good");
+                addColorAndRating(seatElement, "green", "Good");
                 break;
             case valueScore >= 2.0:
-                addSeatColor(seatElement, "rgb(255, 138, 138)");
-                addScoreRating(seatElement, "Okay");
+                addColorAndRating(seatElement, "pink", "Okay");
                 break;
             case valueScore >= 1.0:
-                addSeatColor(seatElement, "rgb(185, 0, 0)");
-                addScoreRating(seatElement, "Bad");
+                addColorAndRating(seatElement, "red", "Bad");
                 break;
             default:
-                addSeatColor(seatElement, "rgb(185, 0, 0)");
-                addScoreRating(seatElement, "Terrible");
+                addColorAndRating(seatElement, "red", "Terrible");
                 break;
-            
         }
     }
 
+    // append seat to specific section; add data-ticketid
+    function appendSeatToSection(section, rowNum, ticketId) {
+
+        $(`.section.${section} .row-${rowNum}`).append(`
+            <div class="seat" data-ticketid="${ticketId}">
+            </div>
+        `);
+    }
+
+    // create seats
     for (rowNum = 1; rowNum <= 20; rowNum++) {
 
         $(".section").append(`
@@ -82,38 +80,71 @@ $(document).ready(() => {
 
         for (seatNum = 1; seatNum <= 30; seatNum++) {
             
-            let id = (rowNum - 1) * 30 + seatNum;
+            const ticketid = (rowNum - 1) * 30 + seatNum;
 
-            $(`.section.north .row-${rowNum}`).append(`
-                <div class="seat" data-id="${id}">
-                </div>
-            `);
+            appendSeatToSection("north", rowNum, ticketid);
 
-            $(`.section.east .row-${rowNum}`).append(`
-                <div class="seat" data-id="${id + 600}">
-                </div>
-            `);
+            appendSeatToSection("east", rowNum, ticketid + 600);
 
-            $(`.section.south .row-${rowNum}`).append(`
-                <div class="seat" data-id="${id + 1200}">
-                </div>
-            `);
+            appendSeatToSection("south", rowNum, ticketid + 1200);
 
-            $(`.section.west .row-${rowNum}`).append(`
-                <div class="seat" data-id="${id + 1800}">
-                </div>
-            `);
-            
+            appendSeatToSection("west", rowNum, ticketid + 1800);
         }
-
     }
 
+    // passed tests
+    function dataAdder(domElement, datasetObj) {
+        domElement.attr("data-section", `${datasetObj.section}`);
+        domElement.attr("data-row", `${datasetObj.row}`);
+        domElement.attr("data-seat", `${datasetObj.seat}`);
+        domElement.attr("data-price", `${datasetObj.price}`);
+        domElement.attr("data-email", `${datasetObj.email}`);
+    }
+
+    // append info to stage or modal
+    function appendSeatInfo(elementClassName, datasetObj) {
+
+        const { section, row, seat, price, score, rating } = datasetObj;
+        
+        $(`.${elementClassName}`).empty();
+
+        $(`.modal-body`).append(`
+            <p class="modal-subheader">Are you sure you want to purchase this ticket?</p>
+        `);
+
+        $(`.${elementClassName}`).append(`
+            <p class="top">Section Number: ${section}</p>
+            <p>Row Number: ${row}</p>
+            <p>Seat Number: ${seat}</p>
+            <p>Price: <b>$${price}</b></p>
+            <p>Value: <b>${rating} (${score}/5.0)</b></p>
+        `);
+
+        $(`.stage`).append(`
+            <p class="purchase">Click seat to purchase!</p>
+        `);
+    }
+
+    function seatClick(event) {
+
+        appendSeatInfo("modal-body", event.target.dataset);
+
+        const purchaseBtnElement = $("#purchase-btn");
+
+        purchaseBtnElement.attr("data-ticketid", `${event.target.dataset.ticketid}`);
+        purchaseBtnElement.attr("data-name", `${event.target.dataset.name}`);
+
+        // helper function adds section, row, seat, price, email to dataset
+        dataAdder(purchaseBtnElement, event.target.dataset);
+    }
+
+    // get all tickets for sale in Ticket Master table
     $.ajax("api/venue", {
         type: "GET"
     })
     .then(allTickets => {
         for (const ticket of allTickets) {
-            const ticketSquareElement = $(`[data-id="${ticket.ticket_id}"]`);
+            const ticketSquareElement = $(`[data-ticketid="${ticket.ticket_id}"]`);
 
             ticketSquareElement.addClass("available");
 
@@ -121,16 +152,21 @@ $(document).ready(() => {
 
             seatColorAndRating(valueScore, ticketSquareElement);
 
-            ticketSquareElement.attr("data-section", `${ticket.section_number}`);
-            ticketSquareElement.attr("data-row", `${ticket.row_number}`);
-            ticketSquareElement.attr("data-seat", `${ticket.seat_number}`);
-            ticketSquareElement.attr("data-price", `${ticket.price}`);
-            ticketSquareElement.attr("data-score", `${valueScore}`);
-            ticketSquareElement.attr("data-email", `${ticket.email}`);
-            ticketSquareElement.attr("data-name", `${ticket.user_name}`);
+            const datasetObj = {
+                section: ticket.section_number,
+                row: ticket.row_number,
+                seat: ticket.seat_number,
+                price: ticket.price,
+                email: ticket.email
+            }
 
+            ticketSquareElement.attr("data-score", `${valueScore}`);
+            ticketSquareElement.attr("data-name", `${ticket.user_name}`);
             ticketSquareElement.attr("data-toggle", "modal");
             ticketSquareElement.attr("data-target", "#purchaseModal");
+
+            // helper function adds section, row, seat, price, email to dataset
+            dataAdder(ticketSquareElement, datasetObj);
             
             ticketSquareElement.on("click", seatClick);
         }
@@ -163,84 +199,44 @@ $(document).ready(() => {
             $(".stage p").remove();
             $(".stage button").remove();
 
-            const { section, row, seat, price, score, rating } = event.target.dataset;
-
-            $(".stage").append(`
-                <p class="top">Section Number: ${section}</p>
-                <p>Row Number: ${row}</p>
-                <p>Seat Number: ${seat}</p>
-                <p>Price: $${price}</p>
-                <p>Value: ${rating} (${score}/5.0)</p>
-                <p class="purchase">Click seat to purchase!</p>
-            `)
+            appendSeatInfo("stage", event.target.dataset);
         }
     })
 
-
-    function seatClick(event) {
-
-        const { id, section, row, seat, price, email, name, score, rating } = event.target.dataset;
-
-        $(".modal-body").empty();
-
-        $(".modal-body").append(`
-            <p class="modal-subheader">Are you sure you want to purchase this ticket?</p>
-            <p class="top">Section Number: ${section}</p>
-            <p>Row Number: ${row}</p>
-            <p>Seat Number: ${seat}</p>
-            <p>Price: <b>$${price}</b></p>
-            <p>Value: <b>${rating} (${score}/5.0)</b></p>
-        `);
-
-        const purchaseBtnElement = $("#purchase-btn");
-
-        purchaseBtnElement.attr("data-id", `${id}`);
-        purchaseBtnElement.attr("data-section", `${section}`);
-        purchaseBtnElement.attr("data-row", `${row}`);
-        purchaseBtnElement.attr("data-seat", `${seat}`);
-        purchaseBtnElement.attr("data-price", `${price}`);
-        purchaseBtnElement.attr("data-email", `${email}`);
-        purchaseBtnElement.attr("data-name", `${name}`);
-
+    // ajax post request 
+    function ajaxPOST(path, ticketInfo, message) {
+        
+        $.ajax(path, {
+            type: "POST",
+            data: ticketInfo
+        })
+        .then(() => {
+            // console.log("ajax post successful");
+        })
+        .catch(() => {
+            console.log(`there's been an error trying to ${message}`);
+        });
     }
 
     $("#purchase-btn").on("click", (event) => {
 
-        const targetData = event.target.dataset;
+        const { ticketid, name, section, row, seat, price, email } = event.target.dataset;
 
-        location.href = "/user-email/ticket/" + targetData.id;
+        location.href = "/user-email/ticket/" + ticketid;
 
         const ticketInfo = {
-            ticketId: targetData.id,
-            sectionNumber: targetData.section,
-            rowNumber: targetData.row,
-            seatNumber: targetData.seat,
-            price: targetData.price,
-            email: targetData.email,
-            userName: targetData.name
+            ticketId: ticketid,
+            sectionNumber: section,
+            rowNumber: row,
+            seatNumber: seat,
+            price: price,
+            email: email,
+            userName: name
         }
 
-        $.ajax("/api/new-sale", {
-            type: "POST",
-            data: ticketInfo
-        })
-        .then(() => {
-            // console.log("seller email successful");
-        })
-        .catch(() => {
-            console.log("there's been an error trying to process a new sale");
-        });
+        ajaxPOST("/email/sold", ticketInfo, "email a seller");
 
-        $.ajax("/api/sold-ticket", {
-            type: "POST",
-            data: ticketInfo
-        })
-        .then(() => {
-            // console.log("adding new row successful");
-        })
-        .catch(() => {
-            console.log("there's been an error trying to insert into tixSold");
-        });
+        ajaxPOST("/api/sold-ticket", ticketInfo, "insert into tixSold");
 
     })
 
