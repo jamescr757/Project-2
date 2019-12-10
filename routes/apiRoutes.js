@@ -40,7 +40,7 @@ function findEmailTixSold(res, userEmail, contextObj) {
       // set no active tix to false b/c handlebars doesn't have else if 
       contextObj.noActiveTix = false;
     } else {
-      contextObj.soldTix = true;
+      contextObj.s = true;
     }
 
     // after adding booleans to the context object with the if statement above, we want to render the user-listing handlebars page with the contextObj
@@ -67,9 +67,9 @@ function grabFaceValueAndCreateNewListing(req, res, rowId) {
 
   //  insert row into TicketMaster table using data retrieved from db query
   //  need the face value price to give TicketMaster all the info it needs
-  // probably could have done an association here but needed to bang this out quickly over the weekend
+  // probably could have done an association here but needed to write this quickly over the weekend
+  // can use the insertIntoTicketMaster function
 
-  //   insertIntoTicketMaster(req, res, rowFaceValue.price)
   // })
   // .catch(error => {
   //   // can console.log the error to see more information about the error
@@ -129,6 +129,7 @@ module.exports = function(app) {
   // this route gets hit after the user enter's their email to view their listings 
   // front-end code on line 112-116
   // want to check if the entered email is in our database
+  // can check this by hitting this route manually and seeing what is rendered
   app.get("/user-email/:email", function(req, res) {
 
     // db.
@@ -165,58 +166,76 @@ module.exports = function(app) {
     // });
   });
 
+  // the user is redirected to this route after they click purchase on the venue modal
+  // the front-end code starts on line 223 of venue.js
+  // we want to use the id in the path to locate the ticket info in the TicketMaster table
+  // can test this by clicking purchase on buy tickets modal and inspecting the form, you should see the ticket's info in its data attributes
+  // can then check mySQLWorkbench and see if that ticket was deleted from the table
   app.get("/user-email/ticket/:id",function(req,res){
 
-    db.TicketMaster.findOne({
-      where: {
-        ticket_id: req.params.id
+    // db.
+
+      // grab ticket from TicketMaster
+
+    // .then(function(ticketInfo) {
+      
+      // we want to render the user-listing handlebars page but the data in the context object is very important 
+      // buyerEmail set to true tells the handlebars page to render the buyer email form (line 95 of user-listing.handlebars)
+      const contextObj = {
+        buyerEmail: true
       }
-    })
-    .then(function(ticketInfo) {
+      // however, that buyer form needs the info from the ticket purchase to send the buyer their receipt email with the ticket info
+      // the ticket info is stored in data attributes on the handlebars page (lines 98-101)
+      // so we need to add those keys to our contextObj...
+      // contextObj.section_number = 
+      // contextObj.row_number = 
+      // contextObj.seat_number = 
+      // contextObj.price = 
+      
+      // render the user-listing handlebars page with the contextObj
+    // })
 
-      const { section_number, row_number, seat_number, price } = ticketInfo.dataValues
+    // .then(() => {
+      // once the handblebars page is rendered and the form has the ticket info, we can now delete that ticket from the TicketMaster table
+      // use the deleteFromTicketMaster function to delete the ticket purchased
+    // })
 
-      // going to be an array of objects
-      res.render("user-listing", { 
-        buyerEmail: true,
-        section_number,
-        row_number,
-        seat_number,
-        price,
-      });
-    })
-    .then(() => {
-      deleteFromTicketMaster(req.params.id);
-    })
-    .catch(error => {
+    // .catch(error => {
       // can console.log the error to see more information about the error
-      console.log("there's been a db query error");
+      console.log("there's been a db error in the route hit after clicking purchase");
       res.status(500).end();
-    });
+    // });
   });
 
+  // this route is hit if the user clicks "View Your Sales" on their active listings page
+  // the end goal is to render the sold-listings handlebars page
+  // can test this by hitting the route below manually with emails you know have sold tickets 
+  // app@gmail.com should always have tickets sold since that's the default email so you can type /sold-listings/app@gmail.com into address bar to test the db query
   app.get("/sold-listings/:email", function(req, res) {
-    db.TixSold.findAll({
-      where: {
-        email: req.params.email
-      }
-    })
-    .then(function(userListing) {
+    
+    // db.
+
+
+    // use seller's email to find their sold tickets in the TixSold Table
+
+
+    // .then(function(userListing) {
       // going to be an array of objects
       const contextObj = {
         listingArray: userListing,
         userEmail: req.params.email
       }
 
+      // want to alert the user if they don't have any sold tickets
       if (userListing.length === 0) contextObj.noSoldTix = true;
 
-      res.render("sold-listings", contextObj);
-    })
-    .catch(error => {
+      // render the sold-listings handlebars page with the context object
+    // })
+    // .catch(error => {
       // can console.log the error to see more information about the error
-      console.log("there's been a db query error");
+      console.log("there's been a db error trying to grab sold listings from TixSold");
       res.status(500).end();
-    });
+    // });
   });
 
   // this gets hit when a user hits submit on the seller listing form 
@@ -251,22 +270,15 @@ module.exports = function(app) {
   // you can test this query by seeing if the sold ticket shows up in the soldTix table when you refresh it in mySQLWorkbench
   app.post("/api/sold-ticket", function(req, res) {
 
-    const { sectionNumber, rowNumber, seatNumber, ticketId, userName, email, price } = req.body;
+    // db.
 
-    // db.TixSold.create({
+    // insert a new row into soldTix table using data from front-end
+    // remember to provide the table with info for all columns that don't have default values
 
-    //   section_number: sectionNumber,
-    //   row_number: rowNumber,
-    //   seat_number: seatNumber,
-    //   ticket_id: ticketId,
-    //   price: price,
-    //   user_name: userName,
-    //   email: email
-
-    // })
+    // 
     // .then(function() {
       
-    //   // send to front-end a successful response
+    //   // send to front-end a success status code
 
     // })
     // .catch(error => {
@@ -278,9 +290,10 @@ module.exports = function(app) {
 
   // route is hit when user clicks deactivate button in modal on the my listings page
   // front-end js starts on line 34 of listing.js
+  // can test this by clicking deactivate and checking the table in Workbench or by refreshing the page and not seeing that ticket displayed anymore
   app.delete("/api/delete-listing/:ticketId", function(req, res) {
 
-    deleteFromTicketMaster(res, req.params.ticketId);
+    // use the deleteFromTicketMaster function to delete from that table
 
   });
 

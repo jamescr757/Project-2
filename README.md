@@ -1,2 +1,26 @@
 # Project-2
 Project 2
+
+### Recreating the app's database queries
+
+- start by creating the virtual representations of the tables in the models folder
+
+- all the missing code is in the apiRoutes file after you fill-in the js files in the models folder
+
+- I would skip all the functions at the top of the apiRoutes file until you come across them in the app listener section (starts at line 105) for a few reasons: 
+    - it's easier to test the app listener's
+    - those functions will make more sense if you understand the full contex of what they are doing
+    - some of those functions are tied together or nested so they won't make any sense by themselves
+
+- I think the app listener on /api/venue (line 252) is the best place to start because it's easy to test and the least complicated db query 
+
+- After that, I would do the app.get or app.delete listeners 
+
+- I would do the app.post listeners last
+
+
+### Few Disclaimers
+
+1. I tried to make it easy to find the front-end code because it's important to understand what the front-end is requesting (you don't have to fully understand how the front-end js is working but hopefully you can follow what it's doing by how I named everything)
+
+2. I like to console log my own error message, so it's clear where the error occurred. If I'm not sure why the error occurred, I can then print the entire error with `console.log(error)` and run the code again to see it in the console. Sometimes seeing that massive error in the console first makes me upset, and it's difficult to parse through it and figure out where the actual error occurred. IMO, I like doing it the way I currently have the code written better.  

@@ -21,13 +21,13 @@ function Email() {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-              user: 'jamesriddle@utexas.edu',
+              user: process.env.GMAIL_EMAIL,
               pass: process.env.GMAIL_PASS
             }
           });
           
         const mailOptions = {
-            from: 'jamesriddle@utexas.edu',
+            from: process.env.GMAIL_EMAIL,
             to: userEmail
         }
         
