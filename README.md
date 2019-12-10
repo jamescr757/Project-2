@@ -1,6 +1,21 @@
 # Project-2
 Project 2
 
+### Logistic steps to take before coding 
+
+1. I changed the email account for the app to a throw away email, so you need to update your .env files 
+
+    `GMAIL_PASS=pw123#456$`
+    `GMAIL_EMAIL=ticketpass713@gmail.com`
+
+2. Your `config.json` should be connected to the deployed database (double check that it is)
+
+3. If you ever need to re-seed the database, just run `npx sequelize-cli db:seed:all` in the terminal. (You'll have to drop the database first before seeding it or there will be an error for repeated seats in the TicketMaster table.)
+
+4. Line 29 of the `server.js` file is where sequelize knows to drop the database or not. You probably want this set to false (don't drop database) 99% of the time.
+
+
+
 ### Recreating the app's database queries
 
 - start by creating the virtual representations of the tables in the models folder
@@ -19,7 +34,9 @@ Project 2
 - I would do the app.post listeners last
 
 
-### Few Disclaimers
+
+
+### A Couple Disclaimers
 
 1. I tried to make it easy to find the front-end code because it's important to understand what the front-end is requesting (you don't have to fully understand how the front-end js is working but hopefully you can follow what it's doing by how I named everything)
 
