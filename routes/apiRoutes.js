@@ -187,38 +187,50 @@ module.exports = function(app) {
 
   });
 
+  // when user travels to /venue route to purchase a ticket, there's an ajax call that hits this route 
+  // if you want to look at the front-end it's line 142 of venue.js
+  // want to select everything from the TicketMaster table and send it back to the front-end
   app.get("/api/venue", function(req, res) {
-    db.TicketMaster.findAll({})
-    .then(function(allTickets) {
-      res.json(allTickets);
-    })
-    .catch(() => {
-      console.log("there's been a db query error");
-    });
+    
+    // db.
+
+    // .then(function(allTickets) {
+
+          // send allTickets to front-end
+
+    // })
+    // .catch(() => {
+    //   console.log("there's been a db query error trying to select all from TicketMaster");
+    // });
   });
 
+  // when a user clicks the purchase button in the modal, there's an ajax call that hits this route
+  // the front-end js starts at line 221 on venue.js
+  // the data being sent from the front-end will include these variables: sectionNumber, rowNumber, seatNumber, ticketId, userName, email, price
   app.post("/api/sold-ticket", function(req, res) {
 
     const { sectionNumber, rowNumber, seatNumber, ticketId, userName, email, price } = req.body;
 
-    db.TixSold.create({
+    // db.TixSold.create({
 
-      section_number: sectionNumber,
-      row_number: rowNumber,
-      seat_number: seatNumber,
-      ticket_id: ticketId,
-      price: price,
-      user_name: userName,
-      email: email
+    //   section_number: sectionNumber,
+    //   row_number: rowNumber,
+    //   seat_number: seatNumber,
+    //   ticket_id: ticketId,
+    //   price: price,
+    //   user_name: userName,
+    //   email: email
 
-    })
-    .then(function() {
-      res.status(201).end();
-    })
-    .catch(error => {
-      console.log("there was a db query error inserting row into tix sold");
-      res.status(500).end();
-    });;
+    // })
+    // .then(function() {
+      
+    //   // send to front-end a successful response
+
+    // })
+    // .catch(error => {
+    //   console.log("there was a db query error inserting row into tixSold");
+    //   res.status(500).end();
+    // });
   });
 
   app.delete("/api/delete-listing/:ticketId", function(req, res) {

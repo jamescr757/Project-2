@@ -2,69 +2,61 @@ module.exports = function(sequelize, DataTypes) {
     
     const TicketMaster = sequelize.define("TicketMaster", {
 
-        section_number: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            validate: {
-                isNumeric: true,
-                min: 1,
-                max: 4
-            }
-        },
-        row_number: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            validate: {
-                isNumeric: true,
-                min: 1,
-                max: 20
-            }
-        },
-        seat_number: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            validate: {
-                isNumeric: true,
-                min: 1,
-                max: 30
-            }
-        },
-        ticket_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            unique: true
-        },
-        purchased: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: false
-        },
-        price: {
-            type: DataTypes.DECIMAL(6, 2),
-            allowNull: false
-        },
-        face_value: {
-            type: DataTypes.DECIMAL(6, 2),
-            allowNull: false
-        },
-        user_name: {
-            type: DataTypes.STRING,
-            defaultValue: "Master"
-        },
-        email: {
-            type: DataTypes.STRING,
-            defaultValue: "app@gmail.com",
-            allowNull: false,
-            validate: {
-                isEmail: true
-            }
-        }
+        // should be 9 columns by the end of this model construction
+        // no null values for all columns
+
+
+        // section_number column
+        // data type integer
+        // validate that the entry is a number and is between 1 and 4
+
+        
+        // row_number column
+        // data type integer
+        // validate that the entry is a number and is between 1 and 20
+
+
+        // seat_number column
+        // data type integer
+        // validate that the entry is a number and is between 1 and 30
+
+
+        // ticket_id column
+        // data type integer
+        // unique value
+
+
+        // purchased column
+        // data type boolean
+        // default value is false
+
+
+        // price column
+        // same definition as FaceValue Table
+        // data type - decimal number up to $9999.99
+
+
+        // face_value column
+        // same data type as price
+
+
+        // user_name
+        // data type string
+        // default value "Master"
+
+
+        // email column
+        // default value "app@gmail.com"
+        // validate to make sure entry has email format
+
 
     }, {
+        // options clause:
+
         // don't add s to table name
-        freezeTableName: true,
+
         // don't add updatedAt and createdAt columns
-        timestamps: false
+
     });
 
     return TicketMaster;

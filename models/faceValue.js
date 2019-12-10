@@ -1,25 +1,23 @@
 module.exports = function(sequelize, DataTypes) {
 
     const FaceValue = sequelize.define("FaceValue", {
-      
-        section_number: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        row_number: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        price: {
-            type: DataTypes.DECIMAL(6, 2),
-            allowNull: false
-        }
+
+        // want 3 columns for this table
+        // no null values allowed for all columns
+
+        // section_number column with data type integer
+
+        // row_number column with data type integer
+
+        // price column that can accept decimal numbers reflecting dollar amounts up to $9999.99
 
     }, {
+        // options clause: 
+
         // don't add s to table name
-        freezeTableName: true,
-        // don't add updatedAt and createdAt columns
-        timestamps: false
+
+        // don't add updatedAt and createdAt default columns
+
     });
 
     return FaceValue;
