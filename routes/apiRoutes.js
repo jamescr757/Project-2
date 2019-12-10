@@ -5,7 +5,7 @@ const mailer = new Email;
 
 // function to delete from TicketMaster table
 // will be nested inside route to render buyer receipt email
-function deleteFromTicketMaster(ticketId) {
+function deleteFromTicketMaster(res, ticketId) {
   
   db.TicketMaster.destroy({
     where: {
@@ -14,8 +14,10 @@ function deleteFromTicketMaster(ticketId) {
   })
   .then(function() {
     console.log("delete from ticket master successful");
+    res.status(204).end();
   })
-  .catch(() => {
+  .catch(error => {
+    console.log(error);
     console.log("error in deleteFromTicketMaster");
   });
 }
@@ -150,7 +152,7 @@ module.exports = function(app) {
       });
     })
     .then(() => {
-      deleteFromTicketMaster(req.params.id);
+      deleteFromTicketMaster(res, req.params.id);
     })
     .catch(() => {
       console.log("there's been a db query error");
@@ -223,18 +225,8 @@ module.exports = function(app) {
 
   app.delete("/api/delete-listing/:ticketId", function(req, res) {
 
-    db.TicketMaster.destroy({
-      where: {
-        ticket_id: req.params.ticketId
-      }
-    })
-    .then(function() {
-      res.status(204).end();
-    })
-    .catch(() => {
-      console.log("there was a db query error in deleting from ticket master");
-      res.status(500).end();
-    });
+    deleteFromTicketMaster(res, req.params.ticketId);
+
   });
 
 };
