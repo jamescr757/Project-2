@@ -143,7 +143,9 @@ $(document).ready(() => {
         type: "GET"
     })
     .then(allTickets => {
+        // loop through allTickets array and assign each element to ticket
         for (const ticket of allTickets) {
+            // find the seat that has the same ticket id as element
             const ticketSquareElement = $(`[data-ticketid="${ticket.ticket_id}"]`);
 
             ticketSquareElement.addClass("available");
