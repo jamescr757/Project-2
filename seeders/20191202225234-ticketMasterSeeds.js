@@ -1985,7 +1985,7 @@ module.exports = {
         ticket_id: 1928,
         price: 265.00,
         email: "app@gmail.com",
-        face_value: 300.00
+        face_value: 270.00
       },
       {
         section_number: 4,
