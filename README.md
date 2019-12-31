@@ -2,7 +2,7 @@
 
 ### Overview 
 
-Application mimics buying/selling tickets for a sporting event or concert
+Full-Stack application mimics buying/selling tickets for a sporting event or concert
 
 - a mock venue was created to build out basic functionality
 - user can purchase any ticket that is available 
