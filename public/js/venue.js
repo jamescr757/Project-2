@@ -106,7 +106,7 @@ $(document).ready(() => {
 
         const { section, row, seat, price, score, rating } = datasetObj;
         
-        $(`.${elementClassName}`).empty();
+        $(`.modal-body`).empty();
 
         $(`.modal-body`).append(`
             <p class="modal-subheader">Are you sure you want to purchase this ticket?</p>
