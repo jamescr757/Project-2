@@ -1,4 +1,4 @@
-# Ticket Pass - https://ticket-pass-757.herokuapp.com/
+# Ticket Pass 
 
 ### Overview 
 
@@ -16,6 +16,9 @@ Full-Stack application mimics buying/selling tickets for a sporting event or con
 
 ----------------
 
+### Deployed Link 
+
+https://ticket-pass-757.herokuapp.com/
 
 ### Required Node Packages 
 - `npm install dotenv express express-handlebars mysql2 nodemailer sequelize-cli sequelize`
