@@ -1,4 +1,4 @@
-# Ticket Pass
+# Ticket Pass - https://ticket-pass-757.herokuapp.com/
 
 ### Overview 
 
@@ -30,6 +30,15 @@ Full-Stack application mimics buying/selling tickets for a sporting event or con
 - stop the server process
 - run `npx sequelize-cli db:seed:all` to seed the tables (this is inserting the rows from the files in `seeders/` into their respective tables)
 - local database should be ready 
+
+
+### Running the Application
+- run `node server.js` to start the server and connect to database
+- if you ever want to delete everything in the database and re-seed it:
+    - change `var syncOptions = { force: false }` boolean to `true` in `server.js` file 
+    - start the server to then drop all tables `node server.js`
+    - kill the server and re-seed with `npx sequelize-cli db:seed:all`
+    - change `var syncOptions = { force: true }` boolean back to `false` in `server.js` file 
 
 
 ### Protecting Database Password
